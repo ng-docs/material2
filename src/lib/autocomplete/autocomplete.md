@@ -1,6 +1,10 @@
 The autocomplete is a normal text input enhanced by a panel of suggested options.
 
+自动完成（autocomplete）通过显示一个建议选项面板，来对标准文本框进行增强
+
 ### Simple autocomplete
+
+### 简单的自动完成
 
 Start by adding a regular `matInput` to your template. Let's assume you're using the `formControl`
 directive from `ReactiveFormsModule` to track the value of the input.
