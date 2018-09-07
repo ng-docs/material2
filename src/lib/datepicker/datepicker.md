@@ -1,12 +1,18 @@
 The datepicker allows users to enter a date either through text input, or by choosing a date from
 the calendar. It is made up of several components and directives that work together.
 
+日期选择器允许用户通过文本框输入一个日期，或用日历选取一个日期。它由一几个协同工作的组件和指令组成。
+
 <!-- example(datepicker-overview) -->
 
 ### Connecting a datepicker to an input
 
+### 把日期选择器关联到一个输入框
+
 A datepicker is composed of a text input and a calendar pop-up, connected via the `matDatepicker`
 property on the text input.
+
+日期选择器由一个文本输入框和一个日历弹出框组成，它们通过文本框上的 `matDatepicker` 联系起来。
 
 ```html
 <input [matDatepicker]="myDatepicker">
@@ -14,6 +20,8 @@ property on the text input.
 ```
 
 An optional datepicker toggle button is available. A toggle can be added to the example above:
+
+还可以使用一个可选的日期选择器切换按钮。可以这样添加切换按钮：
 
 ```html
 <input [matDatepicker]="myDatepicker">
@@ -23,6 +31,9 @@ An optional datepicker toggle button is available. A toggle can be added to the 
 
 This works exactly the same with an input that is part of an `<mat-form-field>` and the toggle
 can easily be used as a prefix or suffix on the material input:
+
+当输入框作为 `<mat-form-field>` 的一部分时，也完全一样。
+切换按钮可以很容易地作为输入框的前缀或后缀：
 
 ```html
 <mat-form-field>
@@ -35,13 +46,20 @@ can easily be used as a prefix or suffix on the material input:
 If you want to customize the icon that is rendered inside the `mat-datepicker-toggle`, you can do so
 by using the `matDatepickerToggleIcon` directive:
 
+如果你要定制 `mat-datepicker-toggle` 中渲染的图标，可以使用 `matDatepickerToggleIcon` 指令：
+
 <!-- example(datepicker-custom-icon) -->
 
 ### Setting the calendar starting view
 
+### 设置日历的起始视图
+
 The `startView` property of `<mat-datepicker>` can be used to set the view that will show up when
 the calendar first opens. It can be set to `month`, `year`, or `multi-year`; by default it will open
 to month view.
+
+`<mat-datepicker>` 的 `startView` 属性可用来指定当首次打开日历时，应该使用哪个视图。
+它可以是 `month`（月）、`year`（年）或 `multi-year`（多年）之一，默认情况下是月。
 
 The month, year, or range of years that the calendar opens to is determined by first checking if any
 date is currently selected, if so it will open to the month or year containing that date. Otherwise
@@ -49,9 +67,14 @@ it will open to the month or year containing today's date. This behavior can be 
 the `startAt` property of `<mat-datepicker>`. In this case the calendar will open to the month or
 year containing the `startAt` date.
 
+此日历中打开的月份、年份或年份的范围，取决于当前是否选择了某个日期。如果选择了，它就会打开包含该日期的月份或年份。否则，它就打开包含当前日期的月份或年份。
+这种行为可以用 `<mat-datepicker>` 的 `startAt` 属性来改写。这种情况下，此日历将打开包含 `startAt` 日期的月份或年份。
+
 <!-- example(datepicker-start-view) -->
 
 #### Watching the views for changes on selected years and months
+
+#### 在选择的年份或月份上监听视图的更改
 
 When a year or a month is selected in `multi-year` and `year` views respectively, the `yearSelected`
 and `monthSelected` outputs emit a normalized date representing the chosen year or month. By
