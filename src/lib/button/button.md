@@ -1,7 +1,7 @@
 Angular Material buttons are native `<button>` or `<a>` elements enhanced with Material Design
 styling and ink ripples.
 
-Angular Material 按钮使用 Material Design 的样式和墨水涟漪等对原生的 `<button>` 或 `<a>` 元素进行增强。
+Angular Material 按钮就是原生的 `<button>` 或 `<a>` 元素，但使用 Material Design 的样式和墨水涟漪等效果进行了增强。
 
 <!-- example(button-overview) -->
 
