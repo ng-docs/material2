@@ -252,7 +252,7 @@ Any errors and hints added to the form field are automatically added to the form
 
 ### Troubleshooting
 
-### 故障排除
+### 故障排查
 
 #### Error: Placeholder attribute and child element were both specified
 
