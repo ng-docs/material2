@@ -31,7 +31,7 @@ Next, create the autocomplete panel and the options displayed inside it. Each op
 defined by an `mat-option` tag. Set each option's value property to whatever you'd like the value
 of the text input to be upon that option's selection.
 
-接下来，创建自动完成面板和待显示的候选项。每个选项都应该用 `mat-option` 标签来定义。将每个选项的值设置为你想用作候选文本的值。
+接下来，创建自动完成面板和待显示的候选项。每个选项都应该用 `mat-option` 标记来定义。将每个选项的值设置为你想用作候选文本的值。
 
 *my-comp.html*
 ```html
