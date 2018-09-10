@@ -58,7 +58,7 @@ additional information about these features, see the
 
 ### Placeholder
 
-### 占位文本
+### 占位符
 
 The placeholder is text shown when the `<mat-form-field>` label is floating but the input is empty.
 It is used to give the user an additional hint about what they should type in the input. The
@@ -66,10 +66,10 @@ placeholder can be specified by setting the `placeholder` attribute on the `<inp
 element. In some cases that `<mat-form-field>` may use the placeholder as the label (see the
 [form field label documentation](https://material.angular.io/components/form-field/overview#floating-label)).
 
-占位文本是当 `<mat-form-field>` 浮起但输入框为空时显示的文本。
+占位符是当 `<mat-form-field>` 浮起但输入框为空时显示的文本。
 它可以给用户一个额外的提示，来告诉他们该在输入框中输入什么。
-占位文本可以通过 `<input>` 或 `<textarea>` 上的 `placeholder` 属性进行指定。
-在某些情况下，`<mat-form-field>` 可以把此占位文本用作标签（参见[表单字段的文档](/components/form-field/overview)）。
+占位符可以通过 `<input>` 或 `<textarea>` 上的 `placeholder` 属性进行指定。
+在某些情况下，`<mat-form-field>` 可以把此占位符用作标签（参见[表单字段的文档](/components/form-field/overview)）。
 
 ### Changing when error messages are shown
 

@@ -64,9 +64,9 @@ promote placeholders to labels. For the `legacy` appearance specifying
 `mat-form-field`. For the newer variants it will just add a normal placeholder to the input. If you
 want a floating label, add a `<mat-label>` to the `mat-form-field`.
 
-第二个重要的不同点是 `standard`、`fill` 或 `outline` 不会把占位文本（placeholder）提升为标签。
+第二个重要的不同点是 `standard`、`fill` 或 `outline` 不会把占位符（placeholder）提升为标签。
 对于 `legacy` 外观来说，指定 `<input placeholder="placeholder">` 将导致为 `mat-form-field` 添加一个浮动标签。
-对于新外观，它只会给输入框添加一个标准的占位文本。如果你想使用浮动标签，请往 `mat-form-field` 中添加一个 `<mat-label>`。
+对于新外观，它只会给输入框添加一个标准的占位符。如果你想使用浮动标签，请往 `mat-form-field` 中添加一个 `<mat-label>`。
 
 <!-- example(form-field-appearance) -->
 
@@ -91,9 +91,9 @@ placeholder. The `placeholder` will never be promoted to a label for `standard`,
 you will need to specify an empty label to prevent the `placeholder` from being promoted.
 
 在 `<mat-form-field>` 的传统版本中（没有 `appearance` 属性或指定了 `appearance="legacy"`），如果没有指定标签，
-则表单控件的 `placeholder` 属性将会被提升为浮动标签。如果指定了标签，则 `placeholder` 会显示为标准的占位文本。
+则表单控件的 `placeholder` 属性将会被提升为浮动标签。如果指定了标签，则 `placeholder` 会显示为标准的占位符。
 对于 `standard`、`fill` 和 `outline` 外观，`placeholder` 永远不会提升为标签。
-如果你要创建一个有占位文本但却没有标签的传统表单字段，就需要指定一个空白的 `mat-label` 来防止 `placeholder` 被提升。
+如果你要创建一个有占位符但却没有标签的传统表单字段，就需要指定一个空白的 `mat-label` 来防止 `placeholder` 被提升。
 
 ```html
 <mat-form-field>
@@ -263,8 +263,8 @@ included both a `placeholder` property on your form field control and a `<mat-pl
 element. The `<mat-placeholder>` element is deprecated, you should use `placeholder` for
 placeholders and `<mat-label>` for labels.
 
-该错误会在你指定了两个相互冲突的占位文本时出现。请确保你没有在表单控件中同时包含 `placeholder` 属性和 `<mat-placeholder>` 元素。
-`<mat-placeholder>` 已废弃，请使用 `placeholder` 来指定占位文本，使用 `<mat-label>` 来指定标签。
+该错误会在你指定了两个相互冲突的占位符时出现。请确保你没有在表单控件中同时包含 `placeholder` 属性和 `<mat-placeholder>` 元素。
+`<mat-placeholder>` 已废弃，请使用 `placeholder` 来指定占位符，使用 `<mat-label>` 来指定标签。
 
 #### Error: A hint was already declared for align="..."
 
