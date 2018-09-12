@@ -150,7 +150,7 @@ Any `mat-error` and `mat-hint` are automatically added to the input's `aria-desc
 
 ### Troubleshooting
 
-### 故障排查
+### 排查问题
 
 #### Error: Input type "..." isn't supported by matInput
 

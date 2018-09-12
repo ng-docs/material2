@@ -221,7 +221,7 @@ The select component has `role="listbox"` and options inside select have `role="
 
 ### Troubleshooting
 
-### 错误排查
+### 排查问题
 
 #### Error: Cannot change `multiple` mode of select after initialization
 
