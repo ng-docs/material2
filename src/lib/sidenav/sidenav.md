@@ -305,7 +305,7 @@ specific role makes sense, `role="region"` is again a good fallback.
 
 #### Error: A drawer was already declared for 'position="..."'
 
-#### Error: A drawer was already declared for 'position="..."'（指定的 'position="..."' 处已经声明了一个抽屉）
+#### Error: A drawer was already declared for 'position="..."' <br>（指定的 'position="..."' 处已经声明了一个抽屉）
 
 This error is thrown if you have more than one sidenav or drawer in a given container with the same
 `position`. The `position` property defaults to `start`, so the issue may just be that you forgot to

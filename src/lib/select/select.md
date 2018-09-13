@@ -225,7 +225,7 @@ The select component has `role="listbox"` and options inside select have `role="
 
 #### Error: Cannot change `multiple` mode of select after initialization
 
-#### Error: Cannot change `multiple` mode of select after initialization（不能在选择框初始化完成后修改 `multiple` 模式）
+#### Error: Cannot change `multiple` mode of select after initialization <br>（不能在选择框初始化完成后修改 `multiple` 模式）
 
 This error is thrown if you attempt to bind the `multiple` property on `<mat-select>` to a dynamic
 value. (e.g. `[multiple]="isMultiple"` where the value of `isMultiple` changes over the course of
@@ -244,7 +244,7 @@ the component's lifetime). If you need to change this dynamically, use `ngIf` or
 
 #### Error: Value must be an array in multiple-selection mode
 
-#### Error: Value must be an array in multiple-selection mode（在多选模式下，值必须是数组）
+#### Error: Value must be an array in multiple-selection mode <br>（在多选模式下，值必须是数组）
 
 This error is thrown if you attempt to assign a value other than `null`, `undefined`, or an array to
 a `<mat-select multiple>`. For example, something like `mySelect.value = 'option1'`. What you likely
@@ -255,7 +255,7 @@ meant to do was `mySelect.value = ['option1']`.
 
 #### Error: `compareWith` must be a function
 
-#### Error: `compareWith` must be a function（`compareWith` 必须是函数）
+#### Error: `compareWith` must be a function <br>（`compareWith` 必须是函数）
 
 This error occurs if you attempt to assign something other than a function to the `compareWith`
 property. For more information on proper usage of `compareWith` see the

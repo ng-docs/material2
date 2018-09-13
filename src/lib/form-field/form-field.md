@@ -256,7 +256,7 @@ Any errors and hints added to the form field are automatically added to the form
 
 #### Error: Placeholder attribute and child element were both specified
 
-#### Error: Placeholder attribute and child element were both specified（同时指定了 Placeholder 属性和子元素）
+#### Error: Placeholder attribute and child element were both specified <br>（同时指定了 Placeholder 属性和子元素）
 
 This error occurs when you have specified two conflicting placeholders. Make sure that you haven't
 included both a `placeholder` property on your form field control and a `<mat-placeholder>`
@@ -268,7 +268,7 @@ placeholders and `<mat-label>` for labels.
 
 #### Error: A hint was already declared for align="..."
 
-#### Error: A hint was already declared for align="..." （在 align="..." 声明的位置已经有一个提示信息了）
+#### Error: A hint was already declared for align="..." <br>（在 align="..." 声明的位置已经有一个提示信息了）
 
 This error occurs if you have added multiple hints for the same side. Keep in mind that the
 `hintLabel` property adds a hint to the start side.
@@ -277,7 +277,7 @@ This error occurs if you have added multiple hints for the same side. Keep in mi
 
 #### Error: mat-form-field must contain a MatFormFieldControl
 
-#### Error: mat-form-field must contain a MatFormFieldControl（mat-form-field 内必须有一个 MatFormFieldControl）
+#### Error: mat-form-field must contain a MatFormFieldControl <br>（mat-form-field 内必须有一个 MatFormFieldControl）
 
 This error occurs when you have not added a form field control to your form field. If your form
 field contains a native `<input>` or `<textarea>` element, make sure you've added the `matInput`

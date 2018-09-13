@@ -581,7 +581,7 @@ In multi-year view:
 
 #### Error: MatDatepicker: No provider found for DateAdapter/MAT_DATE_FORMATS
 
-#### Error: MatDatepicker: No provider found for DateAdapter/MAT_DATE_FORMATS（未找到 DateAdapter/MAT_DATE_FORMATS 的提供商）
+#### Error: MatDatepicker: No provider found for DateAdapter/MAT_DATE_FORMATS <br>（未找到 DateAdapter/MAT_DATE_FORMATS 的提供商）
 
 This error is thrown if you have not provided all of the injectables the datepicker needs to work.
 The easiest way to resolve this is to import the `MatNativeDateModule` or `MatMomentDateModule` in
@@ -594,7 +594,7 @@ more information.
 
 #### Error: A MatDatepicker can only be associated with a single input
 
-#### Error: A MatDatepicker can only be associated with a single input（一个 MatDatepicker 只能关联一个输入框）
+#### Error: A MatDatepicker can only be associated with a single input <br>（一个 MatDatepicker 只能关联一个输入框）
 
 This error is thrown if more than one `<input>` tries to claim ownership over the same
 `<mat-datepicker>` (via the `matDatepicker` attribute on the input). A datepicker can only be
@@ -605,7 +605,7 @@ associated with a single input.
 
 #### Error: Attempted to open an MatDatepicker with no associated input.
 
-#### Error: Attempted to open an MatDatepicker with no associated input.（试图打开一个没有关联到输入框的 MatDatepicker）
+#### Error: Attempted to open an MatDatepicker with no associated input. <br>（试图打开一个没有关联到输入框的 MatDatepicker）
 
 This error occurs if your `<mat-datepicker>` is not associated with any `<input>`. To associate an
 input with your datepicker, create a template reference for the datepicker and assign it to the

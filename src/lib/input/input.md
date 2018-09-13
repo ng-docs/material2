@@ -154,7 +154,7 @@ Any `mat-error` and `mat-hint` are automatically added to the input's `aria-desc
 
 #### Error: Input type "..." isn't supported by matInput
 
-#### Error: Input type "..." isn't supported by matInput（matInput 不支持输入类型 "..."）
+#### Error: Input type "..." isn't supported by matInput <br>（matInput 不支持输入类型 "..."）
 
 This error is thrown when you attempt to set an input's `type` property to a value that isn't
 supported by the `matInput` directive. If you need to use an unsupported input type with
