@@ -7,9 +7,8 @@ nvm use 8
 set -x
 set -e
 
-npm run build
-npm run docs
-
+rm -fr ./tmp/
 ./scripts/deploy/publish-docs-content.sh
+sleep 5
 cd ../material.angular.io
 ./translator/deploy.sh
