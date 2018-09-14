@@ -6,7 +6,7 @@ element.
 
 `<mat-select>` 是一个表单控件，像原生的 `<select>` 元素一样，它用于从一组选项中选取一个值。
 你可以阅读 [Material Design 规范](https://material.io/design/components/menus.html)了解更多信息。
-它被设计成在 [`<mat-form-field>`](https://material.angular.io/components/form-field/overview) 元素内部使用的。
+它被设计成在 [`<mat-form-field>`](/components/form-field/overview) 元素内部使用的。
 
 To add options to the select, add `<mat-option>` elements to the `<mat-select>`. Each `<mat-option>`
 has a `value` property that can be used to set the value that will be selected if the user chooses
@@ -64,7 +64,7 @@ In some cases that `<mat-form-field>` may use the placeholder as the label (see 
 占位符是指当 `<mat-form-field>` 浮起，但 `<mat-select>` 为空时显示的文本。
 它可以给用户提供一些关于如何进行选择的附加信息。
 占位符可以通过 `<mat-select>` 元素上的 `placeholder` 属性来指定。
-有些情况下，`<mat-form-field>` 可以把占位符用作标签（参见[表单字段文档](https://material.angular.io/components/form-field/overview#floating-label)）。
+有些情况下，`<mat-form-field>` 可以把占位符用作标签（参见[表单字段文档](/components/form-field/overview#floating-label)）。
 
 ### Disabling the select or individual options
 

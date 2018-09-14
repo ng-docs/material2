@@ -202,7 +202,7 @@ within itself. Once a dialog is closed, it will return focus to the element that
 before the dialog was opened.
 
 当对话框打开时，会把焦点转给它所能知道的第一个可获得焦点的元素。
-为了阻止用户 tab 进背景中的元素，Material 对话框使用[焦点陷阱](https://material.angular.io/cdk/a11y/overview#focustrap)来把焦点困在内部。
+为了阻止用户 tab 进背景中的元素，Material 对话框使用[焦点陷阱](/cdk/a11y/overview#focustrap)来把焦点困在内部。
 当对话框关闭时，它就会把焦点还给打开对话框之前拥有焦点的那个元素。
 
 #### Focus management
