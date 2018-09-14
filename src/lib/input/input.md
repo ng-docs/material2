@@ -163,4 +163,4 @@ supported by the `matInput` directive. If you need to use an unsupported input t
 for it.
 
 当你尝试将输入框的 `type` 属性设置为 `matInput` 指令不支持的值时，将引发此错误。
-如果需要使用不支持的输入类型和 `<mat-form-field>`，请考虑编写[自定义表单控件](/guide/creating-a-custom-form-field-control)。
+如果需要使用不支持的输入类型和 `<mat-form-field>`，请考虑编写[自定义表单字段控件](/guide/creating-a-custom-form-field-control)。

@@ -80,7 +80,7 @@ floats above the form field control. The label for a form field can be specified
 `mat-label` element.
 
 当控件不包含任何文本时，显示在表单字段控件顶部的那个文本标签就叫做浮动标签。
-默认情况下，如果存在文本，则浮动标签将显示在表单控件的上方。
+默认情况下，如果存在文本，则浮动标签将显示在表单字段控件的上方。
 可以通过添加 `mat-label` 元素来为表单字段指定浮动标签。
 
 In the legacy version of the `<mat-form-field>` (one that has no `appearance` attribute or has
@@ -114,7 +114,7 @@ behavior. It can set to `never` to hide the label instead of float it when text 
 the form field control. It can be set to `always` to float the label even when no text is
 present in the form field control. It can also be set to `auto` to restore the default behavior.
 
-`<mat-form-field>` 的 `floatLabel` 属性可以用来修改默认的浮动行为。它可以设置为 `never`，以便当表单控件中有文本时隐藏该标签，而不是浮起它。也可以设置为 `always`，以便当表单控件中没有文本时也仍然浮起该标签。
+`<mat-form-field>` 的 `floatLabel` 属性可以用来修改默认的浮动行为。它可以设置为 `never`，以便当表单字段控件中有文本时隐藏该标签，而不是浮起它。也可以设置为 `always`，以便当表单字段控件中没有文本时也仍然浮起该标签。
 它也可以设置为 `auto` 来恢复默认行为。
 
 <!-- example(form-field-label) -->
@@ -207,7 +207,7 @@ custom form field controls that work with `<mat-form-field>` in the same way. Fo
 information on this see the guide on
 [Creating Custom mat-form-field Controls](https://material.angular.io/guide/creating-a-custom-form-field-control).
 
-除了 Angular Material 提供的表单控件之外，也同样可以创建能和 `<mat-form-field>` 协同工作的自定义表单控件。
+除了 Angular Material 提供的表单字段控件之外，也同样可以创建能和 `<mat-form-field>` 协同工作的自定义表单字段控件。
 欲知详情，参见[创建自定义 mat-form-field 控件](/guide/creating-a-custom-form-field-control)。
 
 ### Theming
@@ -243,12 +243,12 @@ If a floating label is specified, it will be automatically used as the label for
 field control. If no floating label is specified, the user should label the form field control
 themselves using `aria-label`, `aria-labelledby` or `<label for=...>`.
 
-如果指定了浮动标签，它就会自动用作表单控件的标签。如果没有指定浮动标签，用户就应该使用 `aria-label`、`aria-labelledby` 或 `<label for=...>` 来给表单控件提供标签。
+如果指定了浮动标签，它就会自动用作表单字段控件的标签。如果没有指定浮动标签，用户就应该使用 `aria-label`、`aria-labelledby` 或 `<label for=...>` 来给表单字段控件提供标签。
 
 Any errors and hints added to the form field are automatically added to the form field control's
 `aria-describedby` set.
 
-任何添加到表单字段中的错误信息或提示信息都会自动添加到表单控件的 `aria-describedby` 集合中。
+任何添加到表单字段中的错误信息或提示信息都会自动添加到表单字段控件的 `aria-describedby` 集合中。
 
 ### Troubleshooting
 
@@ -263,7 +263,7 @@ included both a `placeholder` property on your form field control and a `<mat-pl
 element. The `<mat-placeholder>` element is deprecated, you should use `placeholder` for
 placeholders and `<mat-label>` for labels.
 
-该错误会在你指定了两个相互冲突的占位符时出现。请确保你没有在表单控件中同时包含 `placeholder` 属性和 `<mat-placeholder>` 元素。
+该错误会在你指定了两个相互冲突的占位符时出现。请确保你没有在表单字段控件中同时包含 `placeholder` 属性和 `<mat-placeholder>` 元素。
 `<mat-placeholder>` 已废弃，请使用 `placeholder` 来指定占位符，使用 `<mat-label>` 来指定标签。
 
 #### Error: A hint was already declared for align="..."
@@ -285,6 +285,6 @@ directive to it and have imported `MatInputModule`. Other components that can ac
 control include `<mat-select>`, `<mat-chip-list>`, and any custom form field controls you've
 created.
 
-该错误会在你没有往表单字段中添加过表单控件时出现。如果你的表单字段包含了原生的 `<input>` 或 `<textarea>` 元素，
+该错误会在你没有往表单字段中添加过表单字段控件时出现。如果你的表单字段包含了原生的 `<input>` 或 `<textarea>` 元素，
 请确保你往它们上添加过 `matInput` 指令，并且导入过 `MatInputModule`。
-可以充当表单控件的其它组件包括 `<mat-select>`、`<mat-chip-list>` 以及你创建的任何自定义表单控件。
+可以充当表单字段控件的其它组件包括 `<mat-select>`、`<mat-chip-list>` 以及你创建的任何自定义表单字段控件。
