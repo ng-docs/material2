@@ -54,7 +54,7 @@ When user clicks on the `mat-checkbox`, the default behavior is toggle `checked`
 of `MAT_CHECKBOX_CLICK_ACTION` to the checkbox.
 
 当用户点击 `mat-checkbox` 时，其默认行为是切换 `checked` 的值并把 `indeterminate` 设置为 `false`。
-该行为可以通过为检查框的 `MAT_CHECKBOX_CLICK_ACTION` 令牌[提供一个新值](https://angular.io/guide/dependency-injection)进行定制。
+该行为可以通过为检查框的 `MAT_CHECKBOX_CLICK_ACTION` 令牌[提供一个新值](https://angular.cn/guide/dependency-injection)进行定制。
 
 ```
 providers: [

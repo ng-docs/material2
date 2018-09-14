@@ -33,7 +33,7 @@ also supports a `compareWith` function. (Additional information about using a cu
 function can be found in the
 [Angular forms documentation](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection)).
 
-`<mat-select>` 也支持所有的表单指令，包括来自 `FormsModule` 的 `NgModel` 和来自 `ReactiveFormsModule` 的 `FormControl`、`FormGroup` 等。像原生的 `<select>` 一样，`<mat-select>` 也支持 `compareWith` 函数。（要了解自定义 `compareWith` 的方法，参见 [Angular 表单文档](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection)。）
+`<mat-select>` 也支持所有的表单指令，包括来自 `FormsModule` 的 `NgModel` 和来自 `ReactiveFormsModule` 的 `FormControl`、`FormGroup` 等。像原生的 `<select>` 一样，`<mat-select>` 也支持 `compareWith` 函数。（要了解自定义 `compareWith` 的方法，参见 [Angular 表单文档](https://angular.cn/api/forms/SelectControlValueAccessor#caveat-option-selection)。）
 
 <!-- example(select-form) -->
 
@@ -261,4 +261,4 @@ This error occurs if you attempt to assign something other than a function to th
 property. For more information on proper usage of `compareWith` see the
 [Angular forms documentation](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection)).
 
-如果你尝试把函数之外的值赋给 `compareWith` 属性，就会出现此错误。要了解如何正确使用 `compareWith`，请参见 [Angular 表单文档](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection)。
+如果你尝试把函数之外的值赋给 `compareWith` 属性，就会出现此错误。要了解如何正确使用 `compareWith`，请参见 [Angular 表单文档](https://angular.cn/api/forms/SelectControlValueAccessor#caveat-option-selection)。
