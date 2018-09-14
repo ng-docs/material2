@@ -16,10 +16,13 @@ You can use either the npm or yarn command-line tool to install packages. Use wh
 你可以使用 npm 或 yarn 命令行工具来安装这些包。请从下面的例子中任选一个适合你项目需求的。
 
 #### NPM
+
+#### NPM 命令
+
 ```bash
 npm install --save @angular/material @angular/cdk @angular/animations
 ```
-#### Yarn
+#### Yarn 命令
 ```bash
 yarn add @angular/material @angular/cdk @angular/animations
 ```
@@ -35,11 +38,17 @@ build should not be considered stable and may break between releases.
 也可以用 master 分支上的最新更改进行快照构建。注意，快照构建不能保证稳定，并且可能在各个发布之间出现破坏性变更。
 
 #### NPM
+
+#### NPM 命令
+
 ```bash
 npm install --save angular/material2-builds angular/cdk-builds angular/animations-builds
 ```
 
 #### Yarn
+
+#### Yarn 命令
+
 ```bash
 yarn add angular/material2-builds angular/cdk-builds angular/animations-builds
 ```
@@ -177,11 +186,17 @@ To install via npm, use the following command:
 要想通过 npm 安装，请使用下列命令：
 
 #### NPM
+
+#### NPM 命令
+
 ```bash
 npm install --save hammerjs
 ```
 
 #### Yarn
+
+#### Yarn 命令
+
 ```bash
 yarn add hammerjs
 ```
