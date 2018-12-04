@@ -118,7 +118,7 @@ the `active` property to determine which tab is currently active. The correspond
 
 By default, the tab contents are eagerly loaded. Eagerly loaded tabs
 will initalize the child components but not inject them into the DOM
-until the tab is activated. 
+until the tab is activated.
 
 默认情况下，选项卡的内容是立即加载的。立即加载的选项卡会初始化其子组件，但在该选项卡激活之前不会把它插入到 DOM 中。
 
@@ -147,6 +147,19 @@ with the `matTabContent` attribute.
   </mat-tab>
 </mat-tab-group>
 ```
+
+### Label alignment
+If you want to align the tab labels in the center or towards the end of the container, you can
+do so using the `[mat-align-tabs]` attribute.
+
+<!-- example(tab-group-align) -->
+
+### Controlling the tab animation
+You can control the duration of the tabs' animation using the `animationDuration` input. If you
+want to disable the animation completely, you can do so by setting the properties to `0ms`. The
+duration can be configured globally using the `MAT_TABS_CONFIG` injection token.
+
+<!-- example(tab-group-animations) -->
 
 ### Accessibility
 

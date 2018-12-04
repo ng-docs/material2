@@ -14,7 +14,6 @@ import {
   OverlayRef,
   PositionStrategy,
   ScrollStrategy,
-  ViewportRuler,
 } from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 import {DOCUMENT} from '@angular/common';
@@ -33,6 +32,7 @@ import {
   Optional,
   ViewContainerRef,
 } from '@angular/core';
+import {ViewportRuler} from '@angular/cdk/scrolling';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {
   _countGroupLabelsBeforeOption,
@@ -87,6 +87,7 @@ export const MAT_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
 
 /**
  * Creates an error to be thrown when attempting to use an autocomplete trigger without a panel.
+ * @docs-private
  */
 export function getMatAutocompleteMissingPanelError(): Error {
   return Error('Attempting to open an undefined instance of `mat-autocomplete`. ' +
@@ -119,6 +120,7 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
   private _portal: TemplatePortal;
   private _componentDestroyed = false;
   private _autocompleteDisabled = false;
+  private _scrollStrategy: () => ScrollStrategy;
 
   /** Old value of the native input. Used to work around issues with the `input` event on IE. */
   private _previousValue: string | number | null;
@@ -192,11 +194,11 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
               private _viewContainerRef: ViewContainerRef,
               private _zone: NgZone,
               private _changeDetectorRef: ChangeDetectorRef,
-              @Inject(MAT_AUTOCOMPLETE_SCROLL_STRATEGY) private _scrollStrategy,
+              @Inject(MAT_AUTOCOMPLETE_SCROLL_STRATEGY) scrollStrategy: any,
               @Optional() private _dir: Directionality,
               @Optional() @Host() private _formField: MatFormField,
               @Optional() @Inject(DOCUMENT) private _document: any,
-              // @breaking-change 7.0.0 Make `_viewportRuler` required.
+              // @breaking-change 8.0.0 Make `_viewportRuler` required.
               private _viewportRuler?: ViewportRuler) {
 
     if (typeof window !== 'undefined') {
@@ -204,6 +206,8 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
         window.addEventListener('blur', this._windowBlurHandler);
       });
     }
+
+    this._scrollStrategy = scrollStrategy;
   }
 
   ngOnDestroy() {
@@ -261,6 +265,16 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
   }
 
   /**
+   * Updates the position of the autocomplete suggestion panel to ensure that it fits all options
+   * within the viewport.
+   */
+  updatePosition(): void {
+    if (this._overlayAttached) {
+      this._overlayRef!.updatePosition();
+    }
+  }
+
+  /**
    * A stream of actions that should close the autocomplete panel, including
    * when an option is selected, on blur, and when TAB is pressed.
    */
@@ -269,7 +283,7 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
       this.optionSelections,
       this.autocomplete._keyManager.tabOut.pipe(filter(() => this._overlayAttached)),
       this._closeKeyEventStream,
-      this._outsideClickStream,
+      this._getOutsideClickStream(),
       this._overlayRef ?
           this._overlayRef.detachments().pipe(filter(() => this._overlayAttached)) :
           observableOf()
@@ -302,16 +316,16 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
   }
 
   /** Stream of clicks outside of the autocomplete panel. */
-  private get _outsideClickStream(): Observable<any> {
+  private _getOutsideClickStream(): Observable<any> {
     if (!this._document) {
       return observableOf(null);
     }
 
     return merge(
-      fromEvent(this._document, 'click'),
-      fromEvent(this._document, 'touchend')
+      fromEvent<MouseEvent>(this._document, 'click'),
+      fromEvent<TouchEvent>(this._document, 'touchend')
     )
-    .pipe(filter((event: MouseEvent | TouchEvent) => {
+    .pipe(filter(event => {
       const clickTarget = event.target as HTMLElement;
       const formField = this._formField ?
           this._formField._elementRef.nativeElement : null;
@@ -354,13 +368,7 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
       event.preventDefault();
     }
 
-    // Close when pressing ESCAPE or ALT + UP_ARROW, based on the a11y guidelines.
-    // See: https://www.w3.org/TR/wai-aria-practices-1.1/#textbox-keyboard-interaction
-    if (this.panelOpen && (keyCode === ESCAPE || (keyCode === UP_ARROW && event.altKey))) {
-      this._resetActiveItem();
-      this._closeKeyEventStream.next();
-      event.stopPropagation();
-    } else if (this.activeOption && keyCode === ENTER && this.panelOpen) {
+    if (this.activeOption && keyCode === ENTER && this.panelOpen) {
       this.activeOption._selectViaInteraction();
       this._resetActiveItem();
       event.preventDefault();
@@ -394,11 +402,11 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
     // filter out all of the extra events, we save the value on focus and between
     // `input` events, and we check whether it changed.
     // See: https://connect.microsoft.com/IE/feedback/details/885747/
-    if (this._previousValue !== value && document.activeElement === event.target) {
+    if (this._previousValue !== value) {
       this._previousValue = value;
       this._onChange(value);
 
-      if (this._canOpen()) {
+      if (this._canOpen() && document.activeElement === event.target) {
         this.openPanel();
       }
     }
@@ -524,6 +532,8 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
     } else {
       this._element.nativeElement.value = inputValue;
     }
+
+    this._previousValue = inputValue;
   }
 
   /**
@@ -562,6 +572,17 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
     if (!this._overlayRef) {
       this._portal = new TemplatePortal(this.autocomplete.template, this._viewContainerRef);
       this._overlayRef = this._overlay.create(this._getOverlayConfig());
+
+      // Use the `keydownEvents` in order to take advantage of
+      // the overlay event targeting provided by the CDK overlay.
+      this._overlayRef.keydownEvents().subscribe(event => {
+        // Close when pressing ESCAPE or ALT + UP_ARROW, based on the a11y guidelines.
+        // See: https://www.w3.org/TR/wai-aria-practices-1.1/#textbox-keyboard-interaction
+        if (event.keyCode === ESCAPE || (event.keyCode === UP_ARROW && event.altKey)) {
+          this._resetActiveItem();
+          this._closeKeyEventStream.next();
+        }
+      });
 
       if (this._viewportRuler) {
         this._viewportSubscription = this._viewportRuler.change().subscribe(() => {
@@ -607,8 +628,23 @@ export class MatAutocompleteTrigger implements ControlValueAccessor, OnDestroy {
       .withFlexibleDimensions(false)
       .withPush(false)
       .withPositions([
-        {originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top'},
-        {originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom'}
+        {
+          originX: 'start',
+          originY: 'bottom',
+          overlayX: 'start',
+          overlayY: 'top'
+        },
+        {
+          originX: 'start',
+          originY: 'top',
+          overlayX: 'start',
+          overlayY: 'bottom',
+
+          // The overlay edge connected to the trigger should have squared corners, while
+          // the opposite end has rounded corners. We apply a CSS class to swap the
+          // border-radius based on the overlay position.
+          panelClass: 'mat-autocomplete-panel-above'
+        }
       ]);
 
     return this._positionStrategy;

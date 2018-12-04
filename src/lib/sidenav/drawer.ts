@@ -11,7 +11,7 @@ import {Directionality} from '@angular/cdk/bidi';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {ESCAPE} from '@angular/cdk/keycodes';
 import {Platform} from '@angular/cdk/platform';
-import {CdkScrollable} from '@angular/cdk/scrolling';
+import {CdkScrollable, ScrollDispatcher} from '@angular/cdk/scrolling';
 import {DOCUMENT} from '@angular/common';
 import {
   AfterContentChecked,
@@ -37,12 +37,23 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {fromEvent, merge, Observable, Subject} from 'rxjs';
-import {debounceTime, filter, map, startWith, take, takeUntil} from 'rxjs/operators';
+import {
+  debounceTime,
+  filter,
+  map,
+  startWith,
+  take,
+  takeUntil,
+  distinctUntilChanged,
+} from 'rxjs/operators';
 import {matDrawerAnimations} from './drawer-animations';
 import {ANIMATION_MODULE_TYPE} from '@angular/platform-browser/animations';
 
 
-/** Throws an exception when two MatDrawer are matching the same position. */
+/**
+ * Throws an exception when two MatDrawer are matching the same position.
+ * @docs-private
+ */
 export function throwMatDuplicatedDrawerError(position: string) {
   throw Error(`A drawer was already declared for 'position="${position}"'`);
 }
@@ -75,10 +86,14 @@ export function MAT_DRAWER_DEFAULT_AUTOSIZE_FACTORY(): boolean {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class MatDrawerContent implements AfterContentInit {
+export class MatDrawerContent extends CdkScrollable implements AfterContentInit {
   constructor(
       private _changeDetectorRef: ChangeDetectorRef,
-      @Inject(forwardRef(() => MatDrawerContainer)) public _container: MatDrawerContainer) {
+      @Inject(forwardRef(() => MatDrawerContainer)) public _container: MatDrawerContainer,
+      elementRef: ElementRef<HTMLElement>,
+      scrollDispatcher: ScrollDispatcher,
+      ngZone: NgZone) {
+    super(elementRef, scrollDispatcher, ngZone);
   }
 
   ngAfterContentInit() {
@@ -96,13 +111,13 @@ export class MatDrawerContent implements AfterContentInit {
   moduleId: module.id,
   selector: 'mat-drawer',
   exportAs: 'matDrawer',
-  template: '<ng-content></ng-content>',
+  templateUrl: 'drawer.html',
   animations: [matDrawerAnimations.transformDrawer],
   host: {
     'class': 'mat-drawer',
     '[@transform]': '_animationState',
-    '(@transform.start)': '_onAnimationStart($event)',
-    '(@transform.done)': '_onAnimationEnd($event)',
+    '(@transform.start)': '_animationStarted.next($event)',
+    '(@transform.done)': '_animationEnd.next($event)',
     // must prevent the browser from aligning text based on value
     '[attr.align]': 'null',
     '[class.mat-drawer-end]': 'position === "end"',
@@ -159,7 +174,10 @@ export class MatDrawer implements AfterContentInit, AfterContentChecked, OnDestr
   private _openedVia: FocusOrigin | null;
 
   /** Emits whenever the drawer has started animating. */
-  _animationStarted = new EventEmitter<AnimationEvent>();
+  _animationStarted = new Subject<AnimationEvent>();
+
+  /** Emits whenever the drawer is done animating. */
+  _animationEnd = new Subject<AnimationEvent>();
 
   /** Current state of the sidenav animation. */
   _animationState: 'open-instant' | 'open' | 'void' = 'void';
@@ -241,12 +259,25 @@ export class MatDrawer implements AfterContentInit, AfterContentChecked, OnDestr
      * and we don't have close disabled.
      */
     this._ngZone.runOutsideAngular(() => {
-        fromEvent(this._elementRef.nativeElement, 'keydown').pipe(
-            filter((event: KeyboardEvent) => event.keyCode === ESCAPE && !this.disableClose)
-        ).subscribe((event) => this._ngZone.run(() => {
+        fromEvent<KeyboardEvent>(this._elementRef.nativeElement, 'keydown').pipe(
+            filter(event => event.keyCode === ESCAPE && !this.disableClose)
+        ).subscribe(event => this._ngZone.run(() => {
             this.close();
             event.stopPropagation();
         }));
+    });
+
+    // We need a Subject with distinctUntilChanged, because the `done` event
+    // fires twice on some browsers. See https://github.com/angular/angular/issues/24084
+    this._animationEnd.pipe(distinctUntilChanged((x, y) => {
+      return x.fromState === y.fromState && x.toState === y.toState;
+    })).subscribe((event: AnimationEvent) => {
+      const {fromState, toState} = event;
+
+      if ((toState.indexOf('open') === 0 && fromState === 'void') ||
+          (toState === 'void' && fromState.indexOf('open') === 0)) {
+        this.openedChange.emit(this._opened);
+      }
     });
   }
 
@@ -307,6 +338,9 @@ export class MatDrawer implements AfterContentInit, AfterContentChecked, OnDestr
     if (this._focusTrap) {
       this._focusTrap.destroy();
     }
+
+    this._animationStarted.complete();
+    this._animationEnd.complete();
   }
 
   /**
@@ -360,19 +394,6 @@ export class MatDrawer implements AfterContentInit, AfterContentChecked, OnDestr
     });
   }
 
-  _onAnimationStart(event: AnimationEvent) {
-    this._animationStarted.emit(event);
-  }
-
-  _onAnimationEnd(event: AnimationEvent) {
-    const {fromState, toState} = event;
-
-    if ((toState.indexOf('open') === 0 && fromState === 'void') ||
-        (toState === 'void' && fromState.indexOf('open') === 0)) {
-      this.openedChange.emit(this._opened);
-    }
-  }
-
   get _width(): number {
     return this._elementRef.nativeElement ? (this._elementRef.nativeElement.offsetWidth || 0) : 0;
   }
@@ -401,6 +422,7 @@ export class MatDrawer implements AfterContentInit, AfterContentChecked, OnDestr
 export class MatDrawerContainer implements AfterContentInit, DoCheck, OnDestroy {
   @ContentChildren(MatDrawer) _drawers: QueryList<MatDrawer>;
   @ContentChild(MatDrawerContent) _content: MatDrawerContent;
+  @ViewChild(MatDrawerContent) _userContent: MatDrawerContent;
 
   /** The drawer child with the `start` position. */
   get start(): MatDrawer | null { return this._start; }
@@ -471,7 +493,9 @@ export class MatDrawerContainer implements AfterContentInit, DoCheck, OnDestroy 
   readonly _contentMarginChanges = new Subject<{left: number|null, right: number|null}>();
 
   /** Reference to the CdkScrollable instance that wraps the scrollable content. */
-  @ViewChild(CdkScrollable) scrollable: CdkScrollable;
+  get scrollable(): CdkScrollable {
+    return this._userContent || this._content;
+  }
 
   constructor(@Optional() private _dir: Directionality,
               private _element: ElementRef<HTMLElement>,
@@ -548,8 +572,8 @@ export class MatDrawerContainer implements AfterContentInit, DoCheck, OnDestroy 
    */
   private _watchDrawerToggle(drawer: MatDrawer): void {
     drawer._animationStarted.pipe(
+      filter((event: AnimationEvent) => event.fromState !== event.toState),
       takeUntil(this._drawers.changes),
-      filter((event: AnimationEvent) => event.fromState !== event.toState)
     )
     .subscribe((event: AnimationEvent) => {
       // Set the transition class on the container so that the animations occur. This should not

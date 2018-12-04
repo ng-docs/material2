@@ -7,7 +7,6 @@
  */
 
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {CdkColumnDef} from '@angular/cdk/table';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -16,9 +15,10 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  ViewEncapsulation
+  ViewEncapsulation,
+  Inject,
 } from '@angular/core';
-import {CanDisable, mixinDisabled} from '@angular/material/core';
+import {CanDisable, CanDisableCtor, mixinDisabled} from '@angular/material/core';
 import {merge, Subscription} from 'rxjs';
 import {MatSort, MatSortable} from './sort';
 import {matSortAnimations} from './sort-animations';
@@ -30,7 +30,8 @@ import {MatSortHeaderIntl} from './sort-header-intl';
 // Boilerplate for applying mixins to the sort header.
 /** @docs-private */
 export class MatSortHeaderBase {}
-export const _MatSortHeaderMixinBase = mixinDisabled(MatSortHeaderBase);
+export const _MatSortHeaderMixinBase: CanDisableCtor & typeof MatSortHeaderBase =
+    mixinDisabled(MatSortHeaderBase);
 
 /**
  * Valid positions for the arrow to be in for its opacity and translation. If the state is a
@@ -50,6 +51,11 @@ export type ArrowViewState = SortDirection | 'hint' | 'active';
 export interface ArrowViewStateTransition {
   fromState?: ArrowViewState;
   toState: ArrowViewState;
+}
+
+/** Column definition associated with a `MatSortHeader`. */
+interface MatSortHeaderColumnDef {
+  name: string;
 }
 
 /**
@@ -133,8 +139,12 @@ export class MatSortHeader extends _MatSortHeaderMixinBase
   constructor(public _intl: MatSortHeaderIntl,
               changeDetectorRef: ChangeDetectorRef,
               @Optional() public _sort: MatSort,
-              @Optional() public _cdkColumnDef: CdkColumnDef) {
-
+              @Inject('MAT_SORT_HEADER_COLUMN_DEF') @Optional()
+                  public _columnDef: MatSortHeaderColumnDef) {
+    // Note that we use a string token for the `_columnDef`, because the value is provided both by
+    // `material/table` and `cdk/table` and we can't have the CDK depending on Material,
+    // and we want to avoid having the sort header depending on the CDK table because
+    // of this single reference.
     super();
 
     if (!_sort) {
@@ -158,8 +168,8 @@ export class MatSortHeader extends _MatSortHeaderMixinBase
   }
 
   ngOnInit() {
-    if (!this.id && this._cdkColumnDef) {
-      this.id = this._cdkColumnDef.name;
+    if (!this.id && this._columnDef) {
+      this.id = this._columnDef.name;
     }
 
     // Initialize the direction of the arrow and set the view state to be immediately that state.

@@ -1,9 +1,9 @@
-
 .mat-expansion-panel-header {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 0 24px;
+  border-radius: inherit;
 
   &:focus,
   &:hover {
@@ -11,7 +11,7 @@
   }
 
   &.mat-expanded:focus,
-  &.mat-expanded:hover, {
+  &.mat-expanded:hover {
     background: inherit;
   }
 

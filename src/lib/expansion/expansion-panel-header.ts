@@ -7,7 +7,7 @@
  */
 
 import {FocusMonitor, FocusableOption, FocusOrigin} from '@angular/cdk/a11y';
-import {ENTER, SPACE} from '@angular/cdk/keycodes';
+import {ENTER, SPACE, hasModifierKey} from '@angular/cdk/keycodes';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -86,9 +86,9 @@ export class MatExpansionPanelHeader implements OnDestroy, FocusableOption {
     // Avoids focus being lost if the panel contained the focused element and was closed.
     panel.closed
       .pipe(filter(() => panel._containsFocus()))
-      .subscribe(() => _focusMonitor.focusVia(_element.nativeElement, 'program'));
+      .subscribe(() => _focusMonitor.focusVia(_element, 'program'));
 
-    _focusMonitor.monitor(_element.nativeElement).subscribe(origin => {
+    _focusMonitor.monitor(_element).subscribe(origin => {
       if (origin && panel.accordion) {
         panel.accordion._handleHeaderFocus(this);
       }
@@ -140,8 +140,11 @@ export class MatExpansionPanelHeader implements OnDestroy, FocusableOption {
       // Toggle for space and enter keys.
       case SPACE:
       case ENTER:
-        event.preventDefault();
-        this._toggle();
+        if (!hasModifierKey(event)) {
+          event.preventDefault();
+          this._toggle();
+        }
+
         break;
       default:
         if (this.panel.accordion) {
@@ -158,12 +161,12 @@ export class MatExpansionPanelHeader implements OnDestroy, FocusableOption {
    * @docs-private
    */
   focus(origin: FocusOrigin = 'program') {
-    this._focusMonitor.focusVia(this._element.nativeElement, origin);
+    this._focusMonitor.focusVia(this._element, origin);
   }
 
   ngOnDestroy() {
     this._parentChangeSubscription.unsubscribe();
-    this._focusMonitor.stopMonitoring(this._element.nativeElement);
+    this._focusMonitor.stopMonitoring(this._element);
   }
 }
 

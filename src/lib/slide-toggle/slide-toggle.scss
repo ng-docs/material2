@@ -1,6 +1,5 @@
 @import '../core/style/variables';
 @import '../core/ripple/ripple';
-@import '../core/style/elevation';
 @import '../core/style/vendor-prefixes';
 @import '../core/style/list-common';
 @import '../../cdk/a11y/a11y';
@@ -9,7 +8,7 @@ $mat-slide-toggle-thumb-size: 20px !default;
 $mat-slide-toggle-bar-border-radius: 8px !default;
 $mat-slide-toggle-height: 24px !default;
 $mat-slide-toggle-spacing: 8px !default;
-$mat-slide-toggle-ripple-radius: 23px !default;
+$mat-slide-toggle-ripple-radius: 20px !default;
 $mat-slide-toggle-bar-width: 36px !default;
 $mat-slide-toggle-bar-height: 14px !default;
 $mat-slide-toggle-bar-track-width: $mat-slide-toggle-bar-width - $mat-slide-toggle-thumb-size;
@@ -41,6 +40,9 @@ $mat-slide-toggle-bar-track-width: $mat-slide-toggle-bar-width - $mat-slide-togg
   }
 
   &.mat-disabled {
+    // The value is based on MDC.
+    opacity: 0.38;
+
     .mat-slide-toggle-label, .mat-slide-toggle-thumb-container {
       cursor: default;
     }
@@ -132,8 +134,6 @@ $mat-slide-toggle-bar-track-width: $mat-slide-toggle-bar-width - $mat-slide-togg
   height: $mat-slide-toggle-thumb-size;
   width: $mat-slide-toggle-thumb-size;
   border-radius: 50%;
-
-  @include mat-elevation(1);
 }
 
 // Horizontal bar for the slide-toggle.
@@ -179,7 +179,9 @@ $mat-slide-toggle-bar-track-width: $mat-slide-toggle-bar-width - $mat-slide-togg
 }
 
 // Ripple positioning for the slide-toggle. Moves the ripple container into the center of the thumb.
-.mat-slide-toggle-ripple {
+// Increase specificity because ripple styles are part of the `mat-core` mixin and can
+// potentially overwrite the absolute position of the container.
+.mat-slide-toggle .mat-slide-toggle-ripple {
   position: absolute;
   top: calc(50% - #{$mat-slide-toggle-ripple-radius});
   left: calc(50% - #{$mat-slide-toggle-ripple-radius});
@@ -187,6 +189,44 @@ $mat-slide-toggle-bar-track-width: $mat-slide-toggle-bar-width - $mat-slide-togg
   width: $mat-slide-toggle-ripple-radius * 2;
   z-index: 1;
   pointer-events: none;
+
+  .mat-ripple-element:not(.mat-slide-toggle-persistent-ripple) {
+    // Although the specs describe an opacity of 16% for ripples if the slide-toggle is being
+    // pressed, we need to reduce the opacity a bit because besides the transient ripples,
+    // the persistent ripple will still show up and blend with the transient ripple.
+    opacity: 0.12;
+  }
+}
+
+.mat-slide-toggle-persistent-ripple {
+  width: 100%;
+  height: 100%;
+  transform: none;
+
+  .mat-slide-toggle-bar:hover & {
+    opacity: 0.04;
+  }
+
+  .mat-slide-toggle:not(.mat-disabled).cdk-focused & {
+    opacity: 0.12;
+  }
+
+  // We do this here, rather than having a `:not(.mat-slide-toggle-disabled)`
+  // above in the `:hover`, because the `:not` will bump the specificity
+  // a lot and will cause it to overide the focus styles.
+  &, .mat-slide-toggle.mat-disabled .mat-slide-toggle-bar:hover & {
+    opacity: 0;
+  }
+
+  // Hover styles will be displayed after tapping on touch devices.
+  // Disable the hover styling if the user's device doesn't support hovering.
+  @media (hover: none) {
+    // Note that we only negate the `:hover` rather than setting it to always be `display: none`,
+    // in order to maintain the focus indication for hybrid touch + keyboard devices.
+    .mat-slide-toggle-bar:hover & {
+      display: none;
+    }
+  }
 }
 
 /** Custom styling to make the slide-toggle usable in high contrast mode. */
@@ -203,6 +243,14 @@ $mat-slide-toggle-bar-track-width: $mat-slide-toggle-bar-width - $mat-slide-togg
 
   .mat-slide-toggle-bar {
     background: #fff;
+
+    // As a focus indication in high contrast mode, we add a dotted outline to the slide-toggle
+    // bar. Since the bar element does not have any padding, we need to specify an outline offset
+    // because otherwise the opaque thumb element will hide the outline.
+    .mat-slide-toggle.cdk-keyboard-focused & {
+      outline: 1px dotted;
+      outline-offset: ($mat-slide-toggle-height - $mat-slide-toggle-bar-height) / 2;
+    }
   }
 }
 

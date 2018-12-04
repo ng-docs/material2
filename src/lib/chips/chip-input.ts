@@ -7,9 +7,10 @@
  */
 
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {Directive, ElementRef, EventEmitter, Input, Output, Inject, OnChanges} from '@angular/core';
-import {MatChipList} from './chip-list';
+import {Directive, ElementRef, EventEmitter, Inject, Input, OnChanges, Output} from '@angular/core';
 import {MAT_CHIPS_DEFAULT_OPTIONS, MatChipsDefaultOptions} from './chip-default-options';
+import {MatChipList} from './chip-list';
+import {MatChipTextControl} from './chip-text-control';
 
 
 /** Represents an input event on a `matChipInput`. */
@@ -40,9 +41,10 @@ let nextUniqueId = 0;
     '[id]': 'id',
     '[attr.disabled]': 'disabled || null',
     '[attr.placeholder]': 'placeholder || null',
+    '[attr.aria-invalid]': '_chipList && _chipList.ngControl ? _chipList.ngControl.invalid : null',
   }
 })
-export class MatChipInput implements OnChanges {
+export class MatChipInput implements MatChipTextControl, OnChanges {
   /** Whether the control is focused. */
   focused: boolean = false;
   _chipList: MatChipList;
@@ -69,9 +71,8 @@ export class MatChipInput implements OnChanges {
    *
    * Defaults to `[ENTER]`.
    */
-  // TODO(tinayuangao): Support Set here
   @Input('matChipInputSeparatorKeyCodes')
-  separatorKeyCodes: number[] = this._defaultOptions.separatorKeyCodes;
+  separatorKeyCodes: number[] | Set<number> = this._defaultOptions.separatorKeyCodes;
 
   /** Emitted when a chip is to be added. */
   @Output('matChipInputTokenEnd')
@@ -133,7 +134,7 @@ export class MatChipInput implements OnChanges {
     if (!this._inputElement.value && !!event) {
       this._chipList._keydown(event);
     }
-    if (!event || this.separatorKeyCodes.indexOf(event.keyCode) > -1) {
+    if (!event || this._isSeparatorKey(event.keyCode)) {
       this.chipEnd.emit({ input: this._inputElement, value: this._inputElement.value });
 
       if (event) {
@@ -148,5 +149,13 @@ export class MatChipInput implements OnChanges {
   }
 
   /** Focuses the input. */
-  focus(): void { this._inputElement.focus(); }
+  focus(): void {
+    this._inputElement.focus();
+  }
+
+  /** Checks whether a keycode is one of the configured separators. */
+  private _isSeparatorKey(keyCode: number) {
+    const separators = this.separatorKeyCodes;
+    return Array.isArray(separators) ? separators.indexOf(keyCode) > -1 : separators.has(keyCode);
+  }
 }

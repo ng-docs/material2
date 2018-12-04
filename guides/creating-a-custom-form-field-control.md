@@ -37,7 +37,7 @@ class MyTel {
 }
 
 @Component({
-  selector: 'my-tel-input',
+  selector: 'example-tel-input',
   template: `
     <div [formGroup]="parts">
       <input class="area" formControlName="area" size="3">
@@ -168,7 +168,7 @@ element and just generate a unique ID for it.
 ```ts
 static nextId = 0;
 
-@HostBinding() id = `my-tel-input-${MyTelInput.nextId++}`;
+@HostBinding() id = `example-tel-input-${MyTelInput.nextId++}`;
 ```
 
 #### `placeholder`
@@ -196,7 +196,9 @@ private _placeholder: string;
 
 #### `ngControl`
 
-This property allows the form field control to specify the `@angular/forms` control that is bound to this component. Since we haven't set up our component to act as a `ControlValueAccessor`, we'll just set this to `null` in our component.
+This property allows the form field control to specify the `@angular/forms` control that is bound
+to this component. Since we haven't set up our component to act as a `ControlValueAccessor`, we'll
+just set this to `null` in our component.
 
 该属性能为表单字段控件指定一个 `@angular/forms` 中的表单控件，以绑定到本控件。由于我们还没有把本组件实现为 `ControlValueAccessor`，所以我们先把它设置为 `null`。
 
@@ -204,11 +206,14 @@ This property allows the form field control to specify the `@angular/forms` cont
 ngControl: NgControl = null;
 ```
 
-It is likely you will want to implement `ControlValueAccessor` so that your component can work with `formControl` and `ngModel`. If you do implement `ControlValueAccessor` you will need to get a reference to the `NgControl` associated with your control and make it publicly available.
+It is likely you will want to implement `ControlValueAccessor` so that your component can work with
+`formControl` and `ngModel`. If you do implement `ControlValueAccessor` you will need to get a
+reference to the `NgControl` associated with your control and make it publicly available.
 
 看样子你还要实现 `ControlValueAccessor`，以便你的组件可以跟 `formControl` 和 `ngModel` 协同工作。要想实现 `ControlValueAccessor`，你就要获得一个关联到此控件的 `NgControl`，并把它公开。
 
-The easy way is to add it as a public property to your constructor and let dependency injection handle it:
+The easy way is to add it as a public property to your constructor and let dependency injection
+handle it:
 
 最简单的方式是把它添加为构造函数中的一个公共属性，并交给依赖注入体系来处理它：
 
@@ -220,7 +225,9 @@ constructor(
 ) { }
 ```
 
-Note that if your component implements `ControlValueAccessor`, it may already be set up to provide `NG_VALUE_ACCESSOR` (in the `providers` part of the component's decorator, or possibly in a module declaration). If so you may get a *cannot instantiate cyclic dependency* error.
+Note that if your component implements `ControlValueAccessor`, it may already be set up to provide
+`NG_VALUE_ACCESSOR` (in the `providers` part of the component's decorator, or possibly in a module
+declaration). If so you may get a *cannot instantiate cyclic dependency* error.
 
 注意，如果你的组件实现了 `ControlValueAccessor`，那么它可能已经作为 `NG_VALUE_ACCESSOR` 提供出去了（在组件装饰器的 `providers` 部分，或模块声明中）。如果是这样，可能会导致*cannot instantiate cyclic dependency（不能实例化循环依赖）*错误。
 
@@ -229,14 +236,32 @@ To resolve this, remove the `NG_VALUE_ACCESSOR` provider and instead set the val
 要解决这个问题，请移除 `NG_VALUE_ACCESSOR` 提供商，改为直接设置 Value Accessor 的值：
 
 ```ts
-constructor(
+@Component({
   ...,
-  @Optional() @Self() public ngControl: NgControl,
-  ...,
-) {
-  // Setting the value accessor directly (instead of using
-  // the providers) to avoid running into a circular import.
-  if (this.ngControl != null) { this.ngControl.valueAccessor = this; }
+  providers: [
+    ...,
+    // Remove this.
+    // {
+    //   provide: NG_VALUE_ACCESSOR,
+    //   useExisting: forwardRef(() => MatFormFieldControl),
+    //   multi: true,
+    // },
+  ],
+})
+class MyTelInput implements MatFormFieldControl<MyTel> {
+  constructor(
+    ...,
+    @Optional() @Self() public ngControl: NgControl,
+    ...,
+  ) {
+
+    // Replace the provider from above with this.
+    if (this.ngControl != null) {
+      // Setting the value accessor directly (instead of using
+      // the providers) to avoid running into a circular import.
+      this.ngControl.valueAccessor = this;
+    }
+  }
 }
 ```
 
@@ -378,15 +403,15 @@ errorState = false;
 This property allows us to specify a unique string for the type of control in form field. The
 `<mat-form-field>` will add an additional class based on this type that can be used to easily apply
 special styles to a `<mat-form-field>` that contains a specific type of control. In this example
-we'll use `my-tel-input` as our control type which will result in the form field adding the class
-`mat-form-field-my-tel-input`.
+we'll use `example-tel-input` as our control type which will result in the form field adding the
+class `mat-form-field-example-tel-input`.
 
 该属性可以让我们指定一个具有唯一性的字符串，以便在表单字段中表示该控件的类型。
 `<mat-form-field>` 将会据此添加一个附加类，可用于为包含指定控件类型的 `<mat-form-field>` 指定一些特殊样式。
 在这个例子中，我们要用 `my-tel-input` 作为我们的控件类型，这将给包含它的表单字段加上 `mat-form-field-my-tel-input` 类。
 
 ```ts
-controlType = 'my-tel-input';
+controlType = 'example-tel-input';
 ```
 
 #### `setDescribedByIds(ids: string[])`
@@ -435,7 +460,7 @@ do is place it inside of a `<mat-form-field>`
 
 ```html
 <mat-form-field>
-  <my-tel-input></my-tel-input>
+  <example-tel-input></example-tel-input>
 </mat-form-field>
 ```
 
@@ -447,7 +472,7 @@ the error state).
 
 ```html
 <mat-form-field>
-  <my-tel-input placeholder="Phone number" required></my-tel-input>
+  <example-tel-input placeholder="Phone number" required></example-tel-input>
   <mat-icon matPrefix>phone</mat-icon>
   <mat-hint>Include area code</mat-hint>
 </mat-form-field>

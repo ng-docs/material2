@@ -25,14 +25,15 @@ export class NestedTreeControl<T> extends BaseTreeControl<T> {
    */
   expandAll(): void {
     this.expansionModel.clear();
-    const allNodes = this.dataNodes.reduce((accumulator, dataNode) =>
+    const allNodes = this.dataNodes.reduce((accumulator: T[], dataNode) =>
         [...accumulator, ...this.getDescendants(dataNode), dataNode], []);
     this.expansionModel.select(...allNodes);
   }
 
   /** Gets a list of descendant dataNodes of a subtree rooted at given data node recursively. */
   getDescendants(dataNode: T): T[] {
-    const descendants = [];
+    const descendants: T[] = [];
+
     this._getDescendants(descendants, dataNode);
     // Remove the node itself
     return descendants.splice(1);

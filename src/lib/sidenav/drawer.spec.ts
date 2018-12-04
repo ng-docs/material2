@@ -16,6 +16,7 @@ import {A11yModule} from '@angular/cdk/a11y';
 import {PlatformModule} from '@angular/cdk/platform';
 import {ESCAPE} from '@angular/cdk/keycodes';
 import {dispatchKeyboardEvent} from '@angular/cdk/testing';
+import {CdkScrollable} from '@angular/cdk/scrolling';
 
 
 describe('MatDrawer', () => {
@@ -98,9 +99,10 @@ describe('MatDrawer', () => {
     it('should resolve the open method promise with the new state of the drawer', fakeAsync(() => {
       const fixture = TestBed.createComponent(BasicTestApp);
       fixture.detectChanges();
-      const drawer = fixture.debugElement.query(By.directive(MatDrawer));
+      const drawer: MatDrawer =
+          fixture.debugElement.query(By.directive(MatDrawer)).componentInstance;
 
-      drawer.componentInstance.open().then(result => expect(result).toBe('open'));
+      drawer.open().then(result => expect(result).toBe('open'));
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
@@ -110,13 +112,14 @@ describe('MatDrawer', () => {
       const fixture = TestBed.createComponent(BasicTestApp);
       fixture.detectChanges();
       const drawer = fixture.debugElement.query(By.directive(MatDrawer));
+      const drawerInstance: MatDrawer = drawer.componentInstance;
 
-      drawer.componentInstance.open();
+      drawerInstance.open();
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
 
-      drawer.componentInstance.close().then(result => expect(result).toBe('close'));
+      drawerInstance.close().then(result => expect(result).toBe('close'));
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
@@ -497,6 +500,7 @@ describe('MatDrawerContainer', () => {
         DrawerContainerStateChangesTestApp,
         AutosizeDrawer,
         BasicTestApp,
+        DrawerContainerWithContent,
       ],
     });
 
@@ -719,6 +723,27 @@ describe('MatDrawerContainer', () => {
       expect(fixture.componentInstance.drawer.opened).toBe(false);
     }));
 
+    it('should expose a scrollable when the consumer has not specified drawer content',
+      fakeAsync(() => {
+        const fixture = TestBed.createComponent(DrawerContainerTwoDrawerTestApp);
+
+        fixture.detectChanges();
+
+        expect(fixture.componentInstance.drawerContainer.scrollable instanceof CdkScrollable)
+            .toBe(true);
+      }));
+
+    it('should expose a scrollable when the consumer has specified drawer content',
+      fakeAsync(() => {
+        const fixture = TestBed.createComponent(DrawerContainerWithContent);
+
+        fixture.detectChanges();
+
+        expect(fixture.componentInstance.drawerContainer.scrollable instanceof CdkScrollable)
+            .toBe(true);
+      }));
+
+
 });
 
 
@@ -900,4 +925,17 @@ class DrawerContainerStateChangesTestApp {
 class AutosizeDrawer {
   @ViewChild(MatDrawer) drawer: MatDrawer;
   fillerWidth = 0;
+}
+
+
+@Component({
+  template: `
+    <mat-drawer-container>
+      <mat-drawer>Drawer</mat-drawer>
+      <mat-drawer-content>Content</mat-drawer-content>
+    </mat-drawer-container>
+  `,
+})
+class DrawerContainerWithContent {
+  @ViewChild(MatDrawerContainer) drawerContainer: MatDrawerContainer;
 }

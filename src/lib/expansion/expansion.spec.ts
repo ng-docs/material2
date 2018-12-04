@@ -4,15 +4,15 @@ import {By} from '@angular/platform-browser';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatExpansionModule, MatExpansionPanel} from './index';
 import {SPACE, ENTER} from '@angular/cdk/keycodes';
-import {dispatchKeyboardEvent} from '@angular/cdk/testing';
+import {dispatchKeyboardEvent, createKeyboardEvent, dispatchEvent} from '@angular/cdk/testing';
 
 
 describe('MatExpansionPanel', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        MatExpansionModule,
         NoopAnimationsModule,
-        MatExpansionModule
       ],
       declarations: [
         PanelWithContent,
@@ -28,24 +28,22 @@ describe('MatExpansionPanel', () => {
 
   it('should expand and collapse the panel', fakeAsync(() => {
     const fixture = TestBed.createComponent(PanelWithContent);
-    const contentEl = fixture.nativeElement.querySelector('.mat-expansion-panel-content');
     const headerEl = fixture.nativeElement.querySelector('.mat-expansion-panel-header');
     fixture.detectChanges();
 
     expect(headerEl.classList).not.toContain('mat-expanded');
-    expect(contentEl.classList).not.toContain('mat-expanded');
 
     fixture.componentInstance.expanded = true;
     fixture.detectChanges();
     flush();
 
     expect(headerEl.classList).toContain('mat-expanded');
-    expect(contentEl.classList).toContain('mat-expanded');
   }));
 
   it('should be able to render panel content lazily', fakeAsync(() => {
-    let fixture = TestBed.createComponent(LazyPanelWithContent);
-    let content = fixture.debugElement.query(By.css('.mat-expansion-panel-content')).nativeElement;
+    const fixture = TestBed.createComponent(LazyPanelWithContent);
+    const content = fixture.debugElement.query(
+      By.css('.mat-expansion-panel-content')).nativeElement;
     fixture.detectChanges();
 
     expect(content.textContent.trim()).toBe('', 'Expected content element to be empty.');
@@ -58,8 +56,9 @@ describe('MatExpansionPanel', () => {
   }));
 
   it('should render the content for a lazy-loaded panel that is opened on init', fakeAsync(() => {
-    let fixture = TestBed.createComponent(LazyPanelOpenOnLoad);
-    let content = fixture.debugElement.query(By.css('.mat-expansion-panel-content')).nativeElement;
+    const fixture = TestBed.createComponent(LazyPanelOpenOnLoad);
+    const content = fixture.debugElement.query(
+      By.css('.mat-expansion-panel-content')).nativeElement;
     fixture.detectChanges();
 
     expect(content.textContent.trim())
@@ -140,6 +139,24 @@ describe('MatExpansionPanel', () => {
     expect(event.defaultPrevented).toBe(true);
   });
 
+  it('should not toggle if a modifier key is pressed', () => {
+    const fixture = TestBed.createComponent(PanelWithContent);
+    const headerEl = fixture.nativeElement.querySelector('.mat-expansion-panel-header');
+
+    spyOn(fixture.componentInstance.panel, 'toggle');
+
+    ['altKey', 'metaKey', 'shiftKey', 'ctrlKey'].forEach(modifier => {
+      const event = createKeyboardEvent('keydown', ENTER);
+      Object.defineProperty(event, modifier, {get: () => true});
+
+      dispatchEvent(headerEl, event);
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.panel.toggle).not.toHaveBeenCalled();
+      expect(event.defaultPrevented).toBe(false);
+    });
+  });
+
   it('should not be able to focus content while closed', fakeAsync(() => {
     const fixture = TestBed.createComponent(PanelWithContent);
     fixture.componentInstance.expanded = true;
@@ -180,10 +197,10 @@ describe('MatExpansionPanel', () => {
   }));
 
   it('should not override the panel margin if it is not inside an accordion', fakeAsync(() => {
-    let fixture = TestBed.createComponent(PanelWithCustomMargin);
+    const fixture = TestBed.createComponent(PanelWithCustomMargin);
     fixture.detectChanges();
 
-    let panel = fixture.debugElement.query(By.css('mat-expansion-panel'));
+    const panel = fixture.debugElement.query(By.css('mat-expansion-panel'));
     let styles = getComputedStyle(panel.nativeElement);
 
     expect(panel.componentInstance._hasSpacing()).toBe(false);
@@ -240,7 +257,7 @@ describe('MatExpansionPanel', () => {
     }));
 
   it('should make sure accordion item runs ngOnDestroy when expansion panel is destroyed', () => {
-    let fixture = TestBed.createComponent(PanelWithContentInNgIf);
+    const fixture = TestBed.createComponent(PanelWithContentInNgIf);
     fixture.detectChanges();
     let destroyedOk = false;
     fixture.componentInstance.panel.destroyed.subscribe(() => destroyedOk = true);
@@ -265,22 +282,27 @@ describe('MatExpansionPanel', () => {
     expect(fixture.componentInstance.expanded).toBe(false);
   });
 
-  it('should not set the mat-expanded class until the open animation is done', fakeAsync(() => {
-    const fixture = TestBed.createComponent(PanelWithContent);
-    const contentEl = fixture.nativeElement.querySelector('.mat-expansion-panel-content');
 
+
+  it('should emit events for body expanding and collapsing animations', fakeAsync(() => {
+    const fixture = TestBed.createComponent(PanelWithContent);
     fixture.detectChanges();
-    expect(contentEl.classList).not.toContain('mat-expanded',
-        'Expected class not to be there on init');
+    let afterExpand = 0;
+    let afterCollapse = 0;
+    fixture.componentInstance.panel.afterExpand.subscribe(() => afterExpand++);
+    fixture.componentInstance.panel.afterCollapse.subscribe(() => afterCollapse++);
 
     fixture.componentInstance.expanded = true;
     fixture.detectChanges();
-    expect(contentEl.classList).not.toContain('mat-expanded',
-        'Expected class not to be added immediately after becoming expanded');
-
     flush();
-    expect(contentEl.classList).toContain('mat-expanded',
-        'Expected class to be added after the animation has finished');
+    expect(afterExpand).toBe(1);
+    expect(afterCollapse).toBe(0);
+
+    fixture.componentInstance.expanded = false;
+    fixture.detectChanges();
+    flush();
+    expect(afterExpand).toBe(1);
+    expect(afterCollapse).toBe(1);
   }));
 
   describe('disabled state', () => {
@@ -392,7 +414,7 @@ class PanelWithContentInNgIf {
   </mat-expansion-panel>`
 })
 class PanelWithCustomMargin {
-  expanded: boolean = false;
+  expanded = false;
 }
 
 @Component({

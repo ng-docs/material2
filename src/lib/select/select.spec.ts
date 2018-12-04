@@ -293,6 +293,29 @@ describe('MatSelect', () => {
               'Expected value from second option to have been set on the model.');
         }));
 
+        it('should select first/last options via the HOME/END keys on a closed select',
+          fakeAsync(() => {
+            const formControl = fixture.componentInstance.control;
+            const firstOption = fixture.componentInstance.options.first;
+            const lastOption = fixture.componentInstance.options.last;
+
+            expect(formControl.value).toBeFalsy('Expected no initial value.');
+
+            const endEvent = dispatchKeyboardEvent(select, 'keydown', END);
+
+            expect(endEvent.defaultPrevented).toBe(true);
+            expect(lastOption.selected).toBe(true, 'Expected last option to be selected.');
+            expect(formControl.value).toBe(lastOption.value,
+                'Expected value from last option to have been set on the model.');
+
+            const homeEvent = dispatchKeyboardEvent(select, 'keydown', HOME);
+
+            expect(homeEvent.defaultPrevented).toBe(true);
+            expect(firstOption.selected).toBe(true, 'Expected first option to be selected.');
+            expect(formControl.value).toBe(firstOption.value,
+                'Expected value from first option to have been set on the model.');
+          }));
+
         it('should resume focus from selected item after selecting via click', fakeAsync(() => {
           const formControl = fixture.componentInstance.control;
           const options = fixture.componentInstance.options.toArray();
@@ -645,6 +668,21 @@ describe('MatSelect', () => {
           const event = dispatchKeyboardEvent(select, 'keydown', SPACE);
           expect(event.defaultPrevented).toBe(true);
         }));
+
+        it('should prevent the default action when pressing enter', fakeAsync(() => {
+          const event = dispatchKeyboardEvent(select, 'keydown', ENTER);
+          expect(event.defaultPrevented).toBe(true);
+        }));
+
+        it('should not prevent the default actions on selection keys when pressing a modifier',
+          fakeAsync(() => {
+            [ENTER, SPACE].forEach(key => {
+              const event = createKeyboardEvent('keydown', key);
+              Object.defineProperty(event, 'shiftKey', {get: () => true});
+              expect(event.defaultPrevented).toBe(false);
+            });
+
+          }));
 
         it('should consider the selection a result of a user action when closed', fakeAsync(() => {
           const option = fixture.componentInstance.options.first;
@@ -1042,26 +1080,6 @@ describe('MatSelect', () => {
 
         expect(panel.classList).toContain('custom-one');
         expect(panel.classList).toContain('custom-two');
-      }));
-
-      it('should prevent the default action when pressing SPACE on an option', fakeAsync(() => {
-        trigger.click();
-        fixture.detectChanges();
-
-        const option = overlayContainerElement.querySelector('mat-option')!;
-        const event = dispatchKeyboardEvent(option, 'keydown', SPACE);
-
-        expect(event.defaultPrevented).toBe(true);
-      }));
-
-      it('should prevent the default action when pressing ENTER on an option', fakeAsync(() => {
-        trigger.click();
-        fixture.detectChanges();
-
-        const option = overlayContainerElement.querySelector('mat-option')!;
-        const event = dispatchKeyboardEvent(option, 'keydown', ENTER);
-
-        expect(event.defaultPrevented).toBe(true);
       }));
 
       it('should update disableRipple properly on each option', fakeAsync(() => {
@@ -1672,14 +1690,11 @@ describe('MatSelect', () => {
 
     describe('animations', () => {
       let fixture: ComponentFixture<BasicSelect>;
-      let trigger: HTMLElement;
       let formField: HTMLElement;
 
       beforeEach(fakeAsync(() => {
         fixture = TestBed.createComponent(BasicSelect);
         fixture.detectChanges();
-
-        trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
         formField = fixture.debugElement.query(By.css('.mat-form-field')).nativeElement;
       }));
 
@@ -1702,19 +1717,6 @@ describe('MatSelect', () => {
             'Expected placeholder to animate back down to normal position.');
       }));
 
-      it('should add a class to the panel when the menu is done animating', fakeAsync(() => {
-        trigger.click();
-        fixture.detectChanges();
-
-        const panel = overlayContainerElement.querySelector('.mat-select-panel')!;
-
-        expect(panel.classList).not.toContain('mat-select-panel-done-animating');
-
-        flush();
-        fixture.detectChanges();
-
-        expect(panel.classList).toContain('mat-select-panel-done-animating');
-      }));
     });
 
     describe('keyboard scrolling', () => {
@@ -2919,7 +2921,7 @@ describe('MatSelect', () => {
       const overlayTop = overlayPane.getBoundingClientRect().top;
       const options = overlayPane.querySelectorAll('mat-option');
       const optionTop = options[index].getBoundingClientRect().top;
-      const triggerFontSize = parseInt(window.getComputedStyle(trigger)['font-size']);
+      const triggerFontSize = parseInt(window.getComputedStyle(trigger).fontSize || '0');
       const triggerLineHeightEm = 1.125;
 
       // Extra trigger height beyond the font size caused by the fact that the line-height is
@@ -3354,7 +3356,7 @@ describe('MatSelect', () => {
       // both Chrome and Firefox.
       function setScrollTop(num: number) {
         document.body.scrollTop = num;
-        document.documentElement.scrollTop = num;
+        document.documentElement!.scrollTop = num;
       }
 
       beforeEach(fakeAsync(() => {
@@ -3585,7 +3587,7 @@ describe('MatSelect', () => {
 
         // 44px accounts for the checkbox size, margin and the panel's padding.
         expect(Math.floor(firstOptionLeft))
-            .toEqual(Math.floor(triggerLeft - 44),
+            .toEqual(Math.floor(triggerLeft - 40),
                 `Expected trigger label to align along x-axis, accounting for the checkbox.`);
       }));
 
@@ -3601,7 +3603,7 @@ describe('MatSelect', () => {
 
         // 44px accounts for the checkbox size, margin and the panel's padding.
         expect(Math.floor(firstOptionRight))
-            .toEqual(Math.floor(triggerRight + 44),
+            .toEqual(Math.floor(triggerRight + 40),
                 `Expected trigger label to align along x-axis, accounting for the checkbox.`);
       }));
     });
@@ -3860,6 +3862,29 @@ describe('MatSelect', () => {
 
       expect(trigger.textContent).toContain('Tacos, Pizza, Steak');
       expect(fixture.componentInstance.control.value).toEqual(['steak-0', 'pizza-1', 'tacos-2']);
+    }));
+
+    it('should be able to customize the value sorting logic', fakeAsync(() => {
+      fixture.componentInstance.sortComparator = (a, b, optionsArray) => {
+        return optionsArray.indexOf(b) - optionsArray.indexOf(a);
+      };
+      fixture.detectChanges();
+
+      trigger.click();
+      fixture.detectChanges();
+      flush();
+
+      const options = overlayContainerElement.querySelectorAll('mat-option') as
+          NodeListOf<HTMLElement>;
+
+      for (let i = 0; i < 3; i++) {
+        options[i].click();
+      }
+      fixture.detectChanges();
+
+      // Expect the items to be in reverse order.
+      expect(trigger.textContent).toContain('Tacos, Pizza, Steak');
+      expect(fixture.componentInstance.control.value).toEqual(['tacos-2', 'pizza-1', 'steak-0']);
     }));
 
     it('should sort the values that get set via the model based on the panel order',
@@ -4359,7 +4384,8 @@ class FloatLabelSelect {
   selector: 'multi-select',
   template: `
     <mat-form-field>
-      <mat-select multiple placeholder="Food" [formControl]="control">
+      <mat-select multiple placeholder="Food" [formControl]="control"
+        [sortComparator]="sortComparator">
         <mat-option *ngFor="let food of foods"
                     [value]="food.value">{{ food.viewValue }}
         </mat-option>
@@ -4382,6 +4408,7 @@ class MultiSelect {
 
   @ViewChild(MatSelect) select: MatSelect;
   @ViewChildren(MatOption) options: QueryList<MatOption>;
+  sortComparator: (a: MatOption, b: MatOption, options: MatOption[]) => number;
 }
 
 @Component({

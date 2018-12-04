@@ -21,6 +21,7 @@ import {
   Injectable,
   InjectionToken,
   Injector,
+  OnDestroy,
   Optional,
   SkipSelf,
   TemplateRef,
@@ -44,13 +45,13 @@ export const MAT_DIALOG_SCROLL_STRATEGY =
     new InjectionToken<() => ScrollStrategy>('mat-dialog-scroll-strategy');
 
 /** @docs-private */
-export function MAT_DIALOG_SCROLL_STRATEGY_FACTORY(overlay: Overlay): ()  => ScrollStrategy {
+export function MAT_DIALOG_SCROLL_STRATEGY_FACTORY(overlay: Overlay): () => ScrollStrategy {
   return () => overlay.scrollStrategies.block();
 }
 
 /** @docs-private */
 export function MAT_DIALOG_SCROLL_STRATEGY_PROVIDER_FACTORY(overlay: Overlay):
-    () => ScrollStrategy {
+  () => ScrollStrategy {
   return () => overlay.scrollStrategies.block();
 }
 
@@ -66,11 +67,12 @@ export const MAT_DIALOG_SCROLL_STRATEGY_PROVIDER = {
  * Service to open Material Design modal dialogs.
  */
 @Injectable()
-export class MatDialog {
+export class MatDialog implements OnDestroy {
   private _openDialogsAtThisLevel: MatDialogRef<any>[] = [];
   private readonly _afterAllClosedAtThisLevel = new Subject<void>();
-  private readonly _afterOpenAtThisLevel = new Subject<MatDialogRef<any>>();
+  private readonly _afterOpenedAtThisLevel = new Subject<MatDialogRef<any>>();
   private _ariaHiddenElements = new Map<Element, string|null>();
+  private _scrollStrategy: () => ScrollStrategy;
 
   /** Keeps track of the currently-open dialogs. */
   get openDialogs(): MatDialogRef<any>[] {
@@ -78,11 +80,20 @@ export class MatDialog {
   }
 
   /** Stream that emits when a dialog has been opened. */
-  get afterOpen(): Subject<MatDialogRef<any>> {
-    return this._parentDialog ? this._parentDialog.afterOpen : this._afterOpenAtThisLevel;
+  get afterOpened(): Subject<MatDialogRef<any>> {
+    return this._parentDialog ? this._parentDialog.afterOpened : this._afterOpenedAtThisLevel;
   }
 
-  get _afterAllClosed() {
+  /**
+   * Stream that emits when a dialog has been opened.
+   * @deprecated Use `afterOpened` instead.
+   * @breaking-change 8.0.0
+   */
+  get afterOpen(): Subject<MatDialogRef<any>> {
+    return this.afterOpened;
+  }
+
+  get _afterAllClosed(): Subject<void> {
     const parent = this._parentDialog;
     return parent ? parent._afterAllClosed : this._afterAllClosedAtThisLevel;
   }
@@ -99,10 +110,12 @@ export class MatDialog {
       private _overlay: Overlay,
       private _injector: Injector,
       @Optional() private _location: Location,
-      @Optional() @Inject(MAT_DIALOG_DEFAULT_OPTIONS) private _defaultOptions,
-      @Inject(MAT_DIALOG_SCROLL_STRATEGY) private _scrollStrategy,
+      @Optional() @Inject(MAT_DIALOG_DEFAULT_OPTIONS) private _defaultOptions: MatDialogConfig,
+      @Inject(MAT_DIALOG_SCROLL_STRATEGY) scrollStrategy: any,
       @Optional() @SkipSelf() private _parentDialog: MatDialog,
-      private _overlayContainer: OverlayContainer) {}
+      private _overlayContainer: OverlayContainer) {
+    this._scrollStrategy = scrollStrategy;
+  }
 
   /**
    * Opens a modal dialog containing the given component.
@@ -134,7 +147,7 @@ export class MatDialog {
 
     this.openDialogs.push(dialogRef);
     dialogRef.afterClosed().subscribe(() => this._removeOpenDialog(dialogRef));
-    this.afterOpen.next(dialogRef);
+    this.afterOpened.next(dialogRef);
 
     return dialogRef;
   }
@@ -143,15 +156,7 @@ export class MatDialog {
    * Closes all of the currently-open dialogs.
    */
   closeAll(): void {
-    let i = this.openDialogs.length;
-
-    while (i--) {
-      // The `_openDialogs` property isn't updated after close until the rxjs subscription
-      // runs on the next microtask, in addition to modifying the array as we're going
-      // through it. We loop through all of them and call close without assuming that
-      // they'll be removed from the list instantaneously.
-      this.openDialogs[i].close();
-    }
+    this._closeDialogs(this.openDialogs);
   }
 
   /**
@@ -160,6 +165,12 @@ export class MatDialog {
    */
   getDialogById(id: string): MatDialogRef<any> | undefined {
     return this.openDialogs.find(dialog => dialog.id === id);
+  }
+
+  ngOnDestroy() {
+    // Only close the dialogs at this level on destroy
+    // since the parent service may still be active.
+    this._closeDialogs(this._openDialogsAtThisLevel);
   }
 
   /**
@@ -187,7 +198,8 @@ export class MatDialog {
       minWidth: dialogConfig.minWidth,
       minHeight: dialogConfig.minHeight,
       maxWidth: dialogConfig.maxWidth,
-      maxHeight: dialogConfig.maxHeight
+      maxHeight: dialogConfig.maxHeight,
+      disposeOnNavigation: dialogConfig.closeOnNavigation
     });
 
     if (dialogConfig.backdropClass) {
@@ -348,7 +360,19 @@ export class MatDialog {
         }
       }
     }
+  }
 
+  /** Closes all of the dialogs in an array. */
+  private _closeDialogs(dialogs: MatDialogRef<any>[]) {
+    let i = dialogs.length;
+
+    while (i--) {
+      // The `_openDialogs` property isn't updated after close until the rxjs subscription
+      // runs on the next microtask, in addition to modifying the array as we're going
+      // through it. We loop through all of them and call close without assuming that
+      // they'll be removed from the list instantaneously.
+      dialogs[i].close();
+    }
   }
 
 }

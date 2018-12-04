@@ -5,10 +5,11 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+
 import {Injectable, NgZone, OnDestroy} from '@angular/core';
 import {MediaMatcher} from './media-matcher';
-import {combineLatest, fromEventPattern, Observable, Subject} from 'rxjs';
-import {map, startWith, takeUntil} from 'rxjs/operators';
+import {asapScheduler, combineLatest, fromEventPattern, Observable, Subject} from 'rxjs';
+import {debounceTime, map, startWith, takeUntil} from 'rxjs/operators';
 import {coerceArray} from '@angular/cdk/coercion';
 
 
@@ -74,17 +75,19 @@ export class BreakpointObserver implements OnDestroy {
     const queries = splitQueries(coerceArray(value));
     const observables = queries.map(query => this._registerQuery(query).observable);
 
-    return combineLatest(observables).pipe(map((breakpointStates: InternalBreakpointState[]) => {
-      const response: BreakpointState = {
-        matches: false,
-        breakpoints: {},
-      };
-      breakpointStates.forEach((state: InternalBreakpointState) => {
-        response.matches = response.matches || state.matches;
-        response.breakpoints[state.query] = state.matches;
-      });
-      return response;
-    }));
+    return combineLatest(observables).pipe(
+      debounceTime(0, asapScheduler),
+      map((breakpointStates: InternalBreakpointState[]) => {
+        const response: BreakpointState = {
+          matches: false,
+          breakpoints: {},
+        };
+        breakpointStates.forEach((state: InternalBreakpointState) => {
+          response.matches = response.matches || state.matches;
+          response.breakpoints[state.query] = state.matches;
+        });
+        return response;
+      }));
   }
 
   /** Registers a specific query to be listened for. */
@@ -95,23 +98,27 @@ export class BreakpointObserver implements OnDestroy {
     }
 
     const mql: MediaQueryList = this.mediaMatcher.matchMedia(query);
+
+    // TODO(jelbourn): change this `any` to `MediaQueryListEvent` once Google has upgraded to
+    // TypeScript 3.1 (the type is unavailable before then).
+    let queryListener: any;
+
     // Create callback for match changes and add it is as a listener.
-    const queryObservable = fromEventPattern(
+    const queryObservable = fromEventPattern<MediaQueryList>(
       // Listener callback methods are wrapped to be placed back in ngZone. Callbacks must be placed
       // back into the zone because matchMedia is only included in Zone.js by loading the
       // webapis-media-query.js file alongside the zone.js file.  Additionally, some browsers do not
       // have MediaQueryList inherit from EventTarget, which causes inconsistencies in how Zone.js
       // patches it.
-      (listener: MediaQueryListListener) => {
-        mql.addListener((e: MediaQueryList) => this.zone.run(() => listener(e)));
+      (listener: Function) => {
+        queryListener = (e: any) => this.zone.run(() => listener(e));
+        mql.addListener(queryListener);
       },
-      (listener: MediaQueryListListener) => {
-        mql.removeListener((e: MediaQueryList) => this.zone.run(() => listener(e)));
-      })
+      () => mql.removeListener(queryListener))
       .pipe(
-        takeUntil(this._destroySubject),
         startWith(mql),
-        map((nextMql: MediaQueryList) => ({query, matches: nextMql.matches}))
+        map((nextMql: MediaQueryList) => ({query, matches: nextMql.matches})),
+        takeUntil(this._destroySubject)
       );
 
     // Add the MediaQueryList to the set of queries.

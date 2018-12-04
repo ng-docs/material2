@@ -103,6 +103,19 @@ inside your `NgModule`.
 export class AppModule {}
 ```
 
+### Specifying global configuration defaults
+Default bottom sheet options can be specified by providing an instance of `MatBottomSheetConfig`
+for `MAT_BOTTOM_SHEET_DEFAULT_OPTIONS` in your application's root module.
+
+```ts
+@NgModule({
+  providers: [
+    {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+  ]
+})
+```
+
+
 ### Accessibility
 
 ### 可访问性

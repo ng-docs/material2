@@ -219,7 +219,7 @@ and its interface is not tied to any one specific implementation.
 #### 排序
 
 To add sorting behavior to the table, add the `matSort` directive to the table and add 
-`mat-sort-header` to each column header cell that should trigger sorting. 
+`mat-sort-header` to each column header cell that should trigger sorting. Note that you have to import `MatSortModule` in order to initialize the `matSort` directive (see [API docs](https://material.angular.io/components/sort/api)).
 
 要想为表格添加排序行为，请给它添加 `matSort` 指令并把 `mat-sort-header` 指令添加到每个允许触发排序功能的表头上。
 
@@ -387,6 +387,19 @@ masterToggle() {
 }
 ```
 
+##### 4. Include overflow styling 
+
+Finally, adjust the styling for the select column so that its overflow is not hidden. This allows 
+the ripple effect to extend beyond the cell.
+
+```css
+.mat-column-select {
+  overflow: initial;
+}
+```
+
+<!--- example(table-selection) -->
+
 #### Footer row
 
 #### 表尾
@@ -412,23 +425,6 @@ data rows.
 ```
 
 <!--- example(table-footer-row) -->
-
-##### 4. Include overflow styling 
-
-##### 4. 包含溢出样式
-
-Finally, adjust the styling for the select column so that its overflow is not hidden. This allows 
-the ripple effect to extend beyond the cell.
-
-最后调整选中列的样式，确保它的溢出内容不会被隐藏。这么做可以让它的波纹效果可以延伸到单元格之外。
-
-```css
-.mat-column-select {
-  overflow: initial;
-}
-```
-
-<!--- example(table-selection) -->
 
 #### Sticky Rows and Columns
 

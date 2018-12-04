@@ -3,19 +3,6 @@ import {PropertyMemberDoc} from 'dgeni-packages/typescript/api-doc-types/Propert
 import {MemberDoc} from 'dgeni-packages/typescript/api-doc-types/MemberDoc';
 import {CategorizedClassDoc, DeprecationDoc, HasDecoratorsDoc} from './dgeni-definitions';
 
-/**
- * We want to avoid emitting selectors that are deprecated but don't have a way to mark
- * them as such in the source code. Thus, we maintain a separate blacklist of selectors
- * that should not be emitted in the documentation.
- */
-const SELECTOR_BLACKLIST = new Set([
-  '[portal]',
-  '[portalHost]',
-  'textarea[mat-autosize]',
-  '[overlay-origin]',
-  '[connected-overlay]',
-]);
-
 export function isMethod(doc: MemberDoc) {
   return doc.hasOwnProperty('parameters') && !doc.isGetAccessor && !doc.isSetAccessor;
 }
@@ -62,9 +49,7 @@ export function getDirectiveSelectors(classDoc: CategorizedClassDoc) {
   const directiveSelectors: string = classDoc.directiveMetadata.get('selector');
 
   if (directiveSelectors) {
-    // Filter blacklisted selectors and remove line-breaks in resolved selectors.
-    return directiveSelectors.replace(/[\r\n]/g, '').split(/\s*,\s*/)
-      .filter(s => s !== '' && !s.includes('md') && !SELECTOR_BLACKLIST.has(s));
+    return directiveSelectors.replace(/[\r\n]/g, '').split(/\s*,\s*/).filter(s => s !== '');
   }
 }
 
@@ -101,8 +86,5 @@ export function decorateDeprecatedDoc(doc: DeprecationDoc) {
 
   if (doc.isDeprecated && !doc.breakingChange) {
     console.warn('Warning: There is a deprecated item without a @breaking-change tag.', doc.id);
-  } else if  (doc.breakingChange && !doc.isDeprecated) {
-    console.warn('Warning: There is an item with a @breaking-change which is not deprecated.',
-      doc.id);
   }
 }

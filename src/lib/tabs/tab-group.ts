@@ -22,13 +22,18 @@ import {
   QueryList,
   ViewChild,
   ViewEncapsulation,
+  InjectionToken,
+  Inject,
+  Optional,
 } from '@angular/core';
 import {
   CanColor,
+  CanColorCtor,
   CanDisableRipple,
+  CanDisableRippleCtor,
   mixinColor,
   mixinDisableRipple,
-  ThemePalette
+  ThemePalette,
 } from '@angular/material/core';
 import {merge, Subscription} from 'rxjs';
 import {MatTab} from './tab';
@@ -49,12 +54,22 @@ export class MatTabChangeEvent {
 /** Possible positions for the tab header. */
 export type MatTabHeaderPosition = 'above' | 'below';
 
+/** Object that can be used to configure the default options for the tabs module. */
+export interface MatTabsConfig {
+  /** Duration for the tab animation. Must be a valid CSS value (e.g. 600ms). */
+  animationDuration?: string;
+}
+
+/** Injection token that can be used to provide the default options the tabs module. */
+export const MAT_TABS_CONFIG = new InjectionToken('MAT_TABS_CONFIG');
+
 // Boilerplate for applying mixins to MatTabGroup.
 /** @docs-private */
 export class MatTabGroupBase {
   constructor(public _elementRef: ElementRef) {}
 }
-export const _MatTabGroupMixinBase = mixinColor(mixinDisableRipple(MatTabGroupBase), 'primary');
+export const _MatTabGroupMixinBase: CanColorCtor & CanDisableRippleCtor & typeof MatTabGroupBase =
+    mixinColor(mixinDisableRipple(MatTabGroupBase), 'primary');
 
 /**
  * Material design tab-group component.  Supports basic tab pairs (label + content) and includes
@@ -114,6 +129,9 @@ export class MatTabGroup extends _MatTabGroupMixinBase implements AfterContentIn
   /** Position of the tab header. */
   @Input() headerPosition: MatTabHeaderPosition = 'above';
 
+  /** Duration for the tab animation. Must be a valid CSS value (e.g. 600ms). */
+  @Input() animationDuration: string;
+
   /** Background color of the tab group. */
   @Input()
   get backgroundColor(): ThemePalette { return this._backgroundColor; }
@@ -147,9 +165,12 @@ export class MatTabGroup extends _MatTabGroupMixinBase implements AfterContentIn
   private _groupId: number;
 
   constructor(elementRef: ElementRef,
-              private _changeDetectorRef: ChangeDetectorRef) {
+              private _changeDetectorRef: ChangeDetectorRef,
+              @Inject(MAT_TABS_CONFIG) @Optional() defaultConfig?: MatTabsConfig) {
     super(elementRef);
     this._groupId = nextId++;
+    this.animationDuration = defaultConfig && defaultConfig.animationDuration ?
+        defaultConfig.animationDuration : '500ms';
   }
 
   /**
@@ -307,15 +328,16 @@ export class MatTabGroup extends _MatTabGroupMixinBase implements AfterContentIn
 
   /** Removes the height of the tab body wrapper. */
   _removeTabBodyWrapperHeight(): void {
-    this._tabBodyWrapperHeight = this._tabBodyWrapper.nativeElement.clientHeight;
-    this._tabBodyWrapper.nativeElement.style.height = '';
+    const wrapper = this._tabBodyWrapper.nativeElement;
+    this._tabBodyWrapperHeight = wrapper.clientHeight;
+    wrapper.style.height = '';
     this.animationDone.emit();
   }
 
   /** Handle click events, setting new selected index if appropriate. */
-  _handleClick(tab: MatTab, tabHeader: MatTabHeader, idx: number) {
+  _handleClick(tab: MatTab, tabHeader: MatTabHeader, index: number) {
     if (!tab.disabled) {
-      this.selectedIndex = tabHeader.focusIndex = idx;
+      this.selectedIndex = tabHeader.focusIndex = index;
     }
   }
 

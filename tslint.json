@@ -97,8 +97,11 @@
     // Custom Rules
     "ts-loader": true,
     "no-exposed-todo": true,
+    "no-import-spacing": true,
+    "no-private-getters": true,
     "setters-after-getters": true,
     "rxjs-imports": true,
+    "require-breaking-change-version": true,
     "no-host-decorator-in-concrete": [
       true,
       "HostBinding",
@@ -115,21 +118,29 @@
       },
       "Directive": {
         "!host": "\\[class\\]"
-      }
+      },
+      "NgModule": "^(?!\\s*$).+"
     }, "src/+(lib|cdk|material-experimental|cdk-experimental)/**/!(*.spec).ts"],
     "require-license-banner": [
       true,
-      "src/+(lib|cdk|material-experimental|cdk-experimental|demo-app)/**/!(*.spec).ts"
+      "src/+(lib|cdk|material-experimental|cdk-experimental|dev-app)/**/!(*.spec).ts"
     ],
     "missing-rollup-globals": [
       true,
       "./tools/package-tools/rollup-globals.ts",
-      "src/+(lib|cdk|material-examples|material-experimental|cdk-experimental)/**/*.ts"
+      "src/+(lib|cdk|material-examples|material-experimental|cdk-experimental)/!(schematics)**/*.ts"
     ],
-    "breaking-change": true,
     "no-unescaped-html-tag": true
   },
   "linterOptions": {
-    "exclude": ["src/lib/schematics/**/*"]
+    "exclude": [
+      // Exclude the API golden files
+      "tools/public_api_guard/**/*.d.ts",
+      // Exclude schematic template files and test cases that can't be linted.
+      "src/lib/schematics/ng-generate/*/files/**/*",
+      "src/cdk/schematics/ng-generate/*/files/**/*",
+      "src/cdk/schematics/ng-update/test-cases/**/*",
+      "src/lib/schematics/ng-update/test-cases/**/*"
+    ]
   }
 }

@@ -18,14 +18,21 @@ import {
   OnDestroy,
   QueryList,
 } from '@angular/core';
-import {CanDisable, HasTabIndex, mixinDisabled, mixinTabIndex} from '@angular/material/core';
+import {
+  CanDisable, CanDisableCtor,
+  HasTabIndex,
+  HasTabIndexCtor,
+  mixinDisabled,
+  mixinTabIndex,
+} from '@angular/material/core';
 import {MatTreeNodeOutlet} from './outlet';
 
-// TODO(devversion): workaround for https://github.com/angular/material2/issues/12760
-export const _CdkTreeNodeDef = CdkTreeNodeDef;
+export const _MatTreeNodeMixinBase: HasTabIndexCtor & CanDisableCtor & typeof CdkTreeNode =
+    mixinTabIndex(mixinDisabled(CdkTreeNode));
 
-export const _MatTreeNodeMixinBase = mixinTabIndex(mixinDisabled(CdkTreeNode));
-export const _MatNestedTreeNodeMixinBase = mixinTabIndex(mixinDisabled(CdkNestedTreeNode));
+export const _MatNestedTreeNodeMixinBase:
+    HasTabIndexCtor & CanDisableCtor & typeof CdkNestedTreeNode =
+        mixinTabIndex(mixinDisabled(CdkNestedTreeNode));
 
 /**
  * Wrapper for the CdkTree node with Material design styles.
@@ -65,7 +72,7 @@ export class MatTreeNode<T> extends _MatTreeNodeMixinBase<T>
   ],
   providers: [{provide: CdkTreeNodeDef, useExisting: MatTreeNodeDef}]
 })
-export class MatTreeNodeDef<T> extends _CdkTreeNodeDef<T> {
+export class MatTreeNodeDef<T> extends CdkTreeNodeDef<T> {
   @Input('matTreeNode') data: T;
 }
 

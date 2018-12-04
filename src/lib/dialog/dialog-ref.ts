@@ -9,7 +9,7 @@
 import {ESCAPE} from '@angular/cdk/keycodes';
 import {GlobalPositionStrategy, OverlayRef} from '@angular/cdk/overlay';
 import {Location} from '@angular/common';
-import {Observable, Subject, Subscription, SubscriptionLike} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {filter, take} from 'rxjs/operators';
 import {DialogPosition} from './dialog-config';
 import {MatDialogContainer} from './dialog-container';
@@ -31,24 +31,22 @@ export class MatDialogRef<T, R = any> {
   disableClose: boolean | undefined = this._containerInstance._config.disableClose;
 
   /** Subject for notifying the user that the dialog has finished opening. */
-  private readonly _afterOpen = new Subject<void>();
+  private readonly _afterOpened = new Subject<void>();
 
   /** Subject for notifying the user that the dialog has finished closing. */
   private readonly _afterClosed = new Subject<R | undefined>();
 
   /** Subject for notifying the user that the dialog has started closing. */
-  private readonly _beforeClose = new Subject<R | undefined>();
+  private readonly _beforeClosed = new Subject<R | undefined>();
 
   /** Result to be passed to afterClosed. */
   private _result: R | undefined;
 
-  /** Subscription to changes in the user's location. */
-  private _locationChanges: SubscriptionLike = Subscription.EMPTY;
-
   constructor(
     private _overlayRef: OverlayRef,
     public _containerInstance: MatDialogContainer,
-    location?: Location,
+    // @breaking-change 8.0.0 `_location` parameter to be removed.
+    _location?: Location,
     readonly id: string = `mat-dialog-${uniqueId++}`) {
 
     // Pass the id along to the container.
@@ -60,8 +58,8 @@ export class MatDialogRef<T, R = any> {
       take(1)
     )
     .subscribe(() => {
-      this._afterOpen.next();
-      this._afterOpen.complete();
+      this._afterOpened.next();
+      this._afterOpened.complete();
     });
 
     // Dispose overlay when closing animation is complete
@@ -71,9 +69,8 @@ export class MatDialogRef<T, R = any> {
     ).subscribe(() => this._overlayRef.dispose());
 
     _overlayRef.detachments().subscribe(() => {
-      this._beforeClose.next(this._result);
-      this._beforeClose.complete();
-      this._locationChanges.unsubscribe();
+      this._beforeClosed.next(this._result);
+      this._beforeClosed.complete();
       this._afterClosed.next(this._result);
       this._afterClosed.complete();
       this.componentInstance = null!;
@@ -83,17 +80,6 @@ export class MatDialogRef<T, R = any> {
     _overlayRef.keydownEvents()
       .pipe(filter(event => event.keyCode === ESCAPE && !this.disableClose))
       .subscribe(() => this.close());
-
-    if (location) {
-      // Close the dialog when the user goes forwards/backwards in history or when the location
-      // hash changes. Note that this usually doesn't include clicking on links (unless the user
-      // is using the `HashLocationStrategy`).
-      this._locationChanges = location.subscribe(() => {
-        if (this._containerInstance._config.closeOnNavigation) {
-          this.close();
-        }
-      });
-    }
   }
 
   /**
@@ -109,8 +95,8 @@ export class MatDialogRef<T, R = any> {
       take(1)
     )
     .subscribe(() => {
-      this._beforeClose.next(dialogResult);
-      this._beforeClose.complete();
+      this._beforeClosed.next(dialogResult);
+      this._beforeClosed.complete();
       this._overlayRef.detachBackdrop();
     });
 
@@ -120,8 +106,8 @@ export class MatDialogRef<T, R = any> {
   /**
    * Gets an observable that is notified when the dialog is finished opening.
    */
-  afterOpen(): Observable<void> {
-    return this._afterOpen.asObservable();
+  afterOpened(): Observable<void> {
+    return this._afterOpened.asObservable();
   }
 
   /**
@@ -134,8 +120,8 @@ export class MatDialogRef<T, R = any> {
   /**
    * Gets an observable that is notified when the dialog has started closing.
    */
-  beforeClose(): Observable<R | undefined> {
-    return this._beforeClose.asObservable();
+  beforeClosed(): Observable<R | undefined> {
+    return this._beforeClosed.asObservable();
   }
 
   /**
@@ -185,6 +171,24 @@ export class MatDialogRef<T, R = any> {
     this._getPositionStrategy().width(width).height(height);
     this._overlayRef.updatePosition();
     return this;
+  }
+
+  /**
+   * Gets an observable that is notified when the dialog is finished opening.
+   * @deprecated Use `afterOpened` instead.
+   * @breaking-change 8.0.0
+   */
+  afterOpen(): Observable<void> {
+    return this.afterOpened();
+  }
+
+  /**
+   * Gets an observable that is notified when the dialog has started closing.
+   * @deprecated Use `beforeClosed` instead.
+   * @breaking-change 8.0.0
+   */
+  beforeClose(): Observable<R | undefined> {
+    return this.beforeClosed();
   }
 
   /** Fetches the position strategy object from the overlay ref. */

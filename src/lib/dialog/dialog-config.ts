@@ -95,10 +95,20 @@ export class MatDialogConfig<D = any> {
   /** Whether the dialog should focus the first focusable element on open. */
   autoFocus?: boolean = true;
 
+  /**
+   * Whether the dialog should restore focus to the
+   * previously-focused element, after it's closed.
+   */
+  restoreFocus?: boolean = true;
+
   /** Scroll strategy to be used for the dialog. */
   scrollStrategy?: ScrollStrategy;
 
-  /** Whether the dialog should close when the user goes backwards/forwards in history. */
+  /**
+   * Whether the dialog should close when the user goes backwards/forwards in history.
+   * Note that this usually doesn't include clicking on links (unless the user is using
+   * the `HashLocationStrategy`).
+   */
   closeOnNavigation?: boolean = true;
 
   // TODO(jelbourn): add configuration for lifecycle hooks, ARIA labelling.

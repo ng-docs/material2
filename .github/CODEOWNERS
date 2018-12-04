@@ -1,13 +1,13 @@
 # Angular Material components
 /src/lib/*                                         @jelbourn
 /src/lib/autocomplete/**                           @crisbeto
-/src/lib/badge/**                                  @amcdnl
+/src/lib/badge/**                                  @jelbourn
 /src/lib/bottom-sheet/**                           @jelbourn @crisbeto
-/src/lib/button-toggle/**                          @tinayuangao
-/src/lib/button/**                                 @tinayuangao
+/src/lib/button-toggle/**                          @jelbourn
+/src/lib/button/**                                 @jelbourn @josephperrott
 /src/lib/card/**                                   @jelbourn
-/src/lib/checkbox/**                               @tinayuangao @devversion
-/src/lib/chips/**                                  @tinayuangao
+/src/lib/checkbox/**                               @jelbourn @devversion @josephperrott
+/src/lib/chips/**                                  @jelbourn
 /src/lib/datepicker/**                             @mmalerba
 /src/lib/dialog/**                                 @jelbourn @crisbeto
 /src/lib/divider/**                                @jelbourn @crisbeto
@@ -22,8 +22,8 @@
 /src/lib/prebuilt-themes/**                        @jelbourn
 /src/lib/progress-bar/**                           @jelbourn @crisbeto @josephperrott
 /src/lib/progress-spinner/**                       @jelbourn @crisbeto @josephperrott
-/src/lib/radio/**                                  @tinayuangao @devversion
-/src/lib/schematics/**                             @amcdnl
+/src/lib/radio/**                                  @jelbourn @devversion
+/src/lib/schematics/**                             @devversion @jelbourn
 /src/lib/select/**                                 @crisbeto
 /src/lib/sidenav/**                                @mmalerba
 /src/lib/slide-toggle/**                           @devversion
@@ -33,9 +33,10 @@
 /src/lib/stepper/**                                @mmalerba
 /src/lib/table/**                                  @andrewseguin
 /src/lib/tabs/**                                   @andrewseguin
+/src/lib/testing/**                                @jelbourn
 /src/lib/toolbar/**                                @devversion
 /src/lib/tooltip/**                                @andrewseguin
-/src/lib/tree/**                                   @tinayuangao
+/src/lib/tree/**                                   @jelbourn @andrewseguin
 
 # Angular Material core
 /src/lib/core/*                                    @jelbourn
@@ -49,10 +50,9 @@
 /src/lib/core/option/**                            @crisbeto
 /src/lib/core/placeholder/**                       @mmalerba
 /src/lib/core/ripple/**                            @devversion
-/src/lib/core/selection/**                         @tinayuangao @jelbourn
+/src/lib/core/selection/**                         @jelbourn
 /src/lib/core/selection/pseudo*/**                 @crisbeto @jelbourn
 /src/lib/core/style/**                             @jelbourn
-/src/lib/core/testing/**                           @jelbourn
 /src/lib/core/theming/**                           @jelbourn
 /src/lib/core/typography/**                        @crisbeto
 /src/lib/core/util/**                              @jelbourn
@@ -64,18 +64,20 @@
 /src/cdk/bidi/**                                   @jelbourn
 /src/cdk/coercion/**                               @jelbourn
 /src/cdk/collections/**                            @jelbourn @crisbeto @andrewseguin
+/src/cdk/drag-drop/**                              @crisbeto
 /src/cdk/keycodes/**                               @jelbourn
 /src/cdk/layout/**                                 @josephperrott
 /src/cdk/observers/**                              @jelbourn @crisbeto
 /src/cdk/overlay/**                                @jelbourn @crisbeto
 /src/cdk/platform/**                               @jelbourn @devversion
 /src/cdk/portal/**                                 @jelbourn
+/src/cdk/schematics/**                             @devversion @jelbourn
 /src/cdk/scrolling/**                              @andrewseguin @crisbeto
 /src/cdk/stepper/**                                @mmalerba
 /src/cdk/table/**                                  @andrewseguin
 /src/cdk/testing/**                                @devversion
 /src/cdk/text-field/**                             @mmalerba
-/src/cdk/tree/**                                   @tinayuangao
+/src/cdk/tree/**                                   @jelbourn @andrewseguin
 
 # Moment adapter package
 /src/material-moment-adapter/**                    @mmalerba
@@ -87,75 +89,74 @@
 /src/cdk-experimental/**                           @jelbourn
 /src/cdk-experimental/dialog/**                    @jelbourn @josephperrott @crisbeto
 /src/cdk-experimental/scrolling/**                 @mmalerba
-/src/cdk-experimental/drag-drop/**                 @crisbeto
 
 # Docs examples & guides
-/guides/**                                         @amcdnl @jelbourn
-/src/material-examples/**                          @amcdnl @jelbourn
+/guides/**                                         @jelbourn
+/src/material-examples/**                          @jelbourn
 
-# Demo app
-/src/demo-app/*                                    @jelbourn
-/src/demo-app/a11y/**                              @tinayuangao
-/src/demo-app/autocomplete/**                      @crisbeto
-/src/demo-app/badge/**                             @amcdnl
-/src/demo-app/baseline/**                          @mmalerba
-/src/demo-app/bottom-sheet/**                      @jelbourn @crisbeto
-/src/demo-app/button-toggle/**                     @tinayuangao
-/src/demo-app/button/**                            @tinayuangao
-/src/demo-app/card/**                              @jelbourn
-/src/demo-app/checkbox/**                          @tinayuangao @devversion
-/src/demo-app/chips/**                             @tinayuangao
-/src/demo-app/connected-overlay/**                 @jelbourn @crisbeto
-/src/demo-app/dataset/**                           @andrewseguin
-/src/demo-app/datepicker/**                        @mmalerba
-/src/demo-app/demo-app/**                          @jelbourn
-/src/demo-app/dialog/**                            @jelbourn @crisbeto
-/src/demo-app/drawer/**                            @mmalerba
-/src/demo-app/drag-drop/**                         @crisbeto
-/src/demo-app/example/**                           @andrewseguin
-/src/demo-app/examples-page/**                     @andrewseguin
-/src/demo-app/expansion/**                         @josephperrott
-/src/demo-app/focus-origin/**                      @mmalerba
-/src/demo-app/gestures/**                          @jelbourn
-/src/demo-app/grid-list/**                         @jelbourn
-/src/demo-app/icon/**                              @jelbourn
-/src/demo-app/input/**                             @mmalerba
-/src/demo-app/list/**                              @jelbourn @crisbeto @devversion
-/src/demo-app/live-announcer/**                    @jelbourn
-/src/demo-app/menu/**                              @crisbeto
-/src/demo-app/overlay/**                           @jelbourn @crisbeto
-/src/demo-app/paginator/**                         @andrewseguin
-/src/demo-app/platform/**                          @jelbourn @devversion
-/src/demo-app/portal/**                            @jelbourn
-/src/demo-app/progress-bar/**                      @jelbourn @crisbeto @josephperrott
-/src/demo-app/progress-spinner/**                  @jelbourn @crisbeto @josephperrott
-/src/demo-app/radio/**                             @tinayuangao @devversion
-/src/demo-app/ripple/**                            @devversion
-/src/demo-app/screen-type/**                       @josephperrott
-/src/demo-app/select/**                            @crisbeto
-/src/demo-app/sidenav/**                           @mmalerba
-/src/demo-app/slide-toggle/**                      @devversion
-/src/demo-app/slider/**                            @mmalerba
-/src/demo-app/snack-bar/**                         @jelbourn @crisbeto @josephperrott
-/src/demo-app/stepper/**                           @mmalerba
-/src/demo-app/table/**                             @andrewseguin
-/src/demo-app/tabs/**                              @andrewseguin
-/src/demo-app/toolbar/**                           @devversion
-/src/demo-app/tooltip/**                           @andrewseguin
-/src/demo-app/tree/**                              @tinayuangao
-/src/demo-app/typography/**                        @crisbeto
-/src/demo-app/virtual-scroll/**                    @mmalerba
+# Accessibility demos
+/src/a11y-demo/**/*                                @jelbourn
+
+# Dev-app
+/src/dev-app/*                                     @jelbourn
+/src/dev-app/autocomplete/**                       @crisbeto
+/src/dev-app/badge/**                              @jelbourn
+/src/dev-app/baseline/**                           @mmalerba
+/src/dev-app/bottom-sheet/**                       @jelbourn @crisbeto
+/src/dev-app/button-toggle/**                      @jelbourn
+/src/dev-app/button/**                             @jelbourn
+/src/dev-app/card/**                               @jelbourn
+/src/dev-app/checkbox/**                           @jelbourn @devversion
+/src/dev-app/chips/**                              @jelbourn
+/src/dev-app/connected-overlay/**                  @jelbourn @crisbeto
+/src/dev-app/dataset/**                            @andrewseguin
+/src/dev-app/datepicker/**                         @mmalerba
+/src/dev-app/dialog/**                             @jelbourn @crisbeto
+/src/dev-app/drawer/**                             @mmalerba
+/src/dev-app/drag-drop/**                          @crisbeto
+/src/dev-app/example/**                            @andrewseguin
+/src/dev-app/examples-page/**                      @andrewseguin
+/src/dev-app/expansion/**                          @josephperrott
+/src/dev-app/focus-origin/**                       @mmalerba
+/src/dev-app/gestures/**                           @jelbourn
+/src/dev-app/grid-list/**                          @jelbourn
+/src/dev-app/icon/**                               @jelbourn
+/src/dev-app/input/**                              @mmalerba
+/src/dev-app/list/**                               @jelbourn @crisbeto @devversion
+/src/dev-app/menu/**                               @crisbeto
+/src/dev-app/live-announcer/**                     @jelbourn
+/src/dev-app/overlay/**                            @jelbourn @crisbeto
+/src/dev-app/paginator/**                          @andrewseguin
+/src/dev-app/platform/**                           @jelbourn @devversion
+/src/dev-app/portal/**                             @jelbourn
+/src/dev-app/progress-bar/**                       @jelbourn @crisbeto @josephperrott
+/src/dev-app/progress-spinner/**                   @jelbourn @crisbeto @josephperrott
+/src/dev-app/radio/**                              @jelbourn @devversion
+/src/dev-app/ripple/**                             @devversion
+/src/dev-app/screen-type/**                        @josephperrott
+/src/dev-app/select/**                             @crisbeto
+/src/dev-app/sidenav/**                            @mmalerba
+/src/dev-app/slide-toggle/**                       @devversion
+/src/dev-app/slider/**                             @mmalerba
+/src/dev-app/snack-bar/**                          @jelbourn @crisbeto @josephperrott
+/src/dev-app/stepper/**                            @mmalerba
+/src/dev-app/table/**                              @andrewseguin
+/src/dev-app/tabs/**                               @andrewseguin
+/src/dev-app/toolbar/**                            @devversion
+/src/dev-app/tooltip/**                            @andrewseguin
+/src/dev-app/tree/**                               @jelbourn
+/src/dev-app/typography/**                         @crisbeto
+/src/dev-app/virtual-scroll/**                     @mmalerba
 
 # E2E app
 /e2e/*                                             @jelbourn
 /e2e/components/block-scroll-strategy-e2e.spec.ts  @andrewseguin @crisbeto
-/e2e/components/button-e2e.spec.ts                 @tinayuangao
-/e2e/components/button-toggle-e2e.spec.ts          @tinayuangao
+/e2e/components/button-e2e.spec.ts                 @jelbourn
+/e2e/components/button-toggle-e2e.spec.ts          @jelbourn
 /e2e/components/card-e2e.spec.ts                   @jelbourn
-/e2e/components/checkbox-e2e.spec.ts               @tinayuangao @devversion
+/e2e/components/checkbox-e2e.spec.ts               @jelbourn @devversion
 /e2e/components/dialog-e2e.spec.ts                 @jelbourn @crisbeto
 /e2e/components/expansion-e2e.spec.ts              @josephperrott @jelbourn
-/e2e/components/fullscreen-e2e.spec.ts             @jelbourn
 /e2e/components/grid-list-e2e.spec.ts              @jelbourn
 /e2e/components/icon-e2e.spec.ts                   @jelbourn
 /e2e/components/input-e2e.spec.ts                  @mmalerba
@@ -163,7 +164,7 @@
 /e2e/components/menu-e2e.spec.ts                   @crisbeto
 /e2e/components/progress-bar-e2e.spec.ts           @jelbourn @crisbeto @josephperrott
 /e2e/components/progress-spinner-e2e.spec.ts       @jelbourn @crisbeto @josephperrott
-/e2e/components/radio-e2e.spec.ts                  @tinayuangao @devversion
+/e2e/components/radio-e2e.spec.ts                  @jelbourn @devversion
 /e2e/components/sidenav-e2e.spec.ts                @mmalerba
 /e2e/components/slide-toggle-e2e.spec.ts           @devversion
 /e2e/components/stepper-e2e.spec.ts                @mmalerba
@@ -173,18 +174,17 @@
 /e2e/util/**                                       @jelbourn
 /src/e2e-app/*                                     @jelbourn
 /src/e2e-app/block-scroll-strategy/**              @andrewseguin @crisbeto
-/src/e2e-app/button/**                             @tinayuangao
-/src/e2e-app/checkbox/**                           @tinayuangao @devversion
+/src/e2e-app/button/**                             @jelbourn
+/src/e2e-app/checkbox/**                           @jelbourn @devversion
 /src/e2e-app/dialog/**                             @jelbourn @crisbeto
 /src/e2e-app/e2e-app/**                            @jelbourn
-/src/e2e-app/fullscreen/**                         @jelbourn
 /src/e2e-app/grid-list/**                          @jelbourn
 /src/e2e-app/icon/**                               @jelbourn
 /src/e2e-app/input/**                              @mmalerba
 /src/e2e-app/menu/**                               @crisbeto
 /src/e2e-app/progress-bar/**                       @jelbourn @crisbeto @josephperrott
 /src/e2e-app/progress-spinner/**                   @jelbourn @crisbeto @josephperrott
-/src/e2e-app/radio/**                              @tinayuangao @devversion
+/src/e2e-app/radio/**                              @jelbourn @devversion
 /src/e2e-app/sidenav/**                            @mmalerba
 /src/e2e-app/slide-toggle/**                       @devversion
 /src/e2e-app/tabs/**                               @andrewseguin

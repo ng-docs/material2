@@ -27,18 +27,17 @@ node_modules
 # IDEs
 /.idea
 /.vscode
+/*.iml
 
 # misc
 .DS_Store
 /.sass-cache
 /connect.lock
-/coverage/*
 /libpeerconnection.log
 npm-debug.log
+yarn-debug.log
+yarn-error.log
 testem.log
 /.chrome
 /.git
-
-# schematics
-/src/lib/schematics/**/*.js
-/src/lib/schematics/**/*.map
+/.firebase

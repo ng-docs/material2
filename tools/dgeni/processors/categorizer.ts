@@ -1,17 +1,27 @@
 import {DocCollection, Processor} from 'dgeni';
-import {MethodMemberDoc} from 'dgeni-packages/typescript/api-doc-types/MethodMemberDoc';
-import {getDirectiveMetadata} from '../common/directive-metadata';
+import {MemberDoc} from 'dgeni-packages/typescript/api-doc-types/MemberDoc';
 import {
-  decorateDeprecatedDoc, getDirectiveSelectors, isDirective, isMethod, isNgModule, isProperty,
-  isService
+  decorateDeprecatedDoc,
+  getDirectiveSelectors,
+  isDirective,
+  isMethod,
+  isNgModule,
+  isProperty,
+  isService,
 } from '../common/decorators';
 import {
-  CategorizedClassDoc, CategorizedClassLikeDoc, CategorizedMethodMemberDoc,
-  CategorizedPropertyMemberDoc
+  CategorizedClassDoc,
+  CategorizedClassLikeDoc,
+  CategorizedConstExportDoc,
+  CategorizedFunctionExportDoc,
+  CategorizedMethodMemberDoc,
+  CategorizedPropertyMemberDoc,
+  CategorizedTypeAliasExportDoc,
 } from '../common/dgeni-definitions';
-import {normalizeMethodParameters} from '../common/normalize-method-parameters';
+import {getDirectiveMetadata} from '../common/directive-metadata';
+import {normalizeFunctionParameters} from '../common/normalize-function-parameters';
 import {getInputBindingData, getOutputBindingData} from '../common/property-bindings';
-import {sortCategorizedMembers} from '../common/sort-members';
+import {sortCategorizedMethodMembers, sortCategorizedPropertyMembers} from '../common/sort-members';
 
 
 /**
@@ -30,6 +40,18 @@ export class Categorizer implements Processor {
     docs
       .filter(doc => doc.docType === 'class' || doc.docType === 'interface')
       .forEach(doc => this.decorateClassLikeDoc(doc));
+
+    docs
+      .filter(doc => doc.docType === 'function')
+      .forEach(doc => this.decorateFunctionExportDoc(doc));
+
+    docs
+      .filter(doc => doc.docType === 'const')
+      .forEach(doc => this.decorateConstExportDoc(doc));
+
+    docs
+      .filter(doc => doc.docType === 'type-alias')
+      .forEach(doc => this.decorateTypeAliasExportDoc(doc));
   }
 
   /**
@@ -59,8 +81,8 @@ export class Categorizer implements Processor {
     decorateDeprecatedDoc(classLikeDoc);
 
     // Sort members
-    classLikeDoc.methods.sort(sortCategorizedMembers);
-    classLikeDoc.properties.sort(sortCategorizedMembers);
+    classLikeDoc.methods.sort(sortCategorizedMethodMembers);
+    classLikeDoc.properties.sort(sortCategorizedPropertyMembers);
   }
 
   /**
@@ -92,11 +114,33 @@ export class Categorizer implements Processor {
    * will be normalized, so that they can be easily used inside of dgeni templates.
    */
   private decorateMethodDoc(methodDoc: CategorizedMethodMemberDoc) {
-    normalizeMethodParameters(methodDoc);
+    normalizeFunctionParameters(methodDoc);
     decorateDeprecatedDoc(methodDoc);
+  }
 
-    // Mark methods with a `void` return type so we can omit show the return type in the docs.
-    methodDoc.showReturns = methodDoc.type ? methodDoc.type !== 'void' : false;
+  /**
+   * Method that will be called for each function export doc. The parameters for the functions
+   * will be normalized, so that they can be easily used inside of Dgeni templates.
+   */
+  private decorateFunctionExportDoc(functionDoc: CategorizedFunctionExportDoc) {
+    normalizeFunctionParameters(functionDoc);
+    decorateDeprecatedDoc(functionDoc);
+  }
+
+  /**
+   * Method that will be called for each const export document. We decorate the const
+   * documents with a property that states whether the constant is deprecated or not.
+   */
+  private decorateConstExportDoc(doc: CategorizedConstExportDoc) {
+    decorateDeprecatedDoc(doc);
+  }
+
+  /**
+   * Method that will be called for each type-alias export document. We decorate the type-alias
+   * documents with a property that states whether the type-alias is deprecated or not.
+   */
+  private decorateTypeAliasExportDoc(doc: CategorizedTypeAliasExportDoc) {
+    decorateDeprecatedDoc(doc);
   }
 
   /**
@@ -144,6 +188,6 @@ export class Categorizer implements Processor {
 }
 
 /** Filters any duplicate classDoc members from an array */
-function filterDuplicateMembers(item: MethodMemberDoc, _index: number, array: MethodMemberDoc[]) {
+function filterDuplicateMembers(item: MemberDoc, _index: number, array: MemberDoc[]) {
   return array.filter((memberDoc) => memberDoc.name === item.name)[0] === item;
 }

@@ -15,12 +15,13 @@ import {
   ViewEncapsulation,
   Inject,
   Optional,
+  Input,
 } from '@angular/core';
 import {
-  CanDisable,
-  CanDisableRipple,
+  CanDisable, CanDisableCtor,
+  CanDisableRipple, CanDisableRippleCtor,
   mixinDisabled,
-  mixinDisableRipple
+  mixinDisableRipple,
 } from '@angular/material/core';
 import {Subject} from 'rxjs';
 import {DOCUMENT} from '@angular/common';
@@ -29,7 +30,8 @@ import {MAT_MENU_PANEL, MatMenuPanel} from './menu-panel';
 // Boilerplate for applying mixins to MatMenuItem.
 /** @docs-private */
 export class MatMenuItemBase {}
-export const _MatMenuItemMixinBase = mixinDisableRipple(mixinDisabled(MatMenuItemBase));
+export const _MatMenuItemMixinBase: CanDisableRippleCtor & CanDisableCtor & typeof MatMenuItemBase =
+    mixinDisableRipple(mixinDisabled(MatMenuItemBase));
 
 /**
  * This directive is intended to be used inside an mat-menu tag.
@@ -41,7 +43,7 @@ export const _MatMenuItemMixinBase = mixinDisableRipple(mixinDisabled(MatMenuIte
   exportAs: 'matMenuItem',
   inputs: ['disabled', 'disableRipple'],
   host: {
-    'role': 'menuitem',
+    '[attr.role]': 'role',
     'class': 'mat-menu-item',
     '[class.mat-menu-item-highlighted]': '_highlighted',
     '[class.mat-menu-item-submenu-trigger]': '_triggersSubmenu',
@@ -57,6 +59,9 @@ export const _MatMenuItemMixinBase = mixinDisableRipple(mixinDisabled(MatMenuIte
 })
 export class MatMenuItem extends _MatMenuItemMixinBase
     implements FocusableOption, CanDisable, CanDisableRipple, OnDestroy {
+
+  /** ARIA role for the menu item. */
+  @Input() role: 'menuitem' | 'menuitemradio' | 'menuitemcheckbox' = 'menuitem';
 
   private _document: Document;
 
@@ -75,14 +80,14 @@ export class MatMenuItem extends _MatMenuItemMixinBase
     private _focusMonitor?: FocusMonitor,
     @Inject(MAT_MENU_PANEL) @Optional() private _parentMenu?: MatMenuPanel<MatMenuItem>) {
 
-    // @breaking-change 7.0.0 make `_focusMonitor` and `document` required params.
+    // @breaking-change 8.0.0 make `_focusMonitor` and `document` required params.
     super();
 
     if (_focusMonitor) {
       // Start monitoring the element so it gets the appropriate focused classes. We want
       // to show the focus style for menu items only when the focus was not caused by a
       // mouse or touch interaction.
-      _focusMonitor.monitor(this._getHostElement(), false);
+      _focusMonitor.monitor(this._elementRef, false);
     }
 
     if (_parentMenu && _parentMenu.addItem) {
@@ -103,7 +108,7 @@ export class MatMenuItem extends _MatMenuItemMixinBase
 
   ngOnDestroy() {
     if (this._focusMonitor) {
-      this._focusMonitor.stopMonitoring(this._getHostElement());
+      this._focusMonitor.stopMonitoring(this._elementRef);
     }
 
     if (this._parentMenu && this._parentMenu.removeItem) {

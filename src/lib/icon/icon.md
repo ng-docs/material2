@@ -169,21 +169,6 @@ includes using the icon in place of text inside of a larger message.
 
    **指示符**：该图标不是交互式的，但传达某些信息，比如状态。这种情况也包括在大型消息的文本中使用图标。
 
-### Bidirectionality
-
-### 双向文字
-
-By default icons in an RTL layout will look exactly the same as in LTR, however certain icons have
-to be [mirrored for RTL users](https://material.io/guidelines/usability/bidirectionality.html). If
-you want to mirror an icon only in an RTL layout, you can use the `mat-icon-rtl-mirror` CSS class.
-
-默认情况下，在 RTL 布局下的图标和 LTR 布局下是完全一样的，不过某些图标必须[为 RTL 用户进行镜像处理](https://material.io/guidelines/usability/bidirectionality.html)。
-如果你只想在 RTL 布局下镜像某个图标，可以使用 `mat-icon-rtl-mirror` 类。
-
-```html
-<mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up"></mat-icon>
-```
-
 #### Decorative icons
 
 #### 装饰性图标
@@ -230,3 +215,18 @@ information as the icon.
 on-screen but still available to screen-reader users.
 
    给 `<span>` 添加一个 `cdk-visually-hidden` 类，这会导致在屏幕上看不见该信息，但屏幕阅读器用户仍然可以读取它。
+
+### Bidirectionality
+
+### 双向文字
+
+By default icons in an RTL layout will look exactly the same as in LTR, however certain icons have
+to be [mirrored for RTL users](https://material.io/guidelines/usability/bidirectionality.html). If
+you want to mirror an icon only in an RTL layout, you can use the `mat-icon-rtl-mirror` CSS class.
+
+默认情况下，在 RTL 布局下的图标和 LTR 布局下是完全一样的，不过某些图标必须[为 RTL 用户进行镜像处理](https://material.io/guidelines/usability/bidirectionality.html)。
+如果你只想在 RTL 布局下镜像某个图标，可以使用 `mat-icon-rtl-mirror` 类。
+
+```html
+<mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up"></mat-icon>
+```

@@ -73,6 +73,13 @@ $mat-form-field-default-infix-width: 180px !default;
   height: 100%;
   overflow: hidden;
   pointer-events: none;  // We shouldn't catch mouse events (let them through).
+
+  [dir='rtl'] & {
+    // Usually this isn't necessary since the element is 100% wide, but
+    // when we've got a `select` node, we need to set a `max-width` on it.
+    left: auto;
+    right: 0;
+  }
 }
 
 // The label itself. This is invisible unless it is. The logic to show it is
@@ -116,7 +123,7 @@ $mat-form-field-default-infix-width: 180px !default;
 // This is necessary because these browsers do not actually fire any events when a form auto-fill is
 // occurring. Once the autofill is committed, a change event happen and the regular mat-form-field
 // classes take over to fulfill this behaviour.
-// @breaking-change 7.0.0 will rely on AutofillMonitor instead.
+// @breaking-change 8.0.0 will rely on AutofillMonitor instead.
 .mat-form-field-autofill-control:-webkit-autofill + .mat-form-field-label-wrapper
     .mat-form-field-label {
   // The form field will be considered empty if it is autofilled, and therefore the label will
@@ -215,6 +222,11 @@ $mat-form-field-default-infix-width: 180px !default;
 // Single error message displayed beneath the form field underline.
 .mat-error {
   display: block;
+}
+
+// Element that can used to reliably align content in relation to the form field control.
+.mat-form-field-control-wrapper {
+  position: relative;
 }
 
 .mat-form-field._mat-animation-noopable {

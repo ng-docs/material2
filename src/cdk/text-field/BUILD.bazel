@@ -1,32 +1,54 @@
 package(default_visibility=["//visibility:public"])
-load("@angular//:index.bzl", "ng_module")
-load("@io_bazel_rules_sass//sass:sass.bzl", "sass_library", "sass_binary")
+
+load("@io_bazel_rules_sass//:defs.bzl", "sass_library", "sass_binary")
+load("//tools:defaults.bzl", "ng_module", "ng_test_library", "ng_web_test_suite",
+  "markdown_to_html")
 
 ng_module(
   name = "text-field",
   srcs = glob(["**/*.ts"], exclude=["**/*.spec.ts"]),
   module_name = "@angular/cdk/text-field",
   deps = [
+    "@angular//packages/core",
     "@rxjs",
+    "@rxjs//operators",
     "//src/cdk/coercion",
     "//src/cdk/platform",
   ],
-  tsconfig = "//src/lib:tsconfig-build.json",
-)
-
-# TODO(jelbourn): replace this w/ sass_library when it supports acting like a filegroup
-filegroup(
-  name = "text_field_scss_partials",
-  srcs = glob(["**/_*.scss"]),
 )
 
 sass_library(
   name = "text_field_scss_lib",
-  srcs = [":text_field_scss_partials"],
+  srcs = glob(["**/_*.scss"]),
 )
 
 sass_binary(
   name = "text_field_prebuilt_scss",
   src = "text-field-prebuilt.scss",
   deps = [":text_field_scss_lib"],
+)
+
+ng_test_library(
+  name = "text-field_test_sources",
+  srcs = glob(["**/*.spec.ts"]),
+  deps = [
+    "@angular//packages/forms",
+    "@angular//packages/platform-browser",
+    "@angular//packages/platform-browser/animations",
+    "@rxjs",
+    "//src/cdk/platform",
+    "//src/cdk/testing",
+    ":text-field"
+  ],
+)
+
+ng_web_test_suite(
+  name = "unit_tests",
+  deps = [":text-field_test_sources"],
+  static_css = [":text_field_prebuilt_scss"]
+)
+
+markdown_to_html(
+  name = "overview",
+  srcs = [":text-field.md"],
 )

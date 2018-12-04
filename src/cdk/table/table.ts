@@ -65,6 +65,13 @@ export interface RowOutlet {
 }
 
 /**
+ * Union of the types that can be set as the data source for a `CdkTable`.
+ * @docs-private
+ */
+type CdkTableDataSourceInput<T> = DataSource<T> | Observable<ReadonlyArray<T> | T[]> |
+                                  ReadonlyArray<T> | T[];
+
+/**
  * Provides a handle for the table to grab the view container's ng-container to insert data rows.
  * @docs-private
  */
@@ -157,7 +164,7 @@ export class CdkTable<T> implements AfterContentChecked, CollectionViewer, OnDes
   private _document: Document;
 
   /** Latest data provided by the data source. */
-  protected _data: T[];
+  protected _data: T[] | ReadonlyArray<T>;
 
   /** Subject that emits when the component has been destroyed. */
   private _onDestroy = new Subject<void>();
@@ -310,13 +317,13 @@ export class CdkTable<T> implements AfterContentChecked, CollectionViewer, OnDes
    * subscriptions registered during the connect process).
    */
   @Input()
-  get dataSource(): DataSource<T> | Observable<T[]> | T[] { return this._dataSource; }
-  set dataSource(dataSource: DataSource<T> | Observable<T[]> | T[]) {
+  get dataSource(): CdkTableDataSourceInput<T> { return this._dataSource; }
+  set dataSource(dataSource: CdkTableDataSourceInput<T>) {
     if (this._dataSource !== dataSource) {
       this._switchDataSource(dataSource);
     }
   }
-  private _dataSource: DataSource<T> | Observable<T[]> | T[] | T[];
+  private _dataSource: CdkTableDataSourceInput<T>;
 
   /**
    * Whether to allow multiple rows per data object by evaluating which rows evaluate their 'when'
@@ -463,17 +470,19 @@ export class CdkTable<T> implements AfterContentChecked, CollectionViewer, OnDes
     if (!changes) { return; }
 
     const viewContainer = this._rowOutlet.viewContainer;
-    changes.forEachOperation(
-        (record: IterableChangeRecord<RenderRow<T>>, prevIndex: number, currentIndex: number) => {
-          if (record.previousIndex == null) {
-            this._insertRow(record.item, currentIndex);
-          } else if (currentIndex == null) {
-            viewContainer.remove(prevIndex);
-          } else {
-            const view = <RowViewRef<T>>viewContainer.get(prevIndex);
-            viewContainer.move(view!, currentIndex);
-          }
-        });
+
+    changes.forEachOperation((record: IterableChangeRecord<RenderRow<T>>,
+                              prevIndex: number | null,
+                              currentIndex: number | null) => {
+      if (record.previousIndex == null) {
+        this._insertRow(record.item, currentIndex!);
+      } else if (currentIndex == null) {
+        viewContainer.remove(prevIndex!);
+      } else {
+        const view = <RowViewRef<T>>viewContainer.get(prevIndex!);
+        viewContainer.move(view!, currentIndex);
+      }
+    });
 
     // Update the meta context of a row's context data (index, count, first, last, ...)
     this._updateRowIndexContext();
@@ -757,7 +766,7 @@ export class CdkTable<T> implements AfterContentChecked, CollectionViewer, OnDes
    * render change subscription if one exists. If the data source is null, interpret this by
    * clearing the row outlet. Otherwise start listening for new data.
    */
-  private _switchDataSource(dataSource: DataSource<T> | Observable<T[]> | T[]) {
+  private _switchDataSource(dataSource: CdkTableDataSourceInput<T>) {
     this._data = [];
 
     if (this.dataSource instanceof DataSource) {
@@ -785,7 +794,7 @@ export class CdkTable<T> implements AfterContentChecked, CollectionViewer, OnDes
     // If no data source has been set, there is nothing to observe for changes.
     if (!this.dataSource) { return; }
 
-    let dataStream: Observable<T[]> | undefined;
+    let dataStream: Observable<T[] | ReadonlyArray<T>> | undefined;
 
     // Check if the datasource is a DataSource object by observing if it has a connect function.
     // Cannot check this.dataSource['connect'] due to potential property renaming, nor can it

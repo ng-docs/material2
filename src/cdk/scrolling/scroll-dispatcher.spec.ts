@@ -1,6 +1,6 @@
 import {inject, TestBed, async, fakeAsync, ComponentFixture, tick} from '@angular/core/testing';
 import {NgModule, Component, ViewChild, ElementRef} from '@angular/core';
-import {CdkScrollable, ScrollDispatcher, ScrollDispatchModule} from './public-api';
+import {CdkScrollable, ScrollDispatcher, ScrollingModule} from './public-api';
 import {dispatchFakeEvent} from '@angular/cdk/testing';
 
 describe('ScrollDispatcher', () => {
@@ -110,6 +110,23 @@ describe('ScrollDispatcher', () => {
       fixture.destroy();
       expect(spy).toHaveBeenCalled();
       subscription.unsubscribe();
+    });
+
+    it('should not register the same scrollable twice', () => {
+      const scrollable = fixture.componentInstance.scrollable;
+      const scrollSpy = jasmine.createSpy('scroll spy');
+      const scrollSubscription = scroll.scrolled(0).subscribe(scrollSpy);
+
+      expect(scroll.scrollContainers.has(scrollable)).toBe(true);
+
+      scroll.register(scrollable);
+      scroll.deregister(scrollable);
+
+      dispatchFakeEvent(fixture.componentInstance.scrollingElement.nativeElement, 'scroll');
+      fixture.detectChanges();
+
+      expect(scrollSpy).not.toHaveBeenCalled();
+      scrollSubscription.unsubscribe();
     });
 
   });
@@ -250,7 +267,7 @@ class NestedScrollingComponent {
 
 const TEST_COMPONENTS = [ScrollingComponent, NestedScrollingComponent];
 @NgModule({
-  imports: [ScrollDispatchModule],
+  imports: [ScrollingModule],
   providers: [ScrollDispatcher],
   exports: TEST_COMPONENTS,
   declarations: TEST_COMPONENTS,

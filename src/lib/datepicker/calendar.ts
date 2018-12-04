@@ -32,6 +32,7 @@ import {MatDatepickerIntl} from './datepicker-intl';
 import {MatMonthView} from './month-view';
 import {MatMultiYearView, yearsPerPage} from './multi-year-view';
 import {MatYearView} from './year-view';
+import {MatCalendarCellCssClasses} from './calendar-body';
 
 /**
  * Possible views for the calendar.
@@ -220,8 +221,11 @@ export class MatCalendar<D> implements AfterContentInit, AfterViewChecked, OnDes
   }
   private _maxDate: D | null;
 
-  /** A function used to filter which dates are selectable. */
+  /** Function used to filter which dates are selectable. */
   @Input() dateFilter: (date: D) => boolean;
+
+  /** Function that can be used to add custom CSS classes to dates. */
+  @Input() dateClass: (date: D) => MatCalendarCellCssClasses;
 
   /** Emits when the currently selected date changes. */
   @Output() readonly selectedChange: EventEmitter<D> = new EventEmitter<D>();
@@ -332,6 +336,14 @@ export class MatCalendar<D> implements AfterContentInit, AfterViewChecked, OnDes
 
   focusActiveCell() {
     this._getCurrentViewComponent()._focusActiveCell();
+  }
+
+  /** Updates today's date after an update of the active date */
+  updateTodaysDate() {
+    let view = this.currentView == 'month' ? this.monthView :
+            (this.currentView == 'year' ? this.yearView : this.multiYearView);
+
+    view.ngAfterContentInit();
   }
 
   /** Handles date selection in the month view. */

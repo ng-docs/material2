@@ -35,6 +35,7 @@ import {FormControl, FormsModule, NgForm, ReactiveFormsModule, Validators} from 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {By} from '@angular/platform-browser';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Subject} from 'rxjs';
 import {MatInputModule} from '../input/index';
 import {MatChip} from './chip';
 import {MatChipInputEvent} from './chip-input';
@@ -50,6 +51,7 @@ describe('MatChipList', () => {
   let chips: QueryList<MatChip>;
   let manager: FocusKeyManager<MatChip>;
   let zone: MockNgZone;
+  let dirChange: Subject<Direction>;
 
   describe('StandardChipList', () => {
     describe('basic behaviors', () => {
@@ -269,6 +271,7 @@ describe('MatChipList', () => {
 
           // Press the LEFT arrow
           chipListInstance._keydown(LEFT_EVENT);
+          chipListInstance._blur(); // Simulate focus leaving the list and going to the chip.
           fixture.detectChanges();
 
           // It focuses the next-to-last item
@@ -290,6 +293,7 @@ describe('MatChipList', () => {
 
           // Press the RIGHT arrow
           chipListInstance._keydown(RIGHT_EVENT);
+          chipListInstance._blur(); // Simulate focus leaving the list and going to the chip.
           fixture.detectChanges();
 
           // It focuses the next-to-last item
@@ -362,6 +366,7 @@ describe('MatChipList', () => {
 
           // Press the RIGHT arrow
           chipListInstance._keydown(RIGHT_EVENT);
+          chipListInstance._blur(); // Simulate focus leaving the list and going to the chip.
           fixture.detectChanges();
 
           // It focuses the next-to-last item
@@ -383,6 +388,7 @@ describe('MatChipList', () => {
 
           // Press the LEFT arrow
           chipListInstance._keydown(LEFT_EVENT);
+          chipListInstance._blur(); // Simulate focus leaving the list and going to the chip.
           fixture.detectChanges();
 
           // It focuses the next-to-last item
@@ -418,6 +424,38 @@ describe('MatChipList', () => {
           expect(chipListInstance._tabIndex).toBe(4, 'Expected tabIndex to be reset back to 4');
         }));
       });
+
+      it('should account for the direction changing', () => {
+        setupStandardList();
+        manager = chipListInstance._keyManager;
+
+        let nativeChips = chipListNativeElement.querySelectorAll('mat-chip');
+        let firstNativeChip = nativeChips[0] as HTMLElement;
+
+        let RIGHT_EVENT: KeyboardEvent =
+          createKeyboardEvent('keydown', RIGHT_ARROW, firstNativeChip);
+        let array = chips.toArray();
+        let firstItem = array[0];
+
+        firstItem.focus();
+        expect(manager.activeItemIndex).toBe(0);
+
+        chipListInstance._keydown(RIGHT_EVENT);
+        chipListInstance._blur();
+        fixture.detectChanges();
+
+        expect(manager.activeItemIndex).toBe(1);
+
+        dirChange.next('rtl');
+        fixture.detectChanges();
+
+        chipListInstance._keydown(RIGHT_EVENT);
+        chipListInstance._blur();
+        fixture.detectChanges();
+
+        expect(manager.activeItemIndex).toBe(0);
+      });
+
     });
   });
 
@@ -1012,10 +1050,11 @@ describe('MatChipList', () => {
 
     it('should keep focus on the input after adding the first chip', fakeAsync(() => {
       const nativeInput = fixture.nativeElement.querySelector('input');
-      const chipEls = Array.from(fixture.nativeElement.querySelectorAll('.mat-chip')).reverse();
+      const chipEls = Array.from<HTMLElement>(
+          fixture.nativeElement.querySelectorAll('.mat-chip')).reverse();
 
       // Remove the chips via backspace to simulate the user removing them.
-      chipEls.forEach((chip: HTMLElement) => {
+      chipEls.forEach(chip => {
         chip.focus();
         dispatchKeyboardEvent(chip, 'keydown', BACKSPACE);
         fixture.detectChanges();
@@ -1034,6 +1073,20 @@ describe('MatChipList', () => {
 
       expect(document.activeElement).toBe(nativeInput, 'Expected input to remain focused.');
     }));
+
+    it('should set aria-invalid if the form field is invalid', () => {
+      fixture.componentInstance.control = new FormControl(undefined, [Validators.required]);
+      fixture.detectChanges();
+
+      const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
+
+      expect(input.getAttribute('aria-invalid')).toBe('true');
+
+      fixture.componentInstance.chips.first.selectViaInteraction();
+      fixture.detectChanges();
+
+      expect(input.getAttribute('aria-invalid')).toBe('false');
+    });
 
     describe('keyboard behavior', () => {
       beforeEach(() => {
@@ -1220,8 +1273,12 @@ describe('MatChipList', () => {
   }
 
   function setupStandardList(direction: Direction = 'ltr') {
+    dirChange = new Subject();
     fixture = createComponent(StandardChipList, [{
-      provide: Directionality, useFactory: () => ({value: direction.toLowerCase()})
+      provide: Directionality, useFactory: () => ({
+        value: direction.toLowerCase(),
+        change: dirChange
+      })
     }]);
     fixture.detectChanges();
 

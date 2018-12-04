@@ -266,10 +266,10 @@ To react to scrolling inside the `<mat-sidenav-container>`, you can get a hold o
 要响应 `<mat-sidenav-container>` 内部的滚动事件，你可以通过 `MatSidenavContainer` 来获取一个底层的 `CdkScrollable` 实例。
 
 ```ts
-class YourComponent {
+class YourComponent implements AfterViewInit {
   @ViewChild(MatSidenavContainer) sidenavContainer: MatSidenavContainer;
 
-  constructor() {
+  ngAfterViewInit() {
     this.sidenavContainer.scrollable.elementScrolled().subscribe(() => /* react to scrolling */);
   }
 }

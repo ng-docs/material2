@@ -20,6 +20,7 @@ import {
   Optional,
   SkipSelf,
   TemplateRef,
+  OnDestroy,
 } from '@angular/core';
 import {take, takeUntil} from 'rxjs/operators';
 import {SimpleSnackBar} from './simple-snack-bar';
@@ -45,7 +46,7 @@ export function MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY(): MatSnackBarConfig {
  * Service to dispatch Material Design snack bar messages.
  */
 @Injectable({providedIn: MatSnackBarModule})
-export class MatSnackBar {
+export class MatSnackBar implements OnDestroy {
   /**
    * Reference to the current snack bar in the view *at this level* (in the Angular injector tree).
    * If there is a parent snack-bar service, all operations should delegate to that parent
@@ -129,6 +130,13 @@ export class MatSnackBar {
     }
   }
 
+  ngOnDestroy() {
+    // Only dismiss the snack bar at the current level on destroy.
+    if (this._snackBarRefAtThisLevel) {
+      this._snackBarRefAtThisLevel.dismiss();
+    }
+  }
+
   /**
    * Attaches the snack bar container component to the overlay.
    */
@@ -199,6 +207,10 @@ export class MatSnackBar {
       // Clear the snackbar ref if it hasn't already been replaced by a newer snackbar.
       if (this._openedSnackBarRef == snackBarRef) {
         this._openedSnackBarRef = null;
+      }
+
+      if (config.announcementMessage) {
+        this._live.clear();
       }
     });
 

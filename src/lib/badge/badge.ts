@@ -19,10 +19,17 @@ import {
   Optional,
   Renderer2,
 } from '@angular/core';
-import {ThemePalette} from '@angular/material/core';
+import {ThemePalette, mixinDisabled, CanDisableCtor, CanDisable} from '@angular/material/core';
 
 
 let nextId = 0;
+
+// Boilerplate for applying mixins to MatBadge.
+/** @docs-private */
+export class MatBadgeBase {}
+
+export const _MatBadgeMixinBase:
+    CanDisableCtor & typeof MatBadgeBase = mixinDisabled(MatBadgeBase);
 
 export type MatBadgePosition = 'above after' | 'above before' | 'below before' | 'below after';
 export type MatBadgeSize = 'small' | 'medium' | 'large';
@@ -30,6 +37,7 @@ export type MatBadgeSize = 'small' | 'medium' | 'large';
 /** Directive to display a text badge. */
 @Directive({
   selector: '[matBadge]',
+  inputs: ['disabled: matBadgeDisabled'],
   host: {
     'class': 'mat-badge',
     '[class.mat-badge-overlap]': 'overlap',
@@ -41,9 +49,10 @@ export type MatBadgeSize = 'small' | 'medium' | 'large';
     '[class.mat-badge-medium]': 'size === "medium"',
     '[class.mat-badge-large]': 'size === "large"',
     '[class.mat-badge-hidden]': 'hidden || !_hasContent',
+    '[class.mat-badge-disabled]': 'disabled',
   },
 })
-export class MatBadge implements OnDestroy {
+export class MatBadge extends _MatBadgeMixinBase implements OnDestroy, CanDisable {
   /** Whether the badge has any content. */
   _hasContent = false;
 
@@ -113,7 +122,9 @@ export class MatBadge implements OnDestroy {
       private _elementRef: ElementRef<HTMLElement>,
       private _ariaDescriber: AriaDescriber,
       /** @breaking-change 8.0.0 Make _renderer a required param and remove _document. */
-      private _renderer?: Renderer2) {}
+      private _renderer?: Renderer2) {
+        super();
+      }
 
   /** Whether the badge is above the host or not */
   isAbove(): boolean {
@@ -126,8 +137,19 @@ export class MatBadge implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.description && this._badgeElement) {
-      this._ariaDescriber.removeDescription(this._badgeElement, this.description);
+    const badgeElement = this._badgeElement;
+
+    if (badgeElement) {
+      if (this.description) {
+        this._ariaDescriber.removeDescription(badgeElement, this.description);
+      }
+
+      // When creating a badge through the Renderer, Angular will keep it in an index.
+      // We have to destroy it ourselves, otherwise it'll be retained in memory.
+      // @breaking-change 8.0.0 remove _renderer from null.
+      if (this._renderer && this._renderer.destroyNode) {
+        this._renderer.destroyNode(badgeElement);
+      }
     }
   }
 

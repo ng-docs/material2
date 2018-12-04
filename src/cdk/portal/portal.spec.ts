@@ -29,9 +29,14 @@ describe('Portals', () => {
 
   describe('CdkPortalOutlet', () => {
     let fixture: ComponentFixture<PortalTestApp>;
+    let componentFactoryResolver: ComponentFactoryResolver;
 
     beforeEach(() => {
       fixture = TestBed.createComponent(PortalTestApp);
+
+      inject([ComponentFactoryResolver], (cfr: ComponentFactoryResolver) => {
+        componentFactoryResolver = cfr;
+      })();
     });
 
     it('should load a component into the portal', () => {
@@ -311,6 +316,20 @@ describe('Portals', () => {
       expect(instance.portalOutlet.hasAttached()).toBe(true);
     });
 
+    it('should use the `ComponentFactoryResolver` from the portal, if available', () => {
+      const spy = jasmine.createSpy('resolveComponentFactorySpy');
+      const portal = new ComponentPortal(PizzaMsg, undefined, undefined, {
+        resolveComponentFactory: (...args: any[]) => {
+          spy();
+          return componentFactoryResolver.resolveComponentFactory
+              .apply(componentFactoryResolver, args);
+        }
+      });
+
+      fixture.componentInstance.portalOutlet.attachComponentPortal(portal);
+      expect(spy).toHaveBeenCalled();
+    });
+
   });
 
   describe('DomPortalOutlet', () => {
@@ -322,10 +341,10 @@ describe('Portals', () => {
     let host: DomPortalOutlet;
     let injector: Injector;
     let appRef: ApplicationRef;
-
     let deps = [ComponentFactoryResolver, Injector, ApplicationRef];
-    beforeEach(inject(deps, (dcl: ComponentFactoryResolver, i: Injector, ar: ApplicationRef) => {
-      componentFactoryResolver = dcl;
+
+    beforeEach(inject(deps, (cfr: ComponentFactoryResolver, i: Injector, ar: ApplicationRef) => {
+      componentFactoryResolver = cfr;
       injector = i;
       appRef = ar;
     }));
@@ -468,6 +487,21 @@ describe('Portals', () => {
 
       expect(spy).toHaveBeenCalled();
     });
+
+    it('should use the `ComponentFactoryResolver` from the portal, if available', () => {
+      const spy = jasmine.createSpy('resolveComponentFactorySpy');
+      const portal = new ComponentPortal(PizzaMsg, undefined, undefined, {
+        resolveComponentFactory: (...args: any[]) => {
+          spy();
+          return componentFactoryResolver.resolveComponentFactory
+              .apply(componentFactoryResolver, args);
+        }
+      });
+
+      host.attachComponentPortal(portal);
+      expect(spy).toHaveBeenCalled();
+    });
+
   });
 });
 

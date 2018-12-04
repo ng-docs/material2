@@ -18,7 +18,6 @@ import {
 } from '@angular/cdk/overlay';
 import {ComponentPortal, ComponentType} from '@angular/cdk/portal';
 import {DOCUMENT} from '@angular/common';
-import {take, filter} from 'rxjs/operators';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -30,20 +29,28 @@ import {
   InjectionToken,
   Input,
   NgZone,
+  OnDestroy,
   Optional,
   Output,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
-  OnDestroy,
 } from '@angular/core';
-import {CanColor, DateAdapter, mixinColor, ThemePalette} from '@angular/material/core';
+import {
+  CanColor,
+  CanColorCtor,
+  DateAdapter,
+  mixinColor,
+  ThemePalette,
+} from '@angular/material/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {merge, Subject, Subscription} from 'rxjs';
-import {createMissingDateImplError} from './datepicker-errors';
-import {MatDatepickerInput} from './datepicker-input';
+import {filter, take} from 'rxjs/operators';
 import {MatCalendar} from './calendar';
 import {matDatepickerAnimations} from './datepicker-animations';
+import {createMissingDateImplError} from './datepicker-errors';
+import {MatDatepickerInput} from './datepicker-input';
+import {MatCalendarCellCssClasses} from './calendar-body';
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
@@ -69,7 +76,8 @@ export const MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
 export class MatDatepickerContentBase {
   constructor(public _elementRef: ElementRef) { }
 }
-export const _MatDatepickerContentMixinBase = mixinColor(MatDatepickerContentBase);
+export const _MatDatepickerContentMixinBase: CanColorCtor & typeof MatDatepickerContentBase =
+    mixinColor(MatDatepickerContentBase);
 
 /**
  * Component used as the content for the datepicker dialog and popup. We use this instead of using
@@ -132,6 +140,8 @@ export class MatDatepickerContent<D> extends _MatDatepickerContentMixinBase
   encapsulation: ViewEncapsulation.None,
 })
 export class MatDatepicker<D> implements OnDestroy, CanColor {
+  private _scrollStrategy: () => ScrollStrategy;
+
   /** An input indicating the type of the custom header component for the calendar, if set. */
   @Input() calendarHeaderComponent: ComponentType<any>;
 
@@ -203,6 +213,9 @@ export class MatDatepicker<D> implements OnDestroy, CanColor {
   /** Classes to be passed to the date picker panel. Supports the same syntax as `ngClass`. */
   @Input() panelClass: string | string[];
 
+  /** Function that can be used to add custom CSS classes to dates. */
+  @Input() dateClass: (date: D) => MatCalendarCellCssClasses;
+
   /** Emits when the datepicker has been opened. */
   @Output('opened') openedStream: EventEmitter<void> = new EventEmitter<void>();
 
@@ -269,13 +282,15 @@ export class MatDatepicker<D> implements OnDestroy, CanColor {
               private _overlay: Overlay,
               private _ngZone: NgZone,
               private _viewContainerRef: ViewContainerRef,
-              @Inject(MAT_DATEPICKER_SCROLL_STRATEGY) private _scrollStrategy,
+              @Inject(MAT_DATEPICKER_SCROLL_STRATEGY) scrollStrategy: any,
               @Optional() private _dateAdapter: DateAdapter<D>,
               @Optional() private _dir: Directionality,
               @Optional() @Inject(DOCUMENT) private _document: any) {
     if (!this._dateAdapter) {
       throw createMissingDateImplError('DateAdapter');
     }
+
+    this._scrollStrategy = scrollStrategy;
   }
 
   ngOnDestroy() {
@@ -290,7 +305,7 @@ export class MatDatepicker<D> implements OnDestroy, CanColor {
   }
 
   /** Selects the given date */
-  _select(date: D): void {
+  select(date: D): void {
     let oldValue = this._selected;
     this._selected = date;
     if (!this._dateAdapter.sameDate(oldValue, this._selected)) {
@@ -454,7 +469,7 @@ export class MatDatepicker<D> implements OnDestroy, CanColor {
       .withTransformOriginOn('.mat-datepicker-content')
       .withFlexibleDimensions(false)
       .withViewportMargin(8)
-      .withPush(false)
+      .withLockedPosition()
       .withPositions([
         {
           originX: 'start',

@@ -61,6 +61,13 @@ For more complex labels, add a template with the `matStepLabel` directive inside
 </mat-vertical-stepper>
 ```
 
+#### Label position
+For `mat-horizontal-stepper` it's possible to define the position of the label. `end` is the
+default value, while `bottom` will place it under the step icon instead of at its side.
+This behaviour is controlled by `labelPosition` property.
+
+<!-- example(stepper-label-position-bottom) -->
+
 ### Stepper buttons
 
 ### 步进器按钮
@@ -228,6 +235,85 @@ by placing a `matStepperIcon` for each of the icons that you want to override. T
 Note that you aren't limited to using the `mat-icon` component when providing custom icons.
 
 注意，要想提供自定义图标，你不一定非要用 `mat-icon` 组件。
+
+#### Step States
+
+#### 步骤的状态
+
+You can set the state of a step to whatever you want. The given state by default maps to an icon.
+However, it can be overridden the same way as mentioned above.
+
+你可以随意设置某个步骤的状态。默认情况下，指定的状态会映射到一个图标。不过，你也同样可以像前面所说的那样去覆盖它。
+
+```html
+<mat-horizontal-stepper>
+  <mat-step label="Step 1" state="phone">
+    <p>Put down your phones.</p>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Step 2" state="chat">
+    <p>Socialize with each other.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Step 3">
+    <p>You're welcome.</p>
+  </mat-step>
+
+  <!-- Icon overrides. -->
+  <ng-template matStepperIcon="phone">
+    <mat-icon>call_end</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="chat">
+    <mat-icon>forum</mat-icon>
+  </ng-template>
+</mat-horizontal-stepper>
+```
+
+In order to use the custom step states, you must add the `displayDefaultIndicatorType` option to
+the global default stepper options which can be specified by providing a value for
+`STEPPER_GLOBAL_OPTIONS` in your application's root module.
+
+为了使用自定义的步骤状态，你必须把 `displayDefaultIndicatorType` 选项添加到全局的默认步进器选项中。你可以通过在应用的根模块中给 `STEPPER_GLOBAL_OPTIONS` 令牌提供一个值来指定它。
+
+```ts
+@NgModule({
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    }
+  ]
+})
+```
+
+<!-- example(stepper-states) -->
+
+### Error State
+
+### 错误状态
+
+The stepper can now show error states by simply providing the `showError` option to the
+`STEPPER_GLOBAL_OPTIONS` in your application's root module as mentioned above.
+
+步进器还可以显示错误状态，只要像前面一样在应用的根模块的 `STEPPER_GLOBAL_OPTIONS` 令牌中提供 `showError` 选项就可以了。
+
+```ts
+@NgModule({
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ]
+})
+```
+
+<!-- example(stepper-errors) -->
 
 ### Keyboard interaction
 

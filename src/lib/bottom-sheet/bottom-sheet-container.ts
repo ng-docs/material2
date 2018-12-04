@@ -144,10 +144,10 @@ export class MatBottomSheetContainer extends BasePortalOutlet implements OnDestr
   }
 
   _onAnimationDone(event: AnimationEvent) {
-    if (event.toState === 'visible') {
-      this._trapFocus();
-    } else if (event.toState === 'hidden') {
+    if (event.toState === 'hidden') {
       this._restoreFocus();
+    } else if (event.toState === 'visible' && this.bottomSheetConfig.autoFocus) {
+      this._trapFocus();
     }
 
     this._animationStateChanged.emit(event);
@@ -190,12 +190,12 @@ export class MatBottomSheetContainer extends BasePortalOutlet implements OnDestr
     this._focusTrap.focusInitialElementWhenReady();
   }
 
-  /** Restores focus to the element that was focused before the bottom sheet opened. */
+  /** Restores focus to the element that was focused before the bottom sheet was opened. */
   private _restoreFocus() {
     const toFocus = this._elementFocusedBeforeOpened;
 
     // We need the extra check, because IE can set the `activeElement` to null in some cases.
-    if (toFocus && typeof toFocus.focus === 'function') {
+    if (this.bottomSheetConfig.restoreFocus && toFocus && typeof toFocus.focus === 'function') {
       toFocus.focus();
     }
 

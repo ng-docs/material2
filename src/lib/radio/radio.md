@@ -63,6 +63,6 @@ This internal radio button receives focus and is automatically labelled by the t
 `<mat-radio-button>` 使用其内部的 `<input type="radio">` 来提供可访问性。
 这个内部单选按钮会接受焦点，并自动以 `<mat-radio-button>` 元素的内容作为标签。
 
-Radio button groups should should be given a meaningful label via `aria-label` or `aria-labelledby`.
+Radio button groups should be given a meaningful label via `aria-label` or `aria-labelledby`.
 
 单选按钮组应该通过 `aria-label` 或 `aria-labelledby` 给出一个有意义的标签。

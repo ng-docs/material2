@@ -44,7 +44,7 @@ import {MatSnackBarConfig} from './snack-bar-config';
   encapsulation: ViewEncapsulation.None,
   animations: [matSnackBarAnimations.snackBarState],
   host: {
-    'role': 'alert',
+    '[attr.role]': '_role',
     'class': 'mat-snack-bar-container',
     '[@state]': '_animationState',
     '(@state.done)': 'onAnimationEnd($event)'
@@ -66,6 +66,9 @@ export class MatSnackBarContainer extends BasePortalOutlet implements OnDestroy 
   /** The state of the snack bar animations. */
   _animationState = 'void';
 
+  /** ARIA role for the snack bar container. */
+  _role: 'alert' | 'status' | null;
+
   constructor(
     private _ngZone: NgZone,
     private _elementRef: ElementRef<HTMLElement>,
@@ -74,6 +77,16 @@ export class MatSnackBarContainer extends BasePortalOutlet implements OnDestroy 
     public snackBarConfig: MatSnackBarConfig) {
 
     super();
+
+    // Based on the ARIA spec, `alert` and `status` roles have an
+    // implicit `assertive` and `polite` politeness respectively.
+    if (snackBarConfig.politeness === 'assertive' && !snackBarConfig.announcementMessage) {
+      this._role = 'alert';
+    } else if (snackBarConfig.politeness === 'off') {
+      this._role = null;
+    } else {
+      this._role = 'status';
+    }
   }
 
   /** Attach a component portal as content to this snack bar container. */
@@ -94,11 +107,11 @@ export class MatSnackBarContainer extends BasePortalOutlet implements OnDestroy 
   onAnimationEnd(event: AnimationEvent) {
     const {fromState, toState} = event;
 
-    if ((toState === 'void' && fromState !== 'void') || toState.startsWith('hidden')) {
+    if ((toState === 'void' && fromState !== 'void') || toState === 'hidden') {
       this._completeExit();
     }
 
-    if (toState.startsWith('visible')) {
+    if (toState === 'visible') {
       // Note: we shouldn't use `this` inside the zone callback,
       // because it can cause a memory leak.
       const onEnter = this._onEnter;
@@ -113,14 +126,17 @@ export class MatSnackBarContainer extends BasePortalOutlet implements OnDestroy 
   /** Begin animation of snack bar entrance into view. */
   enter(): void {
     if (!this._destroyed) {
-      this._animationState = `visible-${this.snackBarConfig.verticalPosition}`;
+      this._animationState = 'visible';
       this._changeDetectorRef.detectChanges();
     }
   }
 
   /** Begin animation of the snack bar exiting from view. */
   exit(): Observable<void> {
-    this._animationState = `hidden-${this.snackBarConfig.verticalPosition}`;
+    // Note: this one transitions to `hidden`, rather than `void`, in order to handle the case
+    // where multiple snack bars are opened in quick succession (e.g. two consecutive calls to
+    // `MatSnackBar.open`).
+    this._animationState = 'hidden';
     return this._onExit;
   }
 

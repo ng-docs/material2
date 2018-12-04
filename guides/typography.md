@@ -14,44 +14,22 @@ available levels are:
 排版是一种排列字型的方式，它让文本在显示时更加清晰、易读、富有吸引力。Angular Material 的排版基于 [Material Design 规范][1]中给出的指导原则，并按排版等级进行排列。每个等级都有自己的 `font-size`、`line-height` 和 `font-weight`。
 有效的等级包括：
 
-* `display-4`, `display-3`, `display-2` and `display-1` - Large, one-off headers, usually
-at the top of the page (e.g. a hero header).
+| <t>Name</t><t>名称</t>            | <t>CSS classes</t><t>CSS 类</t>                      | <t>Description</t><t>说明</t>                                                                 |
+|-----------------|----------------------------------|-----------------------------------------------------------------------------|
+| `display-4`     | `.mat-display-4`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
+| `display-3`     | `.mat-display-3`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
+| `display-2`     | `.mat-display-2`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
+| `display-1`     | `.mat-display-1`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
+| `headline`      | `.mat-h1`, `.mat-headline`       | Section heading corresponding to the `<h1>` tag.                            |
+| `title`         | `.mat-h2`, `.mat-title`          | Section heading corresponding to the `<h2>` tag.                            |
+| `subheading-2`  | `.mat-h3`, `.mat-subheading-2`   | Section heading corresponding to the `<h3>` tag.                            |
+| `subheading-1`  | `.mat-h4`, `.mat-subheading-1`   | Section heading corresponding to the `<h4>` tag.                            |
+| `body-1`        | `.mat-body`, `.mat-body-1`       | Base body text.                                                             |
+| `body-2`        | `.mat-body-strong`, `.mat-body-2`| Bolder body text.                                                           |
+| `caption`       | `.mat-small`, `.mat-caption`     | Smaller body and hint text.                                                 |
+| `button`        | <t>None. Used only in components.</t><t>无，只用于组件中。</t>   | Buttons and anchors.                                                        |
+| `input`         | <t>None. Used only in components.</t><t>无，只用于组件中。</t>   | Form input fields.                                                          |
 
-  `display-4`, `display-3`, `display-2` 和 `display-1` - 大型、一次性的标题，通常位于页面的顶部（如英雄卡片的头部）。
-
-* `headline` - Section heading corresponding to the `<h1>` tag.
-
-  `headline` - 与 `<h1>` 标记相对应的小节标题。
-
-* `title` - Section heading corresponding to the `<h2>` tag.
-
-  `title` - 与 `<h2>` 标记相对应的小节标题。
-
-* `subheading-2` - Section heading corresponding to the `<h3>` tag.
-
-  `subheading-2` - 与 `<h3>` 标记相对应的小节标题。
-
-* `subheading-1` - Section heading corresponding to the `<h4>` tag.
-
-  `subheading-1` - 与 `<h4>` 标记相对应的小节标题。
-
-* `body-1` - Base body text.
-
-  `body-1` - 基本的内容文本。
-
-* `body-2` - Bolder body text.
-
-  `body-2` - 较粗的内容文本。
-
-* `caption` - Smaller body and hint text.
-
-  `caption` - 较小的内容和提示文本。
-
-* `button` - Buttons and anchors.
-
-  `button` - 按钮和链接。
-
-* `input` - Form input fields.
 
   `input` - 表单输入字段。
 
@@ -214,5 +192,5 @@ $config: mat-typography-config();
 ```
 
 
-[1]: https://material.io/guidelines/style/typography.html
+[1]: https://material.io/archive/guidelines/style/typography.html
 [2]: https://fonts.google.com/

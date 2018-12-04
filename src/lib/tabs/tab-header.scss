@@ -1,6 +1,6 @@
 @import '../core/style/variables';
 @import '../core/style/layout-common';
-@import 'tabs-common';
+@import './tabs-common';
 
 .mat-tab-header {
   display: flex;
@@ -82,4 +82,12 @@
 
 .mat-tab-labels {
   display: flex;
+
+  [mat-align-tabs='center'] & {
+    justify-content: center;
+  }
+
+  [mat-align-tabs='end'] & {
+    justify-content: flex-end;
+  }
 }

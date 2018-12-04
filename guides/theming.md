@@ -73,7 +73,7 @@ in your `styles.css`  file:
 如果你正在使用 Angular CLI，那么只要在 `styles.css` 文件中添加一行就可以了：
 
 ```css
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 ```
 
 Alternatively, you can just reference the file directly. This would look something like:
@@ -111,7 +111,7 @@ A custom theme file does two things:
 
 自定义主题文件要做两件事：
 
-1. Imports the `mat-core()` sass mixin. This includes all common styles that are used by multiple
+1. Imports the `mat-core()` Sass mixin. This includes all common styles that are used by multiple
 components. **This should only be included once in your application.** If this mixin is included
 multiple times, your application will end up with multiple copies of these common styles.
 
@@ -182,13 +182,13 @@ and then include the output file in your index.html.
 
 然后把它的输出包含进你的 index.html 中即可。
 
-The theme file **should not** be imported into other SCSS files. This will cause duplicate styles
-to be written into your CSS output. If you want to consume the theme definition object
+Your custom theme file **should not** be imported into other SCSS files. This will duplicate styles
+in your CSS output. If you want to consume your theme definition object
 (e.g., `$candy-app-theme`) in other SCSS files, then the definition of the theme object should be
 broken into its own file, separate from the inclusion of the `mat-core` and
 `angular-material-theme` mixins.
 
-这个主题文件**不应该**导入到其它 SCSS 文件中，否则会导致往 CSS 输出文件中写入很多重复的样式。
+你的自定义主题文件**不应该**导入到其它 SCSS 文件中，否则会导致往 CSS 输出文件中写入很多重复的样式。
 如果你希望在其它 SCSS 中使用该主题的定义对象（比如 `$candy-app-theme`），那么就要把这些主题对象的定义拆分到单独的文件中，而不要包含在 `mat-core` 和 `angular-material-theme` 混入器中。
 
 The theme file can be concatenated and minified with the rest of the application's css.
@@ -335,16 +335,3 @@ For more details about theming your own components,
 see [theming-your-components.md](./theming-your-components.md).
 
 要深入了解如何为自定义组件添加主题，参见[为你的组件设置主题](./theming-your-components.md)。
-
-### Future work
-
-### 未来的工作
-
-* Once CSS variables (custom properties) are available in all the browsers we support,
-  we will explore how to take advantage of them to make theming even simpler.
-  
-  一旦 CSS 变量（自定义属性）这个特性被所有浏览器支持，我们就会探索如何利用它让设置主题更简单。
-  
-* More prebuilt themes will be added as development continues.
-
-  随着开发工作的推进，还会加入更多预定义主题。

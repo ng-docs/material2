@@ -57,6 +57,20 @@ element in an `<mat-list-item>`.
 </mat-nav-list>
 ```
 
+### Action lists
+
+Use the `<mat-action-list>` element when each item in the list performs some _action_. Each item
+in an action list is a `<button>` element.
+
+Simple action lists can use the `mat-list-item` attribute on button tag elements directly:
+
+```html
+<mat-action-list>
+  <button mat-list-item (click)="save()"> Save </button>
+  <button mat-list-item (click)="undo()"> Undo </button>
+</mat-action-list>
+```
+
 ### Selection lists
 
 ### 选取列表

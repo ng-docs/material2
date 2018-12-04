@@ -14,13 +14,13 @@ The following Angular Material components are designed to work inside a `<mat-fo
 
 在设计上，下列 Angular Material 组件可用在 `<mat-form-field>` 中：
 
-* [`<input matInput>` &amp; `<textarea matInput>`](https://material.angular.io/components/input/overview)
+* [`<input matNativeControl>` &amp; `<textarea matNativeControl>`](https://material.angular.io/components/input/overview)
 
-  [`<input matInput>` &amp; `<textarea matInput>` 组件](/components/input/overview)
+  [`<input matNativeControl>` &amp; `<textarea matNativeControl>` 组件](/components/input/overview)
 
-* [`<mat-select>`](https://material.angular.io/components/select/overview)
+* [`<select matNativeControl>`](https://material.angular.io/components/select/overview)
 
-  [`<mat-select>` 组件](/components/select/overview)
+  [`<select matNativeControl>` 组件](/components/select/overview)
   
 * [`<mat-chip-list>`](https://material.angular.io/components/chips/overview)
 
@@ -75,7 +75,8 @@ want a floating label, add a `<mat-label>` to the `mat-form-field`.
 ### 浮动标签
 
 The floating label is a text label displayed on top of the form field control when
-the control does not contain any text. By default, when text is present the floating label
+the control does not contain any text or when `<select matNativeControl>` does not show any option text. 
+By default, when text is present the floating label
 floats above the form field control. The label for a form field can be specified by adding a
 `mat-label` element.
 

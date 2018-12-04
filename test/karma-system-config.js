@@ -44,6 +44,7 @@ System.config({
     '@angular/cdk/bidi': 'dist/packages/cdk/bidi/index.js',
     '@angular/cdk/coercion': 'dist/packages/cdk/coercion/index.js',
     '@angular/cdk/collections': 'dist/packages/cdk/collections/index.js',
+    '@angular/cdk/drag-drop': 'dist/packages/cdk/drag-drop/index.js',
     '@angular/cdk/keycodes': 'dist/packages/cdk/keycodes/index.js',
     '@angular/cdk/layout': 'dist/packages/cdk/layout/index.js',
     '@angular/cdk/observers': 'dist/packages/cdk/observers/index.js',
@@ -59,8 +60,6 @@ System.config({
 
     '@angular/cdk-experimental/scrolling': 'dist/packages/cdk-experimental/scrolling/index.js',
     '@angular/cdk-experimental/dialog': 'dist/packages/cdk-experimental/dialog/index.js',
-    '@angular/cdk-experimental/drag-drop':
-      'dist/packages/cdk-experimental/drag-drop/index.js',
 
     '@angular/material/autocomplete': 'dist/packages/material/autocomplete/index.js',
     '@angular/material/badge': 'dist/packages/material/badge/index.js',
@@ -94,6 +93,7 @@ System.config({
     '@angular/material/stepper': 'dist/packages/material/stepper/index.js',
     '@angular/material/table': 'dist/packages/material/table/index.js',
     '@angular/material/tabs': 'dist/packages/material/tabs/index.js',
+    '@angular/material/testing': 'dist/packages/material/testing/index.js',
     '@angular/material/toolbar': 'dist/packages/material/toolbar/index.js',
     '@angular/material/tooltip': 'dist/packages/material/tooltip/index.js',
     '@angular/material/tree': 'dist/packages/material/tree/index.js',
@@ -103,7 +103,7 @@ System.config({
     'rxjs': {main: 'index'},
     'rxjs/operators': {main: 'index'},
 
-    // Set the default extension for the root package, because otherwise the demo-app can't
+    // Set the default extension for the root package, because otherwise the tests can't
     // be built within the production mode. Due to missing file extensions.
     '.': {
       defaultExtension: 'js'

@@ -14,6 +14,19 @@ this option. The content of the `<mat-option>` is what will be shown to the user
 
 要想往选择框中添加选项，请为`<mat-select>` 添加 `<mat-option>` 元素。每个 `<mat-option>` 都有一个 `value` 属性，用于给出当用户选择了该选项时的结果值，而 `<mat-option>` 的内容则会显示给用户。
 
+Angular Material also supports use of the native `<select>` element inside of
+`<mat-form-field>`. The native control has several performance, accessibility,
+and usability advantages. See [the documentation for
+form-field](https://material.angular.io/components/form-field) for more information.
+
+Angular Material 还支持在 `<mat-form-field>` 中使用原生的 `<select>` 元素。
+这种原生控件在性能、可访问性、可用性等方面具有一系列优点。参见 [form-field 的文档](https://material.angular.io/components/form-field)以了解详情。
+
+To use a native select inside `<mat-form-field>`, add  the `matNativeControl` attribute
+to the `<select>` element. 
+
+要在 `<mat-form-field>` 中使用原生 select，请为 `<select>` 元素添加 `matNativeControl` 属性。
+
 <!-- example(select-overview) -->
 
 ### Getting and setting the select value
@@ -27,7 +40,7 @@ forms.
 
 <!-- example(select-value-binding) -->
 
-The `<mat-select>` also supports all of the form directives from the core `FormsModule` (`NgModel`) and
+Both`<mat-select>` and `<select>` support all of the form directives from the core `FormsModule` (`NgModel`) and
 `ReactiveFormsModule` (`FormControl`, `FormGroup`, etc.) As with native `<select>`, `<mat-select>`
 also supports a `compareWith` function. (Additional information about using a custom `compareWith`
 function can be found in the
@@ -41,7 +54,7 @@ function can be found in the
 
 ### 表单字段的特性
 
-There are a number of `<mat-form-field>` features that can be used with any `<mat-select>`. These
+There are a number of `<mat-form-field>` features that can be used with both `<select>` and `<mat-select>`. These
 include error messages, hint text, prefix & suffix, and theming. For additional information about
 these features, see the
 [form field documentation](https://material.angular.io/components/form-field/overview).
@@ -71,7 +84,7 @@ In some cases that `<mat-form-field>` may use the placeholder as the label (see 
 ### 禁用选择框或其中的某个选项
 
 It is possible to disable the entire select or individual options in the select by using the
-disabled property on the `<mat-select>` and the `<mat-option>` components respectively.
+disabled property on the `<select>` or `<mat-select>` and the `<option>` or <mat-option>` elements respectively.
 
 可以通过 `<mat-select>` 上的 `disabled` 属性禁用整个选择框，或通过 `<mat-option>` 上的 `disabled` 属性单独禁用某一个选项。
 
@@ -113,13 +126,19 @@ values rather than a single value.
 `<mat-select>` 默认为单选模式，但是可以通过 `multiple` 属性配置成允许多选的，这样用户就可以同时选择多个值了。
 当在多选模式下使用 `<mat-select>` 时，它的值将会是所有选定值的有序列表，而不再是单个值。
 
+Using multiple selection with a native select element (`<select multiple>`) is discouraged
+inside `<mat-form-field>`, as the inline listbox appearance is inconsistent with other
+Material Design components.
+
+不鼓励在 `<mat-form-field>` 中使用原生选择框（`<select multiple>`）来实现多选功能，因为内联的多项选择框在外观上会与其它 Material 组件不一致。
+
 <!-- example(select-multiple) -->
 
 ### Customizing the trigger label
 
 ### 定制触发器标签
 
-If you want to display a custom trigger label inside a select, you can use the
+If you want to display a custom trigger label inside a `<mat-select>`, you can use the
 `<mat-select-trigger>` element.
 
 如果你想在选择框内部显示一个自定义的触发器标签，可以使用 `<mat-select-trigger>` 元素。
@@ -154,7 +173,7 @@ which can be used to apply additional CSS classes to the dropdown panel.
 
 The `<mat-form-field>` allows you to
 [associate error messages](https://material.angular.io/components/form-field/overview#error-messages)
-with your `<mat-select>`. By default, these error messages are shown when the control is invalid and
+with your `<select>` or `<mat-select>`. By default, these error messages are shown when the control is invalid and
 either the user has interacted with (touched) the element or the parent form has been submitted. If
 you wish to override this behavior (e.g. to show the error as soon as the invalid control is dirty
 or when a parent form group is invalid), you can use the `errorStateMatcher` property of the
@@ -210,12 +229,14 @@ globally cause input errors to show when the input is dirty and invalid.
 
 ### 可访问性
 
-The select component without text or label should be given a meaningful label via
+The `<mat-select>` component without text or label should be given a meaningful label via
 `aria-label` or `aria-labelledby`.
 
 没有文本或标签的选择框组件应该通过 `aria-label` 或 `aria-labelledby` 给出一个有意义的标签。
 
-The select component has `role="listbox"` and options inside select have `role="option"`.
+The `<mat-select>` component has `role="listbox"` and options inside select have `role="option"`.
+
+The native `<select>` offers the best accessibility because it is supported directly by screen-readers.
 
 选择框组件应该有 `role="listbox"` 属性，而其内部的候选项应该有 `role="option"` 属性。
 

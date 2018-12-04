@@ -1,22 +1,23 @@
 # List of all components / subpackages.
 
 CDK_PACKAGES = [
-  "coercion",
-  "keycodes",
-  "scrolling",
-  "accordion",
-  "observers",
   "a11y",
+  "accordion",
+  "bidi",
+  "coercion",
+  "collections",
+  "drag-drop",
+  "keycodes",
+  "layout",
+  "observers",
   "overlay",
   "platform",
-  "bidi",
-  "table",
-  "tree",
   "portal",
-  "layout",
+  "scrolling",
   "stepper",
+  "table",
   "text-field",
-  "collections",
+  "tree",
 ]
 
 CDK_TARGETS = ["//src/cdk"] + ["//src/cdk/%s" % p for p in CDK_PACKAGES]
@@ -24,7 +25,6 @@ CDK_TARGETS = ["//src/cdk"] + ["//src/cdk/%s" % p for p in CDK_PACKAGES]
 CDK_EXPERIMENTAL_PACKAGES = [
   "dialog",
   "scrolling",
-  "drag-drop",
 ]
 
 CDK_EXPERIMENTAL_TARGETS = ["//src/cdk-experimental"] + [
@@ -70,6 +70,12 @@ MATERIAL_PACKAGES = [
 ]
 
 MATERIAL_TARGETS = ["//src/lib:material"] + ["//src/lib/%s" % p for p in MATERIAL_PACKAGES]
+
+# List that references the sass libraries for each Material package. This can be used to create
+# the theming scss-bundle or to specify dependencies for the all-theme.scss file.
+MATERIAL_SCSS_LIBS = [
+  "//src/lib/%s:%s_scss_lib" % (p, p.replace('-', '_')) for p in MATERIAL_PACKAGES
+]
 
 # Each individual package uses a placeholder for the version of Angular to ensure they're
 # all in-sync. This map is passed to each ng_package rule to stamp out the appropriate

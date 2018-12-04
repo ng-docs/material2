@@ -1,4 +1,4 @@
-// TypeScript config file that matches all source files in the project. This file is read by 
+// TypeScript config file that matches all source files in the project. This file is read by
 // IDEs and TSLint. For IDEs it ensures that `experimentalDecorator` warnings are not showing up.
 {
   "compilerOptions": {
@@ -8,6 +8,9 @@
     "moduleResolution": "node",
     "noUnusedParameters": true,
     "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "skipLibCheck": true,
     "target": "es2015",
     "lib": ["es5", "es2015", "dom"],
@@ -15,6 +18,8 @@
   },
   "include": [
     "src/**/*.ts",
+    "e2e/**/*.ts",
+    "test/**/*.ts",
     "tools/**/*.ts"
   ],
   "exclude": [
@@ -22,9 +27,11 @@
     // cause ambiguous imports. For example `setTimeout()` will return a Timer instead of a number.
     "./src/universal-app/prerender.ts",
 
+    // Exclude the API goldens in order to not slow-down IDE's using this tsconfig file
+    "tools/public_api_guard/**/*.d.ts",
+
     // IDEs should not type-check the different node_modules directories of the different packages.
     // This would cause the IDEs to be slower and also linters would check the node_modules.
-    "node_modules/",
-    "tools/dashboard/node_modules/"
+    "node_modules/"
   ]
 }

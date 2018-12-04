@@ -1,7 +1,5 @@
-import {
-  ENTER,
-  RIGHT_ARROW,
-} from '@angular/cdk/keycodes';
+import {Directionality} from '@angular/cdk/bidi';
+import {ENTER, RIGHT_ARROW, SPACE} from '@angular/cdk/keycodes';
 import {
   dispatchFakeEvent,
   dispatchKeyboardEvent,
@@ -9,16 +7,15 @@ import {
   MockNgZone,
 } from '@angular/cdk/testing';
 import {Component, NgZone} from '@angular/core';
-import {ComponentFixture, TestBed, async, inject} from '@angular/core/testing';
-import {DEC, FEB, JAN, MatNativeDateModule, NOV, JUL} from '@angular/material/core';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import {DateAdapter, MatNativeDateModule} from '@angular/material/core';
+import {DEC, FEB, JAN, JUL, NOV} from '@angular/material/testing';
 import {By} from '@angular/platform-browser';
-import {Direction, Directionality} from '@angular/cdk/bidi';
 import {MatCalendar} from './calendar';
 import {MatDatepickerIntl} from './datepicker-intl';
 import {MatDatepickerModule} from './datepicker-module';
 
 describe('MatCalendar', () => {
-  let dir: {value: Direction};
   let zone: MockNgZone;
 
   beforeEach(async(() => {
@@ -37,7 +34,7 @@ describe('MatCalendar', () => {
       providers: [
         MatDatepickerIntl,
         {provide: NgZone, useFactory: () => zone = new MockNgZone()},
-        {provide: Directionality, useFactory: () => dir = {value: 'ltr'}}
+        {provide: Directionality, useFactory: () => ({value: 'ltr'})},
       ],
     });
 
@@ -62,6 +59,27 @@ describe('MatCalendar', () => {
       calendarInstance = calendarDebugElement.componentInstance;
       testComponent = fixture.componentInstance;
     });
+
+    it(`should update today's date`, inject([DateAdapter], (adapter: DateAdapter<Date>) => {
+      let fakeToday = new Date(2018, 0, 1);
+      spyOn(adapter, 'today').and.callFake(() => fakeToday);
+
+      calendarInstance.activeDate = fakeToday;
+      calendarInstance.updateTodaysDate();
+      fixture.detectChanges();
+
+      let todayCell = calendarElement.querySelector('.mat-calendar-body-today')!;
+      expect(todayCell).not.toBeNull();
+      expect(todayCell.innerHTML.trim()).toBe('1');
+
+      fakeToday = new Date(2018, 0, 10);
+      calendarInstance.updateTodaysDate();
+      fixture.detectChanges();
+
+      todayCell = calendarElement.querySelector('.mat-calendar-body-today')!;
+      expect(todayCell).not.toBeNull();
+      expect(todayCell.innerHTML.trim()).toBe('10');
+    }));
 
     it('should be in month view with specified month active', () => {
       expect(calendarInstance.currentView).toBe('month');
@@ -212,6 +230,20 @@ describe('MatCalendar', () => {
             expect(calendarInstance.activeDate).toEqual(new Date(2017, FEB, 28));
             expect(testComponent.selected).toBeUndefined();
           });
+
+          it('should return to month view on space', () => {
+            const tableBodyEl = calendarBodyEl.querySelector('.mat-calendar-body') as HTMLElement;
+
+            dispatchKeyboardEvent(tableBodyEl, 'keydown', RIGHT_ARROW);
+            fixture.detectChanges();
+
+            dispatchKeyboardEvent(tableBodyEl, 'keydown', SPACE);
+            fixture.detectChanges();
+
+            expect(calendarInstance.currentView).toBe('month');
+            expect(calendarInstance.activeDate).toEqual(new Date(2017, FEB, 28));
+            expect(testComponent.selected).toBeUndefined();
+          });
         });
 
         describe('multi-year view', () => {
@@ -235,6 +267,21 @@ describe('MatCalendar', () => {
             expect(calendarInstance.activeDate).toEqual(new Date(2018, JAN, 31));
             expect(testComponent.selected).toBeUndefined();
           });
+
+          it('should go to year view on space', () => {
+            const tableBodyEl = calendarBodyEl.querySelector('.mat-calendar-body') as HTMLElement;
+
+            dispatchKeyboardEvent(tableBodyEl, 'keydown', RIGHT_ARROW);
+            fixture.detectChanges();
+
+            dispatchKeyboardEvent(tableBodyEl, 'keydown', SPACE);
+            fixture.detectChanges();
+
+            expect(calendarInstance.currentView).toBe('year');
+            expect(calendarInstance.activeDate).toEqual(new Date(2018, JAN, 31));
+            expect(testComponent.selected).toBeUndefined();
+          });
+
         });
 
       });

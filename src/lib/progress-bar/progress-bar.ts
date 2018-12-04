@@ -11,13 +11,21 @@ import {
   ElementRef,
   Inject,
   Input,
+  Output,
+  EventEmitter,
   Optional,
+  NgZone,
   ViewEncapsulation,
+  AfterViewInit,
+  ViewChild,
+  OnDestroy,
   InjectionToken,
   inject,
 } from '@angular/core';
+import {fromEvent, Subscription} from 'rxjs';
+import {filter} from 'rxjs/operators';
 import {ANIMATION_MODULE_TYPE} from '@angular/platform-browser/animations';
-import {CanColor, mixinColor} from '@angular/material/core';
+import {CanColor, CanColorCtor, mixinColor} from '@angular/material/core';
 import {DOCUMENT} from '@angular/common';
 
 // TODO(josephperrott): Benchpress tests.
@@ -29,7 +37,13 @@ export class MatProgressBarBase {
   constructor(public _elementRef: ElementRef) { }
 }
 
-export const _MatProgressBarMixinBase = mixinColor(MatProgressBarBase, 'primary');
+/** Last animation end data. */
+export interface ProgressAnimationEnd {
+  value: number;
+}
+
+export const _MatProgressBarMixinBase: CanColorCtor & typeof MatProgressBarBase =
+    mixinColor(MatProgressBarBase, 'primary');
 
 /**
  * Injection token used to provide the current location to `MatProgressBar`.
@@ -46,14 +60,19 @@ export const MAT_PROGRESS_BAR_LOCATION = new InjectionToken<MatProgressBarLocati
  * @docs-private
  */
 export interface MatProgressBarLocation {
-  pathname: string;
+  getPathname: () => string;
 }
 
 /** @docs-private */
 export function MAT_PROGRESS_BAR_LOCATION_FACTORY(): MatProgressBarLocation {
   const _document = inject(DOCUMENT);
-  const pathname = (_document && _document.location && _document.location.pathname) || '';
-  return {pathname};
+  const _location = _document ? _document.location : null;
+
+  return {
+    // Note that this needs to be a function, rather than a property, because Angular
+    // will only resolve it once, but we want the current path on each call.
+    getPathname: () => _location ? (_location.pathname + _location.search) : ''
+  };
 }
 
 
@@ -74,7 +93,7 @@ let progressbarId = 0;
     '[attr.aria-valuenow]': 'value',
     '[attr.mode]': 'mode',
     'class': 'mat-progress-bar',
-    '[class._mat-animation-noopable]': `_animationMode === 'NoopAnimations'`,
+    '[class._mat-animation-noopable]': `_isNoopAnimation`,
   },
   inputs: ['color'],
   templateUrl: 'progress-bar.html',
@@ -82,8 +101,9 @@ let progressbarId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class MatProgressBar extends _MatProgressBarMixinBase implements CanColor {
-  constructor(public _elementRef: ElementRef,
+export class MatProgressBar extends _MatProgressBarMixinBase implements CanColor,
+                                                      AfterViewInit, OnDestroy {
+  constructor(public _elementRef: ElementRef, private _ngZone: NgZone,
               @Optional() @Inject(ANIMATION_MODULE_TYPE) public _animationMode?: string,
               /**
                * @deprecated `location` parameter to be made required.
@@ -94,18 +114,30 @@ export class MatProgressBar extends _MatProgressBarMixinBase implements CanColor
 
     // We need to prefix the SVG reference with the current path, otherwise they won't work
     // in Safari if the page has a `<base>` tag. Note that we need quotes inside the `url()`,
-    // because named route URLs can contain parentheses (see #12338). Also we don't use
-    // `Location` from `@angular/common` since we can't tell the difference between whether
+
+    // because named route URLs can contain parentheses (see #12338). Also we don't use since
+    // we can't tell the difference between whether
     // the consumer is using the hash location strategy or not, because `Location` normalizes
     // both `/#/foo/bar` and `/foo/bar` to the same thing.
-    const path = location && location.pathname ? location.pathname.split('#')[0] : '';
+    const path = location ? location.getPathname().split('#')[0] : '';
     this._rectangleFillValue = `url('${path}#${this.progressbarId}')`;
+    this._isNoopAnimation = _animationMode === 'NoopAnimations';
   }
+
+  /** Flag that indicates whether NoopAnimations mode is set to true. */
+  _isNoopAnimation = false;
 
   /** Value of the progress bar. Defaults to zero. Mirrored to aria-valuenow. */
   @Input()
   get value(): number { return this._value; }
-  set value(v: number) { this._value = clamp(v || 0); }
+  set value(v: number) {
+    this._value = clamp(v || 0);
+
+    // When noop animation is set to true, trigger animationEnd directly.
+    if (this._isNoopAnimation) {
+      this.emitAnimationEnd();
+    }
+  }
   private _value: number = 0;
 
   /** Buffer value of the progress bar. Defaults to zero. */
@@ -113,6 +145,18 @@ export class MatProgressBar extends _MatProgressBarMixinBase implements CanColor
   get bufferValue(): number { return this._bufferValue; }
   set bufferValue(v: number) { this._bufferValue = clamp(v || 0); }
   private _bufferValue: number = 0;
+
+  @ViewChild('primaryValueBar') _primaryValueBar: ElementRef;
+
+  /**
+   * Event emitted when animation of the primary progress bar completes. This event will not
+   * be emitted when animations are disabled, nor will it be emitted for modes with continuous
+   * animations (indeterminate and query).
+   */
+  @Output() animationEnd = new EventEmitter<ProgressAnimationEnd>();
+
+  /** Reference to animation end subscription to be unsubscribed on destroy. */
+  private _animationEndSubscription: Subscription = Subscription.EMPTY;
 
   /**
    * Mode of the progress bar.
@@ -143,6 +187,31 @@ export class MatProgressBar extends _MatProgressBarMixinBase implements CanColor
     if (this.mode === 'buffer') {
       const scale = this.bufferValue / 100;
       return {transform: `scaleX(${scale})`};
+    }
+  }
+
+  ngAfterViewInit() {
+    if (!this._isNoopAnimation) {
+      // Run outside angular so change detection didn't get triggered on every transition end
+      // instead only on the animation that we care about (primary value bar's transitionend)
+      this._ngZone.runOutsideAngular((() => {
+        this._animationEndSubscription =
+            fromEvent<TransitionEvent>(this._primaryValueBar.nativeElement, 'transitionend')
+            .pipe(filter(((e: TransitionEvent) =>
+              e.target === this._primaryValueBar.nativeElement)))
+            .subscribe(_ => this._ngZone.run(() => this.emitAnimationEnd()));
+      }));
+    }
+  }
+
+  ngOnDestroy() {
+    this._animationEndSubscription.unsubscribe();
+  }
+
+  /** Emit an animationEnd event if in determinate or buffer mode. */
+  private emitAnimationEnd(): void {
+    if (this.mode === 'determinate' || this.mode === 'buffer') {
+      this.animationEnd.next({value: this.value});
     }
   }
 }

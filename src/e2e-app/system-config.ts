@@ -38,6 +38,7 @@ System.config({
     '@angular/cdk/bidi': 'dist/bundles/cdk-bidi.umd.js',
     '@angular/cdk/coercion': 'dist/bundles/cdk-coercion.umd.js',
     '@angular/cdk/collections': 'dist/bundles/cdk-collections.umd.js',
+    '@angular/cdk/drag-drop': 'dist/bundles/cdk-drag-drop.umd.js',
     '@angular/cdk/keycodes': 'dist/bundles/cdk-keycodes.umd.js',
     '@angular/cdk/layout': 'dist/bundles/cdk-layout.umd.js',
     '@angular/cdk/observers': 'dist/bundles/cdk-observers.umd.js',
@@ -54,7 +55,6 @@ System.config({
 
     '@angular/cdk-experimental/scrolling': 'dist/bundles/cdk-experimental-scrolling.umd.js',
     '@angular/cdk-experimental/dialog': 'dist/bundles/cdk-experimental-dialog.umd.js',
-    '@angular/cdk-experimental/drag-drop': 'dist/bundles/cdk-experimental-drag-drop.umd.js',
 
     '@angular/material/autocomplete': 'dist/bundles/material-autocomplete.umd.js',
     '@angular/material/bottom-sheet': 'dist/bundles/material-bottom-sheet.umd.js',
@@ -97,7 +97,7 @@ System.config({
     'rxjs': {main: 'index'},
     'rxjs/operators': {main: 'index'},
 
-    // Set the default extension for the root package, because otherwise the demo-app can't
+    // Set the default extension for the root package, because otherwise the e2e app can't
     // be built within the production mode. Due to missing file extensions.
     '.': {
       defaultExtension: 'js'

@@ -10,7 +10,7 @@ import {FocusKeyManager} from '@angular/cdk/a11y';
 import {Directionality} from '@angular/cdk/bidi';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {SelectionModel} from '@angular/cdk/collections';
-import {BACKSPACE, HOME, END} from '@angular/cdk/keycodes';
+import {BACKSPACE, END, HOME} from '@angular/cdk/keycodes';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -30,12 +30,17 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {ControlValueAccessor, FormGroupDirective, NgControl, NgForm} from '@angular/forms';
-import {CanUpdateErrorState, ErrorStateMatcher, mixinErrorState} from '@angular/material/core';
+import {
+  CanUpdateErrorState,
+  CanUpdateErrorStateCtor,
+  ErrorStateMatcher,
+  mixinErrorState,
+} from '@angular/material/core';
 import {MatFormFieldControl} from '@angular/material/form-field';
 import {merge, Observable, Subject, Subscription} from 'rxjs';
 import {startWith, takeUntil} from 'rxjs/operators';
 import {MatChip, MatChipEvent, MatChipSelectionChange} from './chip';
-import {MatChipInput} from './chip-input';
+import {MatChipTextControl} from './chip-text-control';
 
 
 // Boilerplate for applying mixins to MatChipList.
@@ -47,7 +52,8 @@ export class MatChipListBase {
               /** @docs-private */
               public ngControl: NgControl) {}
 }
-export const _MatChipListMixinBase = mixinErrorState(MatChipListBase);
+export const _MatChipListMixinBase: CanUpdateErrorStateCtor & typeof MatChipListBase =
+    mixinErrorState(MatChipListBase);
 
 
 // Increasing integer for generating unique ids for chip-list components.
@@ -64,7 +70,7 @@ export class MatChipListChange {
 
 
 /**
- * A material design chips component (named ChipList for it's similarity to the List component).
+ * A material design chips component (named ChipList for its similarity to the List component).
  */
 @Component({
   moduleId: module.id,
@@ -125,7 +131,7 @@ export class MatChipList extends _MatChipListMixinBase implements MatFormFieldCo
   private _chipRemoveSubscription: Subscription | null;
 
   /** The chip input to add more chips */
-  protected _chipInput: MatChipInput;
+  protected _chipInput: MatChipTextControl;
 
   /** Uid of the chip list */
   _uid: string = `mat-chip-list-${nextUniqueId++}`;
@@ -236,7 +242,7 @@ export class MatChipList extends _MatChipListMixinBase implements MatFormFieldCo
 
   /** Whether any chips or the matChipInput inside of this chip-list has focus. */
   get focused(): boolean {
-    return (this._chipInput && this._chipInput.focused) || this.chips.some(chip => chip._hasFocus);
+    return (this._chipInput && this._chipInput.focused) || this._hasFocusedChip();
   }
 
   /**
@@ -346,6 +352,12 @@ export class MatChipList extends _MatChipListMixinBase implements MatFormFieldCo
       .withVerticalOrientation()
       .withHorizontalOrientation(this._dir ? this._dir.value : 'ltr');
 
+    if (this._dir) {
+      this._dir.change
+        .pipe(takeUntil(this._destroyed))
+        .subscribe(dir => this._keyManager.withHorizontalOrientation(dir));
+    }
+
     // Prevents the chip list from capturing focus and redirecting
     // it back to the first chip when the user tabs out.
     this._keyManager.tabOut.pipe(takeUntil(this._destroyed)).subscribe(() => {
@@ -394,7 +406,7 @@ export class MatChipList extends _MatChipListMixinBase implements MatFormFieldCo
 
 
   /** Associates an HTML input element with this chip list. */
-  registerInput(inputElement: MatChipInput): void {
+  registerInput(inputElement: MatChipTextControl): void {
     this._chipInput = inputElement;
   }
 
@@ -431,7 +443,11 @@ export class MatChipList extends _MatChipListMixinBase implements MatFormFieldCo
    * Implemented as part of MatFormFieldControl.
    * @docs-private
    */
-  onContainerClick() { this.focus(); }
+  onContainerClick(event: MouseEvent) {
+    if (!this._originatesFromChip(event)) {
+      this.focus();
+    }
+  }
 
   /**
    * Focuses the the first non-disabled chip in this chip list, or the associated input when there
@@ -626,7 +642,10 @@ export class MatChipList extends _MatChipListMixinBase implements MatFormFieldCo
 
   /** When blurred, mark the field as touched when focus moved outside the chip list. */
   _blur() {
-    this._keyManager.setActiveItem(-1);
+    if (!this._hasFocusedChip()) {
+      this._keyManager.setActiveItem(-1);
+    }
+
     if (!this.disabled) {
       if (this._chipInput) {
         // If there's a chip input, we should check whether the focus moved to chip input.
@@ -732,5 +751,25 @@ export class MatChipList extends _MatChipListMixinBase implements MatFormFieldCo
         this._lastDestroyedChipIndex = chipIndex;
       }
     });
+  }
+
+  /** Checks whether an event comes from inside a chip element. */
+  private _originatesFromChip(event: Event): boolean {
+    let currentElement = event.target as HTMLElement | null;
+
+    while (currentElement && currentElement !== this._elementRef.nativeElement) {
+      if (currentElement.classList.contains('mat-chip')) {
+        return true;
+      }
+
+      currentElement = currentElement.parentElement;
+    }
+
+    return false;
+  }
+
+  /** Checks whether any of the chips is focused. */
+  private _hasFocusedChip() {
+    return this.chips.some(chip => chip._hasFocus);
   }
 }

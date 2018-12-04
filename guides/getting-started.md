@@ -46,9 +46,6 @@ npm install --save angular/material2-builds angular/cdk-builds angular/animation
 ```
 
 #### Yarn
-
-#### Yarn 命令
-
 ```bash
 yarn add angular/material2-builds angular/cdk-builds angular/animations-builds
 ```
@@ -63,6 +60,9 @@ Using the Angular CLI `ng add` command will update your Angular project with the
 ```bash
 ng add @angular/material
 ```
+#### Alternative 2: Angular Devkit 6+
+
+#### 替代方案 2：Angular Devkit 6+
 
 ### Step 2: Configure animations
 

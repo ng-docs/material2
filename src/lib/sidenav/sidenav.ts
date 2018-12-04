@@ -17,10 +17,13 @@ import {
   Input,
   ViewEncapsulation,
   QueryList,
+  ElementRef,
+  NgZone,
 } from '@angular/core';
 import {MatDrawer, MatDrawerContainer, MatDrawerContent} from './drawer';
 import {matDrawerAnimations} from './drawer-animations';
 import {coerceBooleanProperty, coerceNumberProperty} from '@angular/cdk/coercion';
+import {ScrollDispatcher} from '@angular/cdk/scrolling';
 
 
 @Component({
@@ -38,8 +41,11 @@ import {coerceBooleanProperty, coerceNumberProperty} from '@angular/cdk/coercion
 export class MatSidenavContent extends MatDrawerContent {
   constructor(
       changeDetectorRef: ChangeDetectorRef,
-      @Inject(forwardRef(() => MatSidenavContainer)) container: MatSidenavContainer) {
-    super(changeDetectorRef, container);
+      @Inject(forwardRef(() => MatSidenavContainer)) container: MatSidenavContainer,
+      elementRef: ElementRef<HTMLElement>,
+      scrollDispatcher: ScrollDispatcher,
+      ngZone: NgZone) {
+    super(changeDetectorRef, container, elementRef, scrollDispatcher, ngZone);
   }
 }
 
@@ -48,14 +54,14 @@ export class MatSidenavContent extends MatDrawerContent {
   moduleId: module.id,
   selector: 'mat-sidenav',
   exportAs: 'matSidenav',
-  template: '<ng-content></ng-content>',
+  templateUrl: 'drawer.html',
   animations: [matDrawerAnimations.transformDrawer],
   host: {
     'class': 'mat-drawer mat-sidenav',
     'tabIndex': '-1',
     '[@transform]': '_animationState',
-    '(@transform.start)': '_onAnimationStart($event)',
-    '(@transform.done)': '_onAnimationEnd($event)',
+    '(@transform.start)': '_animationStarted.next($event)',
+    '(@transform.done)': '_animationEnd.next($event)',
     // must prevent the browser from aligning text based on value
     '[attr.align]': 'null',
     '[class.mat-drawer-end]': 'position === "end"',

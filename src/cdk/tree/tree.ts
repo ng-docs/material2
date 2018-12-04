@@ -76,7 +76,7 @@ export class CdkTree<T>
   /**
    * Provides a stream containing the latest data array to render. Influenced by the tree's
    * stream of view window (what dataNodes are currently on screen).
-   * Data source can be an observable of data array, or a dara array to render.
+   * Data source can be an observable of data array, or a data array to render.
    */
   @Input()
   get dataSource(): DataSource<T> | Observable<T[]> | T[] { return this._dataSource; }
@@ -183,7 +183,7 @@ export class CdkTree<T>
 
   /** Set up a subscription for the data provided by the data source. */
   private _observeRenderChanges() {
-    let dataStream: Observable<T[]> | undefined;
+    let dataStream: Observable<T[] | ReadonlyArray<T>> | undefined;
 
     // Cannot use `instanceof DataSource` since the data source could be a literal with
     // `connect` function and may not extends DataSource.
@@ -204,21 +204,22 @@ export class CdkTree<T>
   }
 
   /** Check for changes made in the data and render each change (node added/removed/moved). */
-  renderNodeChanges(data: T[], dataDiffer: IterableDiffer<T> = this._dataDiffer,
+  renderNodeChanges(data: T[] | ReadonlyArray<T>, dataDiffer: IterableDiffer<T> = this._dataDiffer,
                     viewContainer: ViewContainerRef = this._nodeOutlet.viewContainer,
                     parentData?: T) {
     const changes = dataDiffer.diff(data);
     if (!changes) { return; }
 
-    changes.forEachOperation(
-      (item: IterableChangeRecord<T>, adjustedPreviousIndex: number, currentIndex: number) => {
+    changes.forEachOperation((item: IterableChangeRecord<T>,
+                              adjustedPreviousIndex: number | null,
+                              currentIndex: number | null) => {
         if (item.previousIndex == null) {
-          this.insertNode(data[currentIndex], currentIndex, viewContainer, parentData);
+          this.insertNode(data[currentIndex!], currentIndex!, viewContainer, parentData);
         } else if (currentIndex == null) {
-          viewContainer.remove(adjustedPreviousIndex);
+          viewContainer.remove(adjustedPreviousIndex!);
           this._levels.delete(item.item);
         } else {
-          const view = viewContainer.get(adjustedPreviousIndex);
+          const view = viewContainer.get(adjustedPreviousIndex!);
           viewContainer.move(view!, currentIndex);
         }
       });
@@ -295,7 +296,7 @@ export class CdkTreeNode<T> implements FocusableOption, OnDestroy {
    * The most recently created `CdkTreeNode`. We save it in static variable so we can retrieve it
    * in `CdkTree` and set the data to it.
    */
-  static mostRecentTreeNode: CdkTreeNode<{}> | null = null;
+  static mostRecentTreeNode: CdkTreeNode<any> | null = null;
 
   /** Subject that emits when the component has been destroyed. */
   protected _destroyed = new Subject<void>();
