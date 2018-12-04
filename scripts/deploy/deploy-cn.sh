@@ -10,5 +10,5 @@ set -e
 rm -fr ./tmp/
 ./scripts/deploy/publish-docs-content.sh
 sleep 5
-cd ../material.angular.io
+cd ../material.github.io
 ./translator/deploy.sh
