@@ -15,16 +15,9 @@ The following Angular Material components are designed to work inside a `<mat-fo
 在设计上，下列 Angular Material 组件可用在 `<mat-form-field>` 中：
 
 * [`<input matNativeControl>` &amp; `<textarea matNativeControl>`](https://material.angular.io/components/input/overview)
-
-  [`<input matNativeControl>` &amp; `<textarea matNativeControl>` 组件](/components/input/overview)
-
 * [`<select matNativeControl>`](https://material.angular.io/components/select/overview)
-
-  [`<select matNativeControl>` 组件](/components/select/overview)
-  
+* [`<mat-select>`](https://material.angular.io/components/select/overview)
 * [`<mat-chip-list>`](https://material.angular.io/components/chips/overview)
-
-  [`<mat-chip-list>` 组件](/components/chips/overview)
 
 <!-- example(form-field-overview) -->
 
