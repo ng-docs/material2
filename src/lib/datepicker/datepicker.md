@@ -522,66 +522,105 @@ The datepicker supports the following keyboard shortcuts:
 
 日期选择器支持下列键盘快捷键：
 
+| Shortcut             | Action                                    |
 | 快捷键             | 操作                                    |
 |----------------------|-------------------------------------------|
-| `ALT` + `DOWN_ARROW` | <p translation-result>打开日历弹出框</p><p translation-origin="off">Open the calendar pop-up</p>
-| `ESCAPE`             | <p translation-result>关闭日历弹出框</p><p translation-origin="off">Close the calendar pop-up</p>
+| `ALT` + `DOWN_ARROW` | Open the calendar pop-up |
+| `ALT` + `DOWN_ARROW` | 打开日历弹出框 |
+| `ESCAPE`             | Close the calendar pop-up |
+| `ESCAPE`             | 关闭日历弹出框 |
 
 
 In month view:
 
 在月份视图中：
 
+| Shortcut             | Action                                    |
 | 快捷键             | 操作                                    |
 |----------------------|-------------------------------------------|
-| `LEFT_ARROW`         | <p translation-result>转到上一天</p><p translation-origin="off">Go to previous day</p>
-| `RIGHT_ARROW`        | <p translation-result>转到下一天</p><p translation-origin="off">Go to next day</p>
-| `UP_ARROW`           | <p translation-result>转到上周的同一天</p><p translation-origin="off">Go to same day in the previous week</p>
-| `DOWN_ARROW`         | <p translation-result>转到下周的同一天</p><p translation-origin="off">Go to same day in the next week</p>
-| `HOME`               | <p translation-result>转到本月初</p><p translation-origin="off">Go to the first day of the month</p>
-| `END`                | <p translation-result>转到本月末</p><p translation-origin="off">Go to the last day of the month</p>
-| `PAGE_UP`            | <p translation-result>转到上月的同一天</p><p translation-origin="off">Go to the same day in the previous month</p>
-| `ALT` + `PAGE_UP`    | <p translation-result>转到去年的同一天</p><p translation-origin="off">Go to the same day in the previous year</p>
-| `PAGE_DOWN`          | <p translation-result>转到下月的同一天</p><p translation-origin="off">Go to the same day in the next month</p>
-| `ALT` + `PAGE_DOWN`  | <p translation-result>转到明年的同一天</p><p translation-origin="off">Go to the same day in the next year</p>
-| `ENTER`              | <p translation-result>选择当前日期</p><p translation-origin="off">Select current date</p>
+| `LEFT_ARROW`         | Go to previous day |
+| `LEFT_ARROW`         | 转到上一天 |
+| `RIGHT_ARROW`        | Go to next day |
+| `RIGHT_ARROW`        | 转到下一天 |
+| `UP_ARROW`           | Go to same day in the previous week |
+| `UP_ARROW`           | 转到上周的同一天 |
+| `DOWN_ARROW`         | Go to same day in the next week |
+| `DOWN_ARROW`         | 转到下周的同一天 |
+| `HOME`               | Go to the first day of the month |
+| `HOME`               | 转到本月初 |
+| `END`                | Go to the last day of the month |
+| `END`                | 转到本月末 |
+| `PAGE_UP`            | Go to the same day in the previous month |
+| `PAGE_UP`            | 转到上月的同一天 |
+| `ALT` + `PAGE_UP`    | Go to the same day in the previous year |
+| `ALT` + `PAGE_UP`    | 转到去年的同一天 |
+| `PAGE_DOWN`          | Go to the same day in the next month |
+| `PAGE_DOWN`          | 转到下月的同一天 |
+| `ALT` + `PAGE_DOWN`  | Go to the same day in the next year |
+| `ALT` + `PAGE_DOWN`  | 转到明年的同一天 |
+| `ENTER`              | Select current date |
+| `ENTER`              | 选择当前日期 |
 
 
 In year view:
 
 在年份视图中：
 
+| Shortcut             | Action                                    |
 | 快捷键             | 操作                                    |
 |----------------------|-------------------------------------------|
-| `LEFT_ARROW`         | <p translation-result>转到上月</p><p translation-origin="off">Go to previous month</p>
-| `RIGHT_ARROW`        | <p translation-result>转到下月</p><p translation-origin="off">Go to next month</p>
-| `UP_ARROW`           | <p translation-result>转到上一行（回退四个月）</p><p translation-origin="off">Go up a row (back 4 months)</p>
-| `DOWN_ARROW`         | <p translation-result>转到下一行（前进四个月）</p><p translation-origin="off">Go down a row (forward 4 months)</p>
-| `HOME`               | <p translation-result>转到今年的第一个月</p><p translation-origin="off">Go to the first month of the year</p>
-| `END`                | <p translation-result>转到今年的最后一月</p><p translation-origin="off">Go to the last month of the year</p>
-| `PAGE_UP`            | <p translation-result>转到去年的同一月</p><p translation-origin="off">Go to the same month in the previous year</p>
-| `ALT` + `PAGE_UP`    | <p translation-result>转到十年前的同一月</p><p translation-origin="off">Go to the same month 10 years back</p>
-| `PAGE_DOWN`          | <p translation-result>转到明年的同一月</p><p translation-origin="off">Go to the same month in the next year</p>
-| `ALT` + `PAGE_DOWN`  | <p translation-result>转到十年后的同一月</p><p translation-origin="off">Go to the same month 10 years forward</p>
-| `ENTER`              | <p translation-result>选择当前月份</p><p translation-origin="off">Select current month</p>
+| `LEFT_ARROW`         | Go to previous month |
+| `LEFT_ARROW`         | 转到上月 |
+| `RIGHT_ARROW`        | Go to next month |
+| `RIGHT_ARROW`        | 转到下月 |
+| `UP_ARROW`           | Go up a row (back 4 months) |
+| `UP_ARROW`           | 转到上一行（回退四个月） |
+| `DOWN_ARROW`         | Go down a row (forward 4 months) |
+| `DOWN_ARROW`         | 转到下一行（前进四个月） |
+| `HOME`               | Go to the first month of the year |
+| `HOME`               | 转到今年的第一个月 |
+| `END`                | Go to the last month of the year |
+| `END`                | 转到今年的最后一月 |
+| `PAGE_UP`            | Go to the same month in the previous year |
+| `PAGE_UP`            | 转到去年的同一月 |
+| `ALT` + `PAGE_UP`    | Go to the same month 10 years back |
+| `ALT` + `PAGE_UP`    | 转到十年前的同一月 |
+| `PAGE_DOWN`          | Go to the same month in the next year |
+| `PAGE_DOWN`          | 转到明年的同一月 |
+| `ALT` + `PAGE_DOWN`  | Go to the same month 10 years forward |
+| `ALT` + `PAGE_DOWN`  | 转到十年后的同一月 |
+| `ENTER`              | Select current month |
+| `ENTER`              | 选择当前月份 |
 
 In multi-year view:
 
 在多年视图中：
 
+| Shortcut             | Action                                    |
 | 快捷键             | 操作                                    |
 |----------------------|-------------------------------------------|
-| `LEFT_ARROW`         | <p translation-result>转到去年</p><p translation-origin="off">Go to previous year</p>
-| `RIGHT_ARROW`        | <p translation-result>转到明年</p><p translation-origin="off">Go to next year</p>
-| `UP_ARROW`           | <p translation-result>转到上一行（后退四年）</p><p translation-origin="off">Go up a row (back 4 years)</p>
-| `DOWN_ARROW`         | <p translation-result>转到下一行（前进四年）</p><p translation-origin="off">Go down a row (forward 4 years)</p>
-| `HOME`               | <p translation-result>转到当前范围内的第一年</p><p translation-origin="off">Go to the first year in the current range</p>
-| `END`                | <p translation-result>转到当前范围内的最后一年</p><p translation-origin="off">Go to the last year in the current range</p>
-| `PAGE_UP`            | <p translation-result>后退 24 年</p><p translation-origin="off">Go back 24 years</p>
-| `ALT` + `PAGE_UP`    | <p translation-result>后退 240 年</p><p translation-origin="off">Go back 240 years</p>
-| `PAGE_DOWN`          | <p translation-result>前进 24 年</p><p translation-origin="off">Go forward 24 years</p>
-| `ALT` + `PAGE_DOWN`  | <p translation-result>前进 240 年</p><p translation-origin="off">Go forward 240 years</p>
-| `ENTER`              | <p translation-result>选择当前年份</p><p translation-origin="off">Select current year</p>
+| `LEFT_ARROW`         | Go to previous year |
+| `LEFT_ARROW`         | 转到去年 |
+| `RIGHT_ARROW`        | Go to next year |
+| `RIGHT_ARROW`        | 转到明年 |
+| `UP_ARROW`           | Go up a row (back 4 years) |
+| `UP_ARROW`           | 转到上一行（后退四年） |
+| `DOWN_ARROW`         | Go down a row (forward 4 years) |
+| `DOWN_ARROW`         | 转到下一行（前进四年） |
+| `HOME`               | Go to the first year in the current range |
+| `HOME`               | 转到当前范围内的第一年 |
+| `END`                | Go to the last year in the current range |
+| `END`                | 转到当前范围内的最后一年 |
+| `PAGE_UP`            | Go back 24 years |
+| `PAGE_UP`            | 后退 24 年 |
+| `ALT` + `PAGE_UP`    | Go back 240 years |
+| `ALT` + `PAGE_UP`    | 后退 240 年 |
+| `PAGE_DOWN`          | Go forward 24 years |
+| `PAGE_DOWN`          | 前进 24 年 |
+| `ALT` + `PAGE_DOWN`  | Go forward 240 years |
+| `ALT` + `PAGE_DOWN`  | 前进 240 年 |
+| `ENTER`              | Select current year |
+| `ENTER`              | 选择当前年份 |
 
 ### Troubleshooting
 
