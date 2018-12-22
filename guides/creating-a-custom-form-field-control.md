@@ -210,7 +210,7 @@ It is likely you will want to implement `ControlValueAccessor` so that your comp
 `formControl` and `ngModel`. If you do implement `ControlValueAccessor` you will need to get a
 reference to the `NgControl` associated with your control and make it publicly available.
 
-看样子你还要实现 `ControlValueAccessor`，以便你的组件可以跟 `formControl` 和 `ngModel` 协同工作。要想实现 `ControlValueAccessor`，你就要获得一个关联到此控件的 `NgControl`，并把它公开。
+你还要实现 `ControlValueAccessor`，来让你的组件跟 `formControl` 和 `ngModel` 协同工作。要想实现 `ControlValueAccessor`，你就要获得一个关联到此控件的 `NgControl`，并把它公开。
 
 The easy way is to add it as a public property to your constructor and let dependency injection
 handle it:

@@ -108,7 +108,7 @@ You can consume the theming functions and Material Design color palettes from
 `@angular/material/theming`. The `mat-color` Sass function extracts a specific color from a palette.
 For example:
 
-你可以使用来自 `@angular/material/theming` 的主题函数和调色板变量，还可以用 `mat-color` 函数来把指定的颜色从调色板中提取出来。比如：
+你可以使用来自 `@angular/material/theming` 的主题函数和 Material Design 调色板变量，还可以用 Sass 函数 `mat-color` 来把指定的颜色从调色板中提取出来。比如：
 
 ```scss
 // Import theming functions

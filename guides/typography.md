@@ -17,21 +17,31 @@ available levels are:
 | <t>Name</t><t>名称</t>            | <t>CSS classes</t><t>CSS 类</t>                      | <t>Description</t><t>说明</t>                                                                 |
 |-----------------|----------------------------------|-----------------------------------------------------------------------------|
 | `display-4`     | `.mat-display-4`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
+| `display-4`     | `.mat-display-4`                 | 大型的，只出现一次的头，通常位于页面的顶部（比如 hero 的头部） |
 | `display-3`     | `.mat-display-3`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
+| `display-3`     | `.mat-display-3`                 | 大型的，只出现一次的头，通常位于页面的顶部（比如 hero 的头部） |
 | `display-2`     | `.mat-display-2`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
+| `display-2`     | `.mat-display-2`                 | 大型的，只出现一次的头，通常位于页面的顶部（比如 hero 的头部） |
 | `display-1`     | `.mat-display-1`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
+| `display-1`     | `.mat-display-1`                 | 大型的，只出现一次的头，通常位于页面的顶部（比如 hero 的头部） |
 | `headline`      | `.mat-h1`, `.mat-headline`       | Section heading corresponding to the `<h1>` tag.                            |
+| `headline`      | `.mat-h1`, `.mat-headline`       | 与 `<h1>` 标签对应的小节的头部 |
 | `title`         | `.mat-h2`, `.mat-title`          | Section heading corresponding to the `<h2>` tag.                            |
+| `title`         | `.mat-h2`, `.mat-title`          | 与 `<h2>` 标签对应的小节的头部 |
 | `subheading-2`  | `.mat-h3`, `.mat-subheading-2`   | Section heading corresponding to the `<h3>` tag.                            |
+| `subheading-2`  | `.mat-h3`, `.mat-subheading-2`   | 与 `<h3>` 标签对应的小节的头部 |
 | `subheading-1`  | `.mat-h4`, `.mat-subheading-1`   | Section heading corresponding to the `<h4>` tag.                            |
+| `subheading-1`  | `.mat-h4`, `.mat-subheading-1`   | 与 `<h4>` 标签对应的小节的头部 |
 | `body-1`        | `.mat-body`, `.mat-body-1`       | Base body text.                                                             |
+| `body-1`        | `.mat-body`, `.mat-body-1`       | 基本的正文文本。 |
 | `body-2`        | `.mat-body-strong`, `.mat-body-2`| Bolder body text.                                                           |
+| `body-2`        | `.mat-body-strong`, `.mat-body-2`| 较粗的正文文本。 |
 | `caption`       | `.mat-small`, `.mat-caption`     | Smaller body and hint text.                                                 |
-| `button`        | <t>None. Used only in components.</t><t>无，只用于组件中。</t>   | Buttons and anchors.                                                        |
-| `input`         | <t>None. Used only in components.</t><t>无，只用于组件中。</t>   | Form input fields.                                                          |
-
-
-  `input` - 表单输入字段。
+| `caption`       | `.mat-small`, `.mat-caption`     | 较小的正文文本和提示文本。 |
+| `button`        | None. Used only in components.   | Buttons and anchors.                                                        |
+| `button`        | 无。只用于组件中。  | 按钮与链接。 |
+| `input`         | None. Used only in components.   | Form input fields.                                                          |
+| `input`         | 无。只用于组件中。 | 表单输入字段。 |
 
 The typography levels are collected into a typography config which is used to generate the CSS.
 
