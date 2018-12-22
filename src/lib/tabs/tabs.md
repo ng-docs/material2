@@ -177,8 +177,13 @@ Tabs without text or labels should be given a meaningful label via `aria-label` 
 
 | 快捷键             | 操作                     |
 |----------------------|----------------------------|
-| `LEFT_ARROW`         | <p translation-result>把焦点移到前一个选项卡</p><p translation-origin="off">Move focus to previous tab</p>
-| `RIGHT_ARROW`        | <p translation-result>把焦点移到后一个选项卡</p><p translation-origin="off">Move focus to next tab</p>
-| `HOME`               | <p translation-result>把焦点移到第一个选项卡</p><p translation-origin="off">Move focus to first tab</p>
-| `END`                | <p translation-result>把焦点移到最后一个选项卡</p><p translation-origin="off">Move focus to last tab</p>
-| `SPACE` 或 `ENTER`   | <p translation-result>切换到当前有焦点的选项卡</p><p translation-origin="off">Switch to focused tab</p>
+| `LEFT_ARROW`         | Move focus to previous tab |
+| `LEFT_ARROW`         | 把焦点移到前一个选项卡 |
+| `RIGHT_ARROW`        | Move focus to next tab |
+| `RIGHT_ARROW`        | 把焦点移到后一个选项卡 |
+| `HOME`               | Move focus to first tab |
+| `HOME`               | 把焦点移到第一个选项卡 |
+| `END`                | Move focus to last tab |
+| `END`                | 把焦点移到最后一个选项卡 |
+| `SPACE` 或 `ENTER`   | Switch to focused tab |
+| `SPACE` 或 `ENTER`   | 切换到当前有焦点的选项卡 |

@@ -109,10 +109,14 @@ Several directives are available to make it easier to structure your dialog cont
 
 | 名称                  | 说明                                                                                                   |
 |-----------------------|---------------------------------------------------------------------------------------------------------------|
-| `mat-dialog-title`     | <p translation-result>\[Attr] 对话框标题，应用于标题元素（如 `<h1>`、`<h2>`）</p><p translation-origin="off">\[Attr] Dialog title, applied to a heading element (e.g., `<h1>`, `<h2>`)                                     </p>
-| `<mat-dialog-content>` | <p translation-result>对话框中主要的可滚动内容</p><p translation-origin="off">Primary scrollable content of the dialog                                                                      </p>
-| `<mat-dialog-actions>` | <p translation-result>对话框底部动作按钮的容器</p><p translation-origin="off">Container for action buttons at the bottom of the dialog                                                      </p>
-| `mat-dialog-close`     | <p translation-result>\[Attr] 添加到 `<button>` 上，点击它时会用它绑定的值（可选）作为结果来关闭对话框</p><p translation-origin="off">\[Attr] Added to a `<button>`, makes the button close the dialog with an optional result from the bound value.</p>
+| `mat-dialog-title`     | \[Attr] Dialog title, applied to a heading element (e.g., `<h1>`, `<h2>`)                                      |
+| `mat-dialog-title`     | \[Attr] 对话框标题，应用于标题元素（如 `<h1>`、`<h2>`） |
+| `<mat-dialog-content>` | Primary scrollable content of the dialog                                                                       |
+| `<mat-dialog-content>` | 对话框中主要的可滚动内容 |
+| `<mat-dialog-actions>` | Container for action buttons at the bottom of the dialog                                                       |
+| `<mat-dialog-actions>` | 对话框底部动作按钮的容器 |
+| `mat-dialog-close`     | \[Attr] Added to a `<button>`, makes the button close the dialog with an optional result from the bound value. |
+| `mat-dialog-close`     | \[Attr] 添加到 `<button>` 上，点击它时会用它绑定的值（可选）作为结果来关闭对话框 |
 
 For example:
 

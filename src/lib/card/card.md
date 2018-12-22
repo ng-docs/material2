@@ -17,12 +17,18 @@ provides a number of preset sections that you can use inside of an `<mat-card>`:
 
 | 元素               | 说明                                                              |
 |-----------------------|--------------------------------------------------------------------------|
-| `<mat-card-title>`     | <p translation-result>卡片标题</p><p translation-origin="off">Card title                                                               </p>
-| `<mat-card-subtitle>`  | <p translation-result>卡片小标题</p><p translation-origin="off">Card subtitle                                                            </p>
-| `<mat-card-content>`   | <p translation-result>主卡片内容。一般为文本块</p><p translation-origin="off">Primary card content. Intended for blocks of text                        </p>
-| `<img mat-card-image>` | <p translation-result>卡片图片。此图片会拉伸至容器宽度</p><p translation-origin="off">Card image. Stretches the image to the container width                   </p>
-| `<mat-card-actions>`   | <p translation-result>卡片底部按钮的容器</p><p translation-origin="off">Container for buttons at the bottom of the card                          </p>
-| `<mat-card-footer>`    | <p translation-result>钉在卡片底部的小节</p><p translation-origin="off">Section anchored to the bottom of the card                               </p>
+| `<mat-card-title>`     | Card title                                                                |
+| `<mat-card-title>`     | 卡片标题 |
+| `<mat-card-subtitle>`  | Card subtitle                                                             |
+| `<mat-card-subtitle>`  | 卡片小标题 |
+| `<mat-card-content>`   | Primary card content. Intended for blocks of text                         |
+| `<mat-card-content>`   | 主卡片内容。一般为文本块 |
+| `<img mat-card-image>` | Card image. Stretches the image to the container width                    |
+| `<img mat-card-image>` | 卡片图片。此图片会拉伸至容器宽度 |
+| `<mat-card-actions>`   | Container for buttons at the bottom of the card                           |
+| `<mat-card-actions>`   | 卡片底部按钮的容器 |
+| `<mat-card-footer>`    | Section anchored to the bottom of the card                                |
+| `<mat-card-footer>`    | 钉在卡片底部的小节 |
 
 These elements primary serve as pre-styled content containers without any additional APIs. 
 However, the `align` property on `<mat-card-actions>` can be used to position the actions at the 
@@ -42,9 +48,12 @@ header to a card. This header can contain:
 
 | 元素                | 说明                                                             |
 |------------------------|-------------------------------------------------------------------------|
-| `<mat-card-title>`      | <p translation-result>头部的标题</p><p translation-origin="off">A title within the header                                               </p>
-| `<mat-card-subtitle>`   | <p translation-result>头部的小标题</p><p translation-origin="off">A subtitle within the header                                            </p>
-| `<img mat-card-avatar>` | <p translation-result>头部用作头像的图片</p><p translation-origin="off">An image used as an avatar within the header                            </p>
+| `<mat-card-title>`      | A title within the header                                                |
+| `<mat-card-title>`      | 头部的标题 |
+| `<mat-card-subtitle>`   | A subtitle within the header                                             |
+| `<mat-card-subtitle>`   | 头部的小标题 |
+| `<img mat-card-avatar>` | An image used as an avatar within the header                             |
+| `<img mat-card-avatar>` | 头部用作头像的图片 |
 
 
 ### Title groups

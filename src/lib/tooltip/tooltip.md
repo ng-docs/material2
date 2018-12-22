@@ -20,12 +20,18 @@ the positions `before` and `after` should be used instead of `left` and `right`,
 
 | 位置  | 说明                                                                          |
 |-----------|--------------------------------------------------------------------------------------|
-| `above`   | <p translation-result>总是显示在元素上方</p><p translation-origin="off">Always display above the element</p>
-| `below `  | <p translation-result>总是显示在元素下方</p><p translation-origin="off">Always display beneath the element</p>
-| `left`    | <p translation-result>总是显示在元素左侧</p><p translation-origin="off">Always display to the left of the element</p>
-| `right`   | <p translation-result>总是显示在元素右侧</p><p translation-origin="off">Always display to the right of the element</p>
-| `before`  | <p translation-result>在 LTR 布局下显示在左侧，RTL 布局下显示在右侧</p><p translation-origin="off">Display to the left in left-to-right layout and to the right in right-to-left layout</p>
-| `after`   | <p translation-result>在 LTR 布局下显示在右侧，RTL 布局下显示在左侧</p><p translation-origin="off">Display to the right in left-to-right layout and to the left in right-to-left layout</p>
+| `above`   | Always display above the element |
+| `above`   | 总是显示在元素上方 |
+| `below `  | Always display beneath the element |
+| `below `  | 总是显示在元素下方 |
+| `left`    | Always display to the left of the element |
+| `left`    | 总是显示在元素左侧 |
+| `right`   | Always display to the right of the element |
+| `right`   | 总是显示在元素右侧 |
+| `before`  | Display to the left in left-to-right layout and to the right in right-to-left layout |
+| `before`  | 在 LTR 布局下显示在左侧，RTL 布局下显示在右侧 |
+| `after`   | Display to the right in left-to-right layout and to the left in right-to-left layout |
+| `after`   | 在 LTR 布局下显示在右侧，RTL 布局下显示在左侧 |
 
 <!-- example(tooltip-position) -->
 

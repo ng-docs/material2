@@ -128,14 +128,22 @@ The slider has the following keyboard bindings:
 
 | 按键         | 操作                                                                             |
 |-------------|------------------------------------------------------------------------------------|
-| 右方向键 | <p translation-result>滑竿的值增加一步（在 RTL 下则减小）。</p><p translation-origin="off">Increment the slider value by one step (decrements in RTL).</p>
-| 上方向键 | <p translation-result>滑竿的值增加一步。</p><p translation-origin="off">Increment the slider value by one step.</p>
-| 左方向键 | <p translation-result>滑竿的值减小一步（在 RTL 下则增加）。</p><p translation-origin="off">Decrement the slider value by one step (increments in RTL).</p>
-| 下方向键  | <p translation-result>滑竿的值减小一步。</p><p translation-origin="off">Decrement the slider value by one step.</p>
-| 上翻页 | <p translation-result>滑竿的值增加 10 步。</p><p translation-origin="off">Increment the slider value by 10 steps.</p>
-| 下翻页 | <p translation-result>滑竿的值减小 10 步。</p><p translation-origin="off">Decrement the slider value by 10 steps.</p>
-| End         | <p translation-result>设置为可能的最大值。</p><p translation-origin="off">Set the value to the maximum possible.</p>
-| Home        | <p translation-result>设置为可能的最小值。</p><p translation-origin="off">Set the value to the minimum possible.</p>
+| 右方向键 | Increment the slider value by one step (decrements in RTL). |
+| 右方向键 | 滑竿的值增加一步（在 RTL 下则减小）。 |
+| 上方向键 | Increment the slider value by one step. |
+| 上方向键 | 滑竿的值增加一步。 |
+| 左方向键 | Decrement the slider value by one step (increments in RTL). |
+| 左方向键 | 滑竿的值减小一步（在 RTL 下则增加）。 |
+| 下方向键  | Decrement the slider value by one step. |
+| 下方向键  | 滑竿的值减小一步。 |
+| 上翻页 | Increment the slider value by 10 steps. |
+| 上翻页 | 滑竿的值增加 10 步。 |
+| 下翻页 | Decrement the slider value by 10 steps. |
+| 下翻页 | 滑竿的值减小 10 步。 |
+| End         | Set the value to the maximum possible. |
+| End         | 设置为可能的最大值。 |
+| Home        | Set the value to the minimum possible. |
+| Home        | 设置为可能的最小值。 |
 
 ### Accessibility
 

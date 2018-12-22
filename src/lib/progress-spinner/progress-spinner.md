@@ -15,8 +15,10 @@ The `<mat-spinner>` component is an alias for `<mat-progress-spinner mode="indet
 
 | 模式          | 说明                                                                      |
 |---------------|----------------------------------------------------------------------------------|
-| determinate   | <p translation-result>标准的进度指示符，填充 0% 到 100%</p><p translation-origin="off">Standard progress indicator, fills from 0% to 100%                               </p>
-| indeterminate | <p translation-result>表示正在发生某些事情，却没有传达离散的进度</p><p translation-origin="off">Indicates that something is happening without conveying a discrete progress      </p>
+| determinate   | Standard progress indicator, fills from 0% to 100%                                |
+| determinate   | 标准的进度指示符，填充 0% 到 100% |
+| indeterminate | Indicates that something is happening without conveying a discrete progress       |
+| indeterminate | 表示正在发生某些事情，却没有传达离散的进度 |
 
 
 The default mode is "determinate". In this mode, the progress is set via the `value` property, 

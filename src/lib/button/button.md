@@ -19,13 +19,20 @@ There are several button variants, each applied as an attribute:
 
 | 属性            | 说明                                                              |
 |----------------------|--------------------------------------------------------------------------|
-| `mat-button`         | <p translation-result>方形文字按钮 / 无高程（Z 轴位置）</p><p translation-origin="off">Rectangular text button w/ no elevation                                  </p>
-| `mat-raised-button`  | <p translation-result>方形填充按钮 / 有高程</p><p translation-origin="off">Rectangular contained button w/ elevation                                </p>
-| `mat-flat-button`    | <p translation-result>方形填充按钮 / 无高程</p><p translation-origin="off">Rectangular contained button w/ no elevation                             </p>
-| `mat-stroked-button` | <p translation-result>方形外框按钮 / 无高程</p><p translation-origin="off">Rectangular outlined button w/ no elevation                              </p>
-| `mat-icon-button`    | <p translation-result>圆形无背景按钮，通常就是个图标</p><p translation-origin="off">Circular button with a transparent background, meant to contain an icon  </p>
-| `mat-fab`            | <p translation-result>圆形按钮 / 有高程，默认使用主题中的 accent 颜色</p><p translation-origin="off">Circular button w/ elevation, defaults to theme's accent color           </p>
-| `mat-mini-fab`       | <p translation-result>与 `mat-tab` 一样，但更小</p><p translation-origin="off">Same as `mat-fab` but smaller                                            </p>
+| `mat-button`         | Rectangular text button w/ no elevation                                   |
+| `mat-button`         | 方形文字按钮 / 无高程（Z 轴位置） |
+| `mat-raised-button`  | Rectangular contained button w/ elevation                                 |
+| `mat-raised-button`  | 方形填充按钮 / 有高程 |
+| `mat-flat-button`    | Rectangular contained button w/ no elevation                              |
+| `mat-flat-button`    | 方形填充按钮 / 无高程 |
+| `mat-stroked-button` | Rectangular outlined button w/ no elevation                               |
+| `mat-stroked-button` | 方形外框按钮 / 无高程 |
+| `mat-icon-button`    | Circular button with a transparent background, meant to contain an icon   |
+| `mat-icon-button`    | 圆形无背景按钮，通常就是个图标 |
+| `mat-fab`            | Circular button w/ elevation, defaults to theme's accent color            |
+| `mat-fab`            | 圆形按钮 / 有高程，默认使用主题中的 accent 颜色 |
+| `mat-mini-fab`       | Same as `mat-fab` but smaller                                             |
+| `mat-mini-fab`       | 与 `mat-tab` 一样，但更小 |
 
 
 ### Theming
