@@ -11,7 +11,6 @@ npm run preprocess
 
 cd -
 
-npx gulp material-examples:build-release:clean
 yarn docs
 
 git stash pop || true
