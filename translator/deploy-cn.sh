@@ -20,6 +20,3 @@ cd `dirname $0`
 npm run postprocess
 
 cd -
-
-cd ../material.github.io
-./translator/deploy.sh
