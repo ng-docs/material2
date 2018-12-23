@@ -4,7 +4,8 @@
   "description": "Post processor for website translation function",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node ./translate"
+    "preprocess": "ts-node ./preprocess",
+    "postprocess": "ts-node ./postprocess"
   },
   "author": "Zhicheng WANG<asnowwolf@gmail.com>",
   "license": "MIT",
