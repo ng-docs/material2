@@ -1,4 +1,19 @@
-import { JSDOM } from 'jsdom';
+import {JSDOM} from 'jsdom';
+import {sync} from 'globby';
+import * as path from 'path';
+import {readFileSync, writeFileSync} from 'fs';
+
+function processAll(): void {
+  const files = sync(path.join(__dirname, '../dist/docs/**/*.html'));
+
+  files.forEach(file => {
+    const content = readFileSync(file, 'utf-8');
+    const result = postprocess(content);
+    writeFileSync(file, result, 'utf-8');
+  });
+}
+
+processAll();
 
 export function postprocess(content: string): string {
   const dom = new JSDOM(content);

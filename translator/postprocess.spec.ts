@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { postprocess } from './postprocessor';
+import { postprocess } from './postprocess';
 
 describe('postprocessor', function () {
   it('should exchange dom', () => {
