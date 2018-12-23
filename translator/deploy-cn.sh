@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
-. ~/.nvm/nvm.sh
-
-nvm use 8
-
 set -x
 set -e
+
+yarn docs
+
+cd `dirname $0`
+
+npm start
+
+cd -
 
 rm -fr ./tmp/
 ./scripts/deploy/publish-docs-content.sh
