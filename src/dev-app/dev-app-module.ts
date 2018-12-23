@@ -10,10 +10,9 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {FullscreenOverlayContainer, OverlayContainer} from '@angular/cdk/overlay';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {Injector, NgModule} from '@angular/core';
-import {createCustomElement} from '@angular/elements';
+import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {EXAMPLE_COMPONENTS, ExampleModule} from '@angular/material-examples';
+import {ExampleModule} from '@angular/material-examples';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
@@ -28,7 +27,7 @@ import {CheckboxDemo, MatCheckboxDemoNestedChecklist} from './checkbox/checkbox-
 import {ChipsDemo} from './chips/chips-demo';
 import {ConnectedOverlayDemo} from './connected-overlay/connected-overlay-demo';
 import {CustomHeader, CustomHeaderNgContent, DatepickerDemo} from './datepicker/datepicker-demo';
-import {DevAppComponent, DevAppHome} from './dev-app';
+import {DevAppComponent, DevAppHome, DevApp404} from './dev-app';
 import {ContentElementDialog, DialogDemo, IFrameDialog, JazzDialog} from './dialog/dialog-demo';
 import {DragAndDropDemo} from './drag-drop/drag-drop-demo';
 import {DrawerDemo} from './drawer/drawer-demo';
@@ -100,6 +99,7 @@ import {VirtualScrollDemo} from './virtual-scroll/virtual-scroll-demo';
     DatepickerDemo,
     DevAppComponent,
     DevAppHome,
+    DevApp404,
     DialogDemo,
     DragAndDropDemo,
     DrawerDemo,
@@ -152,13 +152,4 @@ import {VirtualScrollDemo} from './virtual-scroll/virtual-scroll-demo';
   ],
   bootstrap: [DevAppComponent],
 })
-export class DevAppModule {
-
-  constructor(injector: Injector) {
-    // Register examples as custom elements so that they can be inserted into the DOM dynamically
-    Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
-      const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {injector});
-      customElements.define(key, element);
-    });
-  }
-}
+export class DevAppModule {}

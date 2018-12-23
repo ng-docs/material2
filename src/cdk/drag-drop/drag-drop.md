@@ -41,7 +41,7 @@ by referencing the `id` of another drop container:
 
 If you have an unknown number of connected drop lists, you can use the `cdkDropListGroup` directive
 to set up the connection automatically. Note that any new `cdkDropList` that is added under a group
-will be connected to all other automatically.
+will be connected to all other lists automatically.
 
 ```html
 <div cdkDropListGroup>
@@ -75,6 +75,7 @@ by the directives:
 | `.cdk-drag-preview` | This is the element that will be rendered next to the user's cursor as they're dragging an item in a sortable list. By default the element looks exactly like the element that is being dragged. |
 | `.cdk-drag-placeholder` | This is element that will be shown instead of the real element as it's being dragged inside a `cdkDropList`. By default this will look exactly like the element that is being sorted. |
 | `.cdk-drop-list-dragging` | A class that is added to `cdkDropList` while the user is dragging an item.  |
+| `.cdk-drop-list-receiving` | A class that is added to `cdkDropList` when it can receive an item that is being dragged inside a connected drop list.  |
 
 ### Animations
 The drag-and-drop module supports animations both while sorting an element inside a list, as well as
@@ -133,6 +134,16 @@ The `cdkDropList` directive assumes that lists are vertical by default. This can
 changed by setting the `orientation` property to `"horizontal".
 
 <!-- example(cdk-drag-drop-horizontal-sorting) -->
+
+### Restricting movement within an element
+
+If you want to stop the user from being able to drag a `cdkDrag` element outside of another element,
+you can pass a CSS selector to the `cdkDragBoundary` attribute. The attribute works by accepting a
+selector and looking up the DOM until it finds an element that matches it. If a match is found,
+it'll be used as the boundary outside of which the element can't be dragged. `cdkDragBoundary` can
+also be used when `cdkDrag` is placed inside a `cdkDropList`.
+
+<!-- example(cdk-drag-drop-boundary) -->
 
 ### Restricting movement along an axis
 By default, `cdkDrag` allows free movement in all directions. To restrict dragging to a

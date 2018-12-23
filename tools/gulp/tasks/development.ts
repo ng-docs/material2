@@ -1,5 +1,5 @@
 import {task, dest} from 'gulp';
-import {tsBuildTask, copyTask, serverTask} from '../util/task_helpers';
+import {tsBuildTask, copyTask, serverTask} from '../util/task-helpers';
 import {join} from 'path';
 import {
   buildConfig,
@@ -85,6 +85,7 @@ task('serve:devapp', ['build:devapp'], sequenceTask([':serve:devapp', ':watch:de
 task('stage-deploy:devapp', ['build:devapp'], () => {
   const deployOutputDir = join(outputDir, 'devapp-deploy');
 
+  copyFiles(outDir, 'index.html', deployOutputDir);
   copyFiles(outDir, '**/*.+(css|js|map)', deployOutputDir);
   copyFiles(join(projectDir, 'node_modules'), vendorGlob, join(deployOutputDir, 'node_modules'));
   copyFiles(bundlesDir, '*.+(js|map)', join(deployOutputDir, 'dist/bundles'));

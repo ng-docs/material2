@@ -72,8 +72,8 @@ export declare class FocusMonitor implements OnDestroy {
     _onBlur(event: FocusEvent, element: HTMLElement): void;
     focusVia(element: ElementRef<HTMLElement>, origin: FocusOrigin, options?: FocusOptions): void;
     focusVia(element: HTMLElement, origin: FocusOrigin, options?: FocusOptions): void;
-    monitor(element: HTMLElement, checkChildren?: boolean): Observable<FocusOrigin>;
     monitor(element: ElementRef<HTMLElement>, checkChildren?: boolean): Observable<FocusOrigin>;
+    monitor(element: HTMLElement, checkChildren?: boolean): Observable<FocusOrigin>;
     ngOnDestroy(): void;
     stopMonitoring(element: ElementRef<HTMLElement>): void;
     stopMonitoring(element: HTMLElement): void;

@@ -33,6 +33,11 @@ export class GitClient {
     return spawnSync('git', ['diff-index', '--quiet', 'HEAD'], {cwd: this.projectDir}).status !== 0;
   }
 
+  /** Checks out an existing branch with the specified name. */
+  checkoutBranch(branchName: string): boolean {
+    return spawnSync('git', ['checkout', branchName], {cwd: this.projectDir}).status === 0;
+  }
+
   /** Creates a new branch which is based on the previous active branch. */
   checkoutNewBranch(branchName: string): boolean {
     return spawnSync('git', ['checkout', '-b', branchName], {cwd: this.projectDir}).status === 0;
@@ -46,6 +51,24 @@ export class GitClient {
   /** Creates a new commit within the current branch with the given commit message. */
   createNewCommit(message: string): boolean {
     return spawnSync('git', ['commit', '-m', message], {cwd: this.projectDir}).status === 0;
+  }
+
+  /** Gets the title of a specified commit reference. */
+  getCommitTitle(commitRef: string): string {
+    return spawnSync('git', ['log', '-n1', '--format', '%s', commitRef], {cwd: this.projectDir})
+      .stdout.toString().trim();
+  }
+
+  /** Creates a tag for the specified commit reference. */
+  createTag(commitRef: string, tagName: string, message: string): boolean {
+    return spawnSync('git', ['tag', tagName, '-m', message], {cwd: this.projectDir}).status === 0;
+  }
+
+  /** Pushes the specified tag to the remote git repository. */
+  pushTagToRemote(tagName: string): boolean {
+    return spawnSync('git', ['push', this.remoteGitUrl, `refs/tags/${tagName}`], {
+      cwd: this.projectDir
+    }).status === 0;
   }
 }
 
