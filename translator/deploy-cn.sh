@@ -22,8 +22,5 @@ npm run postprocess
 
 cd -
 
-rm -fr ./tmp/
-./scripts/deploy/publish-docs-content.sh --no-build
-sleep 5
 cd ../material.github.io
 ./translator/deploy.sh
