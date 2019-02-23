@@ -1,8 +1,13 @@
 ### KeyCodes
- 
+
 Commonly used keycode constants.
 
+常用的键码常量。
+
 #### Example
+
+#### 例子
+
 ```ts
 import {Directive} from '@angular/core';
 import {UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW} from '@angular/cdk/keycodes';
@@ -23,4 +28,3 @@ export class ArrowCounterDirective {
   }
 }
 ```
-
