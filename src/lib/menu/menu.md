@@ -177,27 +177,21 @@ with a different set of data, depending on the trigger that opened it:
 
   <kbd>DOWN_ARROW</kbd>：焦点移到下一个菜单项
 
-
 - <kbd>UP_ARROW</kbd>: Focuses previous menu item
 
   <kbd>UP_ARROW</kbd>：焦点移到上一个菜单项
-
 
 - <kbd>RIGHT_ARROW</kbd>: Opens the menu item's sub-menu
 
   <kbd>RIGHT_ARROW</kbd>：打开当前菜单项的子菜单
 
-
 - <kbd>LEFT_ARROW</kbd>: Closes the current menu, if it is a sub-menu.
 
   <kbd>LEFT_ARROW</kbd>：关闭当前菜单项的子菜单（如果有）。
 
-
 - <kbd>ENTER</kbd>: Activates the focused menu item
 
   <kbd>ENTER</kbd>：激活当前有焦点的菜单项
-
-
 
 ### Accessibility
 

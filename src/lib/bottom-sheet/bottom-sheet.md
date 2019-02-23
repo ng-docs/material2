@@ -115,7 +115,6 @@ for `MAT_BOTTOM_SHEET_DEFAULT_OPTIONS` in your application's root module.
 })
 ```
 
-
 ### Accessibility
 
 ### 可访问性

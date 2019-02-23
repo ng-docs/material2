@@ -170,7 +170,6 @@ autocomplete is attached to using the `matAutocompleteOrigin` directive together
 
   <kbd>ENTER</kbd>：选择当前激活的条目。
 
-
 ### Option groups
 
 ### 选项组
@@ -180,7 +179,6 @@ autocomplete is attached to using the `matAutocompleteOrigin` directive together
 可以使用 `mat-optgroup` 元素对 `mat-option` 进行分组：
 
 <!-- example(autocomplete-optgroup) -->
-
 
 ```html
 <mat-autocomplete #auto="matAutocomplete">

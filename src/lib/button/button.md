@@ -34,7 +34,6 @@ There are several button variants, each applied as an attribute:
 | `mat-mini-fab`       | Same as `mat-fab` but smaller                                             |
 | `mat-mini-fab`       | 与 `mat-tab` 一样，但更小 |
 
-
 ### Theming
 
 ### 主题

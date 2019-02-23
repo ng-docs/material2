@@ -177,7 +177,6 @@ on `mat-step`.
 
 <!-- example(stepper-optional) -->
 
-
 #### Editable step
 
 #### 可编辑的步骤
@@ -338,7 +337,6 @@ The stepper can now show error states by simply providing the `showError` option
 - <kbd>TAB</kbd>+<kbd>SHIFT</kbd>: Focuses the previous tabbable element
 
   <kbd>TAB</kbd>+<kbd>SHIFT</kbd>：焦点移到上一个可捕获焦点的元素上
-
 
 ### Localizing labels
 

@@ -24,7 +24,6 @@ The overlap of the badge in relation to its inner contents can also be defined
 using the `matBadgeOverlap` tag. Typically, you want the badge to overlap an icon and not
 a text phrase. By default it will overlap.
 
-
 还可以用 `matBadgeOverlap` 属性来定义此徽章与其内容的重叠度。
 通常，你会希望徽章与图标重叠，而不要与文本重叠。默认情况下它会重叠。
 

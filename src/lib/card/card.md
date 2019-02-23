@@ -4,7 +4,6 @@
 
 <!-- example(card-overview) -->
 
-
 ### Basic card sections
 
 ### 基本卡片分节
@@ -54,7 +53,6 @@ header to a card. This header can contain:
 | `<mat-card-subtitle>`   | 头部的小标题 |
 | `<img mat-card-avatar>` | An image used as an avatar within the header                             |
 | `<img mat-card-avatar>` | 头部用作头像的图片 |
-
 
 ### Title groups
 
@@ -119,8 +117,6 @@ document flow, `tabindex="-1"` is appropriate.
 
 If the card acts as a purely decorative container, it does not need to be tabbable. In this case,
 the card content should follow normal best practices for tab order.
-
-
 
 如果该卡片扮演一个纯装饰性容器，那么它不需要能 `tab` 进来。这种情况下，卡片内容应该遵循关于安排 `tab` 顺序的标准实践。
 

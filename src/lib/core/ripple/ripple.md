@@ -16,7 +16,6 @@ radiating to cover the host element. Each ripple will fade out only upon release
 Ripples can also be triggered programmatically by getting a reference to the MatRipple directive
 and calling its `launch` method.
 
-
 ### Ripple trigger
 
 By default ripples will fade in on interaction with the directive's host element.

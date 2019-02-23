@@ -213,17 +213,13 @@ globally cause input errors to show when the input is dirty and invalid.
 
   <kbd>DOWN_ARROW</kbd>：焦点移到下一个候选项
 
-
 - <kbd>UP_ARROW</kbd>: Focus previous option
 
   <kbd>UP_ARROW</kbd>：焦点移到上一个候选项
 
-
 - <kbd>ENTER</kbd> or <kbd>SPACE</kbd>: Select focused item
 
   <kbd>ENTER</kbd> 或 <kbd>SPACE</kbd>：选择当前有焦点的条目
-
-
 
 ### Accessibility
 
