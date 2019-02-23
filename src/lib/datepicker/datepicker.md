@@ -171,7 +171,6 @@ from advancing the calendar past the `month` or `year` (depending on current vie
 
 有三个属性可以为日期选择器添加日期验证。前两个是 `min` 和 `max` 属性。除了对输入执行验证之外，这些属性还会禁用日期弹出框中相应值之前或之后的所有日期，并阻止用户将日历推进到包含 `min` 或 `max` 日期之外的 `month` 或 `year`（取决于当前视图）。
 
-
 <!-- example(datepicker-min-max) -->
 
 The second way to add date validation is using the `matDatepickerFilter` property of the datepicker
@@ -530,7 +529,6 @@ The datepicker supports the following keyboard shortcuts:
 | `ESCAPE`             | Close the calendar pop-up |
 | `ESCAPE`             | 关闭日历弹出框 |
 
-
 In month view:
 
 在月份视图中：
@@ -560,7 +558,6 @@ In month view:
 | `ALT` + `PAGE_DOWN`  | 转到明年的同一天 |
 | `ENTER`              | Select current date |
 | `ENTER`              | 选择当前日期 |
-
 
 In year view:
 

@@ -38,7 +38,6 @@ snackBarRef.afterDismissed().subscribe(() => {
   console.log('The snack-bar was dismissed');
 });
 
-
 snackBarRef.onAction().subscribe(() => {
   console.log('The snack-bar action was triggered!');
 });

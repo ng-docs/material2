@@ -6,7 +6,6 @@ list component, it provides Material Design styling, but no behavior of its own.
 
 <!-- example(list-overview) -->
 
-
 ### Simple lists
 
 ### 简单列表
@@ -83,7 +82,6 @@ A selection list provides an interface for selecting values, where each list ite
 
 The options within a selection-list should not contain further interactive controls, such
 as buttons and anchors.
-
 
 选取列表中的选项不应该包含可交互控件，比如按钮或链接。
 
@@ -180,7 +178,6 @@ to the main `mat-list` tag.
  <mat-list-item> Paprika </mat-list-item>
 </mat-list>
 ```
-
 
 ### Lists with multiple sections
 

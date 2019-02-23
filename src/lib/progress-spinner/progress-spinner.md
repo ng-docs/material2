@@ -20,7 +20,6 @@ The `<mat-spinner>` component is an alias for `<mat-progress-spinner mode="indet
 | indeterminate | Indicates that something is happening without conveying a discrete progress       |
 | indeterminate | 表示正在发生某些事情，却没有传达离散的进度 |
 
-
 The default mode is "determinate". In this mode, the progress is set via the `value` property, 
 which can be a whole number between 0 and 100.
 

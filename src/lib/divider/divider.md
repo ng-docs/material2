@@ -4,7 +4,6 @@
 
 <!-- example(divider-overview) -->
 
-
 ### Simple divider
 
 ### 简单分割线
@@ -40,7 +39,6 @@ Add the `vertical` attribute in order to set whether or not the divider is verti
 ```html
 <mat-divider [vertical]="true"></mat-divider>
 ```
-
 
 ### Lists with inset dividers
 
