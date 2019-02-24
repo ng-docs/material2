@@ -20,7 +20,7 @@ and usability advantages. See [the documentation for
 form-field](https://material.angular.io/components/form-field) for more information.
 
 Angular Material 还支持在 `<mat-form-field>` 中使用原生的 `<select>` 元素。
-这种原生控件在性能、可访问性、可用性等方面具有一系列优点。参见 [form-field 的文档](https://material.angular.io/components/form-field)以了解详情。
+这种原生控件在性能、无障碍性、可用性等方面具有一系列优点。参见 [form-field 的文档](https://material.angular.io/components/form-field)以了解详情。
 
 To use a native select inside `<mat-form-field>`, add  the `matNativeControl` attribute
 to the `<select>` element. 
@@ -223,7 +223,7 @@ globally cause input errors to show when the input is dirty and invalid.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `<mat-select>` component without text or label should be given a meaningful label via
 `aria-label` or `aria-labelledby`.

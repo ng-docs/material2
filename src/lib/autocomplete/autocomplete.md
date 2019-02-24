@@ -91,7 +91,7 @@ filtered by that value on init (before there are any value changes).
 filter criteria. This is especially helpful for screenreader users if you're using a non-standard
 filter that doesn't limit matches to the beginning of the string.
 
-为了获得最佳的可访问性，你可能还要往该页添加一些文本指南来解释过滤条件。
+为了获得最佳的无障碍性，你可能还要往该页添加一些文本指南来解释过滤条件。
 特别是，如果你使用了非标准过滤器，并且不单从字符串的开头儿进行匹配，那么它将对使用屏幕阅读器的用户有很大帮助。
 
 <!-- example(autocomplete-filter) -->
@@ -192,7 +192,7 @@ autocomplete is attached to using the `matAutocompleteOrigin` directive together
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The input for an autocomplete without text or labels should be given a meaningful label via
 `aria-label` or `aria-labelledby`.

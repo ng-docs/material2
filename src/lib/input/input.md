@@ -130,11 +130,11 @@ CDK 提供了[一些工具](/cdk/text-field/overview#monitoring-the-autofill-sta
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `matInput` directive works with native `<input>` to provide an accessible experience.
 
-`matInput` 指令和原生的 `<input>` 一起使用，以提供具有可访问性的用户体验。
+`matInput` 指令和原生的 `<input>` 一起使用，以提供具有无障碍性的用户体验。
 
 If the containing `<mat-form-field>` has a label it will automatically be used as the `aria-label`
 for the `<input>`. However, if there's no label specified in the form field, `aria-label`,

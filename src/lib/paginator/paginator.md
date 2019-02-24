@@ -66,7 +66,7 @@ This will allow you to change the following:
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `aria-label`s for next page, previous page, first page and last page buttons can be set in `MatPaginatorIntl`.
 

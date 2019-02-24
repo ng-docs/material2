@@ -185,7 +185,7 @@ export class AppModule {}
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 By default, each dialog has `role="dialog"` on the root element. The role can be changed to
 `alertdialog` via the `MatDialogConfig` when opening.

@@ -152,7 +152,7 @@ use a neutral background color based on the current theme (light or dark). This 
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 A chip-list behaves as a `role="listbox"`, with each chip being a `role="option"`. The chip input
 should have a placeholder or be given a meaningful label via `aria-label` or `aria-labelledby`.

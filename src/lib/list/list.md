@@ -209,7 +209,7 @@ To add a divider, use `<mat-divider>`.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The type of list used in any given situation depends on how the end-user will be interacting with
 the it.
@@ -252,7 +252,7 @@ elements on the page. Any interactive content within the list should be given an
 accessibility treatment based on the specific workflow of your application.
 
 默认情况下，列表组件假定自己是纯装饰性的，因此不设置任何角色、ARIA 属性或键盘快捷键。
-这相当于页面上有一系列 `<div>` 元素。列表内部的任何交互式内容都应该根据应用程序的特定工作流进行适当的可访问性处理。
+这相当于页面上有一系列 `<div>` 元素。列表内部的任何交互式内容都应该根据应用程序的特定工作流进行适当的无障碍性处理。
 
 If the list is used to present a list of non-interactive content items, then the list element should
 be given `role="list"` and each list item should be given `role="listitem"`.

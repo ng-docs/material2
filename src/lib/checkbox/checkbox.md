@@ -99,13 +99,13 @@ use the theme's accent color. This can be changed to `'primary'` or `'warn'`.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `<mat-checkbox>` uses an internal `<input type="checkbox">` to provide an accessible experience.
 This internal checkbox receives focus and is automatically labelled by the text content of the
 `<mat-checkbox>` element.
 
-`<mat-checkbox>` 使用一个内部的 `<input type="checkbox">` 来提供可访问性体验。
+`<mat-checkbox>` 使用一个内部的 `<input type="checkbox">` 来提供无障碍性体验。
 这个内部检查框可以接受焦点，并且自动把 `<mat-checkbox>` 元素的文本内容作为标签。
 
 Checkboxes without text or labels should be given a meaningful label via `aria-label` or

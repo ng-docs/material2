@@ -231,7 +231,7 @@ mat-form-field.mat-form-field {
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 If a floating label is specified, it will be automatically used as the label for the form
 field control. If no floating label is specified, the user should label the form field control

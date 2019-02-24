@@ -120,7 +120,7 @@ If you want to override the default snack bar options, you can do so using the
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Snack-bar messages are announced via an `aria-live` region. By default, the `polite` setting is
 used. While `polite` is recommended, this can be customized by setting the `politeness` property of

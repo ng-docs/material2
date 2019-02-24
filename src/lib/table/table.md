@@ -160,7 +160,7 @@ DataSource 是一个拥有两个函数的基类：`connect` 和 `disconnect`。
 The `MatTable` is focused on a single responsibility: efficiently render rows of data in a 
 performant and accessible way.
 
-`MatTable` 专注于一个职责：以高效且具有可访问性的方式执行数据渲染。
+`MatTable` 专注于一个职责：以高效且具有无障碍性的方式执行数据渲染。
 
 You'll notice that the table itself doesn't come out of the box with a lot of features, but expects
 that the table will be included in a composition of components that fills out its features.
@@ -482,7 +482,7 @@ to resolve this.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Tables without text or labels should be given a meaningful label via `aria-label` or 
 `aria-labelledby`. The `aria-readonly` defaults to `true` if it's not set.

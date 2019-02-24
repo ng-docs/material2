@@ -117,7 +117,7 @@ for `MAT_BOTTOM_SHEET_DEFAULT_OPTIONS` in your application's root module.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 By default, the bottom sheet has `role="dialog"` on the root element and can be labelled using the
 `ariaLabel` property on the `MatBottomSheetConfig`.

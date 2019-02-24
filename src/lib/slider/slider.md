@@ -147,7 +147,7 @@ The slider has the following keyboard bindings:
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Sliders without text or labels should be given a meaningful label via `aria-label` or
 `aria-labelledby`.
