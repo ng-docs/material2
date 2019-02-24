@@ -27,7 +27,7 @@ reorderable collection. Items will automatically rearrange as an element moves. 
 that this will *not* update your data model; you can listen to the `cdkDropListDropped` event to
 update the data model once the user finishes dragging.
 
-在一组 `cdkDrag` 元素外添加一个 `cdkDropList` 包装可以把这些可拖曳元素分组成一个可重新排序的集合。当元素移动时，这些条目会自动重新排序。请注意，这*不会*更新你的数据模型，你可以监听 `cdkDropListDropped` 事件，以便在用户完成拖放操作后更新数据模型。
+在一组 `cdkDrag` 元素外添加一个 `cdkDropList` 包装可以把这些可拖曳元素分组成一个可重新排序的集合。当元素移动时，这些条目会自动重新排序。注意，这*不会*更新你的数据模型，你可以监听 `cdkDropListDropped` 事件，以便在用户完成拖放操作后更新数据模型。
 
 <!-- example(cdk-drag-drop-sorting) -->
 
@@ -62,7 +62,7 @@ If you have an unknown number of connected drop lists, you can use the `cdkDropL
 to set up the connection automatically. Note that any new `cdkDropList` that is added under a group
 will be connected to all other lists automatically.
 
-如果有一个未知数量的连接拖放列表，你也可以使用 `cdkDropListGroup` 指令来自动建立连接。请注意，添加到组下的所有新 `cdkDropList` 都会自动和其它的列表连接起来。
+如果有一个未知数量的连接拖放列表，你也可以使用 `cdkDropListGroup` 指令来自动建立连接。注意，添加到组下的所有新 `cdkDropList` 都会自动和其它的列表连接起来。
 
 ```html
 <div cdkDropListGroup>

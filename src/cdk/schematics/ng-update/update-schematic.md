@@ -35,7 +35,7 @@ Note that the migrations run *in order* if multiple versions are transitively ta
 example, consider an application which uses Angular Material v5.0.0. In case the developer runs
 `ng update`, the Angular CLI **only** installs V7 and runs the V6 and V7 migrations in order.
 
-请注意，如果多个版本之间是可传递的，那么这些迁移就会*按顺序*运行。比如，在用 Angular Material v5.0.0 的应用时，如果开发人员运行了 `ng update`，那么 Angular CLI **只会**安装 V7，并按顺序进行 V6 和 V7 版本的迁移。
+注意，如果多个版本之间是可传递的，那么这些迁移就会*按顺序*运行。比如，在用 Angular Material v5.0.0 的应用时，如果开发人员运行了 `ng update`，那么 Angular CLI **只会**安装 V7，并按顺序进行 V6 和 V7 版本的迁移。
 
 This shows that the we technically need to keep all migrations from V5 in this code base, because
 the CLI usually only installs the latest version and expects all version migrations to be present.
