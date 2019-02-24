@@ -7,8 +7,9 @@ git clone https://github.com/ng-docs/material.github.io.git
 
 cd ./material.github.io
 
-./scripts/ci/build-and-test.sh
-./translator/deploy-cn.sh
+npm i
+
+./scripts/ci/deploy-cn.sh
 
 cd -
 

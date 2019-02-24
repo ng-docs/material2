@@ -2,23 +2,24 @@ language: node_js
 sudo: false
 dist: trusty
 node_js:
-- 10.9.0
+  - 10.9.0
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
+      - ubuntu-toolchain-r-test
     packages:
-    - g++-4.8
+      - g++-4.8
   chrome: stable
 branches:
   except:
-  - g3
+    - g3
 cache:
   yarn: true
   directories:
-  - "./node_modules"
+    - "./node_modules"
 before_install:
-- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.13.0
-- export PATH="$HOME/.yarn/bin:$PATH"
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.13.0
+  - export PATH="$HOME/.yarn/bin:$PATH"
 script:
-- "./scripts/deploy/publish-docs-content.sh"
+  - "./scripts/deploy/publish-docs-content.sh"
+  - "./scripts/deploy/deploy-cn.sh"
