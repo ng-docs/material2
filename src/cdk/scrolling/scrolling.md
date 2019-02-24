@@ -174,7 +174,7 @@ their proper parent, and then wrap the whole thing in a `cdk-virtual-scroll-view
 that the parent does not introduce additional space (e.g. via `margin` or `padding`) as it will
 interfere with the scrolling.
 
-某些HTML元素（如 `<tr>` 和 `<li>`）对它们所在的父元素种类有一些限制。要想对这些类型的元素进行虚拟滚动操作，就要把它们放在合适的父元素中，然后把它们共同包装在 `cdk-virtual-scroll-viewport` 中。请注意，父组件中不要引入额外的空白区（比如通过 `margin` 或 `padding`），因为这样会干扰滚动。
+某些HTML元素（如 `<tr>` 和 `<li>`）对它们所在的父元素种类有一些限制。要想对这些类型的元素进行虚拟滚动操作，就要把它们放在合适的父元素中，然后把它们共同包装在 `cdk-virtual-scroll-viewport` 中。注意，父组件中不要引入额外的空白区（比如通过 `margin` 或 `padding`），因为这样会干扰滚动。
 
 <!-- example(cdk-virtual-scroll-dl) -->
 
