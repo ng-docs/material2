@@ -91,7 +91,7 @@ use a neutral background color based on the current theme (light or dark). This 
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 By default, the toolbar assumes that it will be used in a purely decorative fashion and thus sets
 no roles, ARIA attributes, or keyboard shortcuts. This is equivalent to having a sequence of `<div>`

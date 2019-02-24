@@ -75,14 +75,14 @@ This element can contain:
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Cards can be used in a wide variety of scenarios and can contain many different types of content.
 Due to this dynamic nature, the appropriate accessibility treatment depends on how `<mat-card>` is
 used.
 
 卡片可用在很多场景中，还能包含很多种不同类型的内容。
-由于其动态性，它可访问性是否合适，取决于如何使用 `<mat-card>`。
+由于其动态性，它无障碍性是否合适，取决于如何使用 `<mat-card>`。
 
 #### Group, region, and landmarks
 

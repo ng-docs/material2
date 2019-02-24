@@ -195,7 +195,7 @@ with a different set of data, depending on the trigger that opened it:
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Menu triggers or menu items without text or labels should be given a meaningful label via
 `aria-label` or `aria-labelledby`.

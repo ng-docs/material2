@@ -59,14 +59,14 @@ approach this to the consuming app.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Angular Material uses native `<button>` and `<a>` elements to ensure an accessible experience by
 default. The `<button>` element should be used for any interaction that _performs an action on the
 current page_. The `<a>` element should be used for any interaction that _navigates to another
 view_.
 
-Angular Material 使用原生的 `<button>` 和 `<a>` 元素，来保留默认的可访问性体验。
+Angular Material 使用原生的 `<button>` 和 `<a>` 元素，来保留默认的无障碍性体验。
 当要执行某些*动作*时，应该使用 `<button>` 元素。
 当用户要*导航*到其它视图时，应该使用 `<a>` 元素。
 

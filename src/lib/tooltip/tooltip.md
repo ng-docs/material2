@@ -101,7 +101,7 @@ shown.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Elements with the `matTooltip` will add an `aria-describedby` label that provides a reference
 to a visually hidden element containing the tooltip's message. This provides screenreaders the

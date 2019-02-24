@@ -37,7 +37,7 @@ By default, the appearance of `mat-button-toggle-group` and `mat-button-toggle` 
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The button-toggles will present themselves as either checkboxes or radio-buttons based on the
 presence of the `multiple` attribute.

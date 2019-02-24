@@ -85,7 +85,7 @@ use the theme's primary color. This can be changed to `'accent'` or `'warn'`.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Each progress bar should be given a meaningful label via `aria-label` or `aria-labelledby`.
 

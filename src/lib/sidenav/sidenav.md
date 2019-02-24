@@ -280,7 +280,7 @@ class YourComponent implements AfterViewInit {
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `<mat-sidenav>` an `<mat-sidenav-content>` should each be given an appropriate `role` attribute
 depending on the context in which they are used.

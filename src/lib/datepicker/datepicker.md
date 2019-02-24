@@ -498,7 +498,7 @@ value can be anything that is accepted by `ngClass`.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `MatDatepickerInput` and `MatDatepickerToggle` directives add the `aria-haspopup` attribute to
 the native input and toggle button elements respectively, and they trigger a calendar dialog with

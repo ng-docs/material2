@@ -148,7 +148,7 @@ an `ng-template`:
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The expansion-panel aims to mimic the experience of the native `<details>` and `<summary>` elements.
 The expansion panel header has `role="button"` and also the attribute `aria-controls` with the

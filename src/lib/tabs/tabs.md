@@ -163,7 +163,7 @@ duration can be configured globally using the `MAT_TABS_CONFIG` injection token.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Tabs without text or labels should be given a meaningful label via `aria-label` or
 `aria-labelledby`. For `MatTabNav`, the `<nav>` element should have a label as well.

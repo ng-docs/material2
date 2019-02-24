@@ -54,13 +54,13 @@ and `ReactiveFormsModule`.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `<mat-radio-button>` uses an internal `<input type="radio">` to provide an accessible experience.
 This internal radio button receives focus and is automatically labelled by the text content of the
 `<mat-radio-button>` element.
 
-`<mat-radio-button>` 使用其内部的 `<input type="radio">` 来提供可访问性。
+`<mat-radio-button>` 使用其内部的 `<input type="radio">` 来提供无障碍性。
 这个内部单选按钮会接受焦点，并自动以 `<mat-radio-button>` 元素的内容作为标签。
 
 Radio button groups should be given a meaningful label via `aria-label` or `aria-labelledby`.

@@ -358,7 +358,7 @@ export class MyApp {}
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The stepper is treated as a tabbed view for accessibility purposes, so it is given
 `role="tablist"` by default. The header of step that can be clicked to select the step
@@ -366,7 +366,7 @@ is given `role="tab"`, and the content that can be expanded upon selection is gi
 `role="tabpanel"`. `aria-selected` attribute of step header and `aria-expanded` attribute of
 step content is automatically set based on step selection change.
 
-从可访问性的角度看，步进器和选项卡视图是一样的，所以默认会为它指定 `role="tablist"`。
+从无障碍性的角度看，步进器和选项卡视图是一样的，所以默认会为它指定 `role="tablist"`。
 步骤的头可以点击，以选择该步骤，所以指定 `role="tab"`，其内容可以在选中时展开，所以指定 `role="tabpanel"`。
 步骤头的 `aria-selected` 属性和步骤内容的 `aria-expanded` 属性会根据其选中状态的变化进行自动设置。
 

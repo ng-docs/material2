@@ -49,13 +49,13 @@ slide-toggles use the theme's accent color. This can be changed to `'primary'` o
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `<mat-slide-toggle>` uses an internal `<input type="checkbox">` to provide an accessible
 experience. This internal checkbox receives focus and is automatically labelled by the text content
 of the `<mat-slide-toggle>` element.
 
-`<mat-slide-toggle>` 使用内部的 `<input type="checkbox">` 来提供可访问性。这个内部检查框接受焦点，并自动使用 `<mat-slide-toggle>` 元素的文本内容作为标签。
+`<mat-slide-toggle>` 使用内部的 `<input type="checkbox">` 来提供无障碍性。这个内部检查框接受焦点，并自动使用 `<mat-slide-toggle>` 元素的文本内容作为标签。
 
 Slide toggles without text or labels should be given a meaningful label via `aria-label` or
 `aria-labelledby`.

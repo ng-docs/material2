@@ -127,7 +127,7 @@ structure in DOM.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Trees without text or labels should be given a meaningful label via `aria-label` or
 `aria-labelledby`. The `aria-readonly` defaults to `true` if it's not set.

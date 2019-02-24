@@ -141,7 +141,7 @@ match the current theme's colors using the `color` attribute. This can be change
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Similar to an `<img>` element, an icon alone does not convey any useful information for a
 screen-reader user. The user of `<mat-icon>` must provide additional information pertaining to how
@@ -154,7 +154,7 @@ element.
 
 In thinking about accessibility, it is useful to place icon use into one of three categories:
 
-在考察可访问性时，可以将图标归入下面三种类别之一：
+在考察无障碍性时，可以将图标归入下面三种类别之一：
 
 1. **Decorative**: the icon conveys no real semantic meaning and is purely cosmetic.
 

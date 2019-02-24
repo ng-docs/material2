@@ -41,7 +41,7 @@ progress-spinners use the theme's primary color. This can be changed to `'accent
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Each progress spinner should be given a meaningful label via `aria-label` or `aria-labelledby`.
 

@@ -78,7 +78,7 @@ A header and footer can be added to an `mat-grid-tile` using the `mat-grid-tile-
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 By default, the grid-list assumes that it will be used in a purely decorative fashion and thus sets
 no roles, ARIA attributes, or keyboard shortcuts. This is equivalent to having a sequence of `<div>`
@@ -86,7 +86,7 @@ elements on the page. Any interactive content within the grid-list should be giv
 accessibility treatment based on the specific workflow of your application.
 
 默认情况下，网格列表纯粹是作为装饰使用的，因此不用设置角色、ARIA 属性或键盘快捷键。这相当于在页面上有一系列 `<div>` 元素。
-网格列表中的任何交互式内容都要根据应用程序的工作流进行适当的可访问性处理。
+网格列表中的任何交互式内容都要根据应用程序的工作流进行适当的无障碍性处理。
 
 If the grid-list is used to present a list of _non-interactive_ content items, then the grid-list
 element should be given `role="list"` and each tile should be given `role="listitem"`.

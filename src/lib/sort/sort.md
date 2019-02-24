@@ -67,7 +67,7 @@ by default it will use the id of the column.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 The `aria-label` for the sort button can be set in `MatSortHeaderIntl`.
 

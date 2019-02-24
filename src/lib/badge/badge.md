@@ -80,7 +80,7 @@ background color to `primary`, `accent`, or `warn`.
 
 ### Accessibility
 
-### 可访问性
+### 无障碍性
 
 Badges should be given a meaningful description via `matBadgeDescription`. This description will be
 applied, via `aria-describedby` to the element decorated by `matBadge`.
