@@ -8,6 +8,12 @@ set -e
 
 cd "$(dirname $0)/../../"
 
+if [ -z ${GITHUB_ACCESS_TOKEN} ]; then
+  echo "Error: No access token for GitHub could be found." \
+       "Please set the environment variable 'GITHUB_ACCESS_TOKEN'."
+  exit 1
+fi
+
 if [[ ! ${*} == *--no-build* ]]; then
   $(npm bin)/gulp material-examples:build-release:clean
   $(npm bin)/gulp docs
@@ -26,7 +32,7 @@ docsContentPath="${projectPath}/tmp/material2-docs-content"
 examplesPackagePath="${projectPath}/dist/releases/material-examples"
 
 # Git clone URL for the material2-docs-content repository.
-docsContentRepoUrl="git@github.com:ng-docs/material2-docs-content.git"
+docsContentRepoUrl="https://github.com/ng-docs/material2-docs-content"
 
 # Current version of Angular Material from the package.json file
 buildVersion=$(node -pe "require('./package.json').version")
@@ -107,9 +113,17 @@ if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
 fi
 
 # Setup the Git configuration
+git config user.name "$commitAuthorName"
+git config user.email "$commitAuthorEmail"
+git config credential.helper "store --file=.git/credentials"
+
+echo "https://asnowwolf:${GITHUB_ACCESS_TOKEN}@github.com" > .git/credentials
+
+echo "Credentials for docs-content repository are now set up. Publishing.."
+
 git add -A
 git commit --allow-empty -m "${buildCommitMessage}"
 git tag "${buildTagName}"
-git push origin ${branchName} --tags
+git push origin ${branchName} --tags --force
 
 echo "Published docs-content for ${buildVersionName} into ${branchName} successfully"
