@@ -94,7 +94,7 @@ is reused instead. The size of the view cache can be adjusted via the `templateC
 property; setting this size to `0` disables caching. If your templates are expensive in terms of
 memory you may wish to reduce this number to avoid spending too much memory on the template cache.
 
-为了提高渲染性能， `*cdkVirtualFor` 会缓存那些曾经创建过但不再需要的视图。当要创建一个新视图时，会转而重用一个已缓存的视图。可以通过 `templateCacheSize` 属性来调整视图缓存的大小。把这个大小设置为 `0` 会禁用缓存。如果你的模板在内存方面很昂贵，你可能会希望减小这个数字，以免在模板缓存上花费太多内存。
+为了提高渲染性能， `*cdkVirtualFor` 会缓存那些曾经创建过但不再需要的视图。当要创建一个新视图时，会转而复用一个已缓存的视图。可以通过 `templateCacheSize` 属性来调整视图缓存的大小。把这个大小设置为 `0` 会禁用缓存。如果你的模板在内存方面很昂贵，你可能会希望减小这个数字，以免在模板缓存上花费太多内存。
 
 <!-- example(cdk-virtual-scroll-template-cache) -->
 
