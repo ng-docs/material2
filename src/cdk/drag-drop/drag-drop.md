@@ -33,7 +33,7 @@ update the data model once the user finishes dragging.
 
 ### Transferring items between lists
 
-### 在列表之间转移项目
+### 在列表之间转移条目
 
 The `cdkDropList` directive supports transferring dragged items between connected drop zones.
 You can connect one or more `cdkDropList` instances together by setting the `cdkDropListConnectedTo`
@@ -255,7 +255,7 @@ If you want more fine-grained control over which items can be dropped, you can u
 new container. Depending on whether the predicate returns `true` or `false`, the item may or may not
 be allowed into the new container.
 
-默认情况下，一个容器中的所有 `cdkDrag` 项都可以移动到另一个相连的容器中。如果你想对可拖放的条目进行更精细的控制，你可以使用 `cdkDropListEnterPredicate` ，它会在项目即将进入新容器时调用。根据它是返回的是 `true` 还是 `false`，可以允许或不允许该条目进入新容器。
+默认情况下，一个容器中的所有 `cdkDrag` 项都可以移动到另一个相连的容器中。如果你想对可拖放的条目进行更精细的控制，你可以使用 `cdkDropListEnterPredicate` ，它会在条目即将进入新容器时调用。根据它是返回的是 `true` 还是 `false`，可以允许或不允许该条目进入新容器。
 
 <!-- example(cdk-drag-drop-enter-predicate) -->
 

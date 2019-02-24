@@ -8,7 +8,7 @@ The `portals` package provides a flexible system for rendering dynamic content i
 
 A `Portal` is a piece of UI that can be dynamically rendered to an open slot on the page.
 
-`Portal` 是一小块 UI，可以被动态呈现到页面上的空白插槽（slot）中。
+`Portal` 是一小块 UI，可以被动态渲染到页面上的空白插槽（slot）中。
 
 The "piece of UI" can be either a `Component` or a `TemplateRef` and the "open slot" is
 a `PortalOutlet`.
