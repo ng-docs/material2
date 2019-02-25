@@ -84,8 +84,8 @@ used to easily generate Material Design components:
 除了用于安装的 schematic 之外，Angular Material 还带有多个原理图，用于轻松生成 Material Design 组件：
 
 | Name           | Description                                                                                            |
-| 名称           | 说明                                                                                            |
 |----------------|--------------------------------------------------------------------------------------------------------|
+| 名称           | 说明                                                                                            |
 | `address-form` | Component with a form group that uses Material Design form controls to prompt for a shipping address   |
 | `address-form` | 一个表单组，它使用 Material Design 的多个表单控件接收一个送货地址   |
 | `navigation`   | Creates a component with a responsive Material Design sidenav and a toolbar for showing the app name   |
@@ -103,8 +103,8 @@ Additionally the Angular CDK also comes with a collection of component schematic
 此外，Angular CDK 也给出了一些组件的原理图：
 
 | Name           | Description                                                                                        |
-| 名称           | 说明                                                                                        |
 |----------------|----------------------------------------------------------------------------------------------------|
+| 名称           | 说明                                                                                        |
 | `drag-drop`    | Component that uses the `@angular/cdk/drag-drop` directives for creating an interactive to-do list |
 | `drag-drop`    | 该组件使用 `@angular/cdk/drag-drop` 指令来创建一个可交互的 to-do 列表 |
 

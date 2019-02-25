@@ -14,8 +14,9 @@ available levels are:
 排版是一种排列字型的方式，它让文本在显示时更加清晰、易读、富有吸引力。Angular Material 的排版基于 [Material Design 规范][1]中给出的指导原则，并按排版等级进行排列。每个等级都有自己的 `font-size`、`line-height` 和 `font-weight`。
 有效的等级包括：
 
-| <t>Name</t><t>名称</t>            | <t>CSS classes</t><t>CSS 类</t>                      | <t>Description</t><t>说明</t>                                                                 |
+| Name            | CSS classes                      | Description                                                                 |
 |-----------------|----------------------------------|-----------------------------------------------------------------------------|
+| 名称            | CSS 类                      | 说明                                                                 |
 | `display-4`     | `.mat-display-4`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |
 | `display-4`     | `.mat-display-4`                 | 大型的，只出现一次的头，通常位于页面的顶部（比如 hero 的头部） |
 | `display-3`     | `.mat-display-3`                 | Large, one-off header, usually at the top of the page (e.g. a hero header). |

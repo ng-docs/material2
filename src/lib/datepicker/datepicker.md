@@ -522,8 +522,8 @@ The datepicker supports the following keyboard shortcuts:
 日期选择器支持下列键盘快捷键：
 
 | Shortcut             | Action                                    |
-| 快捷键             | 操作                                    |
 |----------------------|-------------------------------------------|
+| 快捷键             | 操作                                    |
 | `ALT` + `DOWN_ARROW` | Open the calendar pop-up |
 | `ALT` + `DOWN_ARROW` | 打开日历弹出框 |
 | `ESCAPE`             | Close the calendar pop-up |
@@ -534,8 +534,8 @@ In month view:
 在月份视图中：
 
 | Shortcut             | Action                                    |
-| 快捷键             | 操作                                    |
 |----------------------|-------------------------------------------|
+| 快捷键             | 操作                                    |
 | `LEFT_ARROW`         | Go to previous day |
 | `LEFT_ARROW`         | 转到上一天 |
 | `RIGHT_ARROW`        | Go to next day |
@@ -564,8 +564,8 @@ In year view:
 在年份视图中：
 
 | Shortcut             | Action                                    |
-| 快捷键             | 操作                                    |
 |----------------------|-------------------------------------------|
+| 快捷键             | 操作                                    |
 | `LEFT_ARROW`         | Go to previous month |
 | `LEFT_ARROW`         | 转到上月 |
 | `RIGHT_ARROW`        | Go to next month |
@@ -594,8 +594,8 @@ In multi-year view:
 在多年视图中：
 
 | Shortcut             | Action                                    |
-| 快捷键             | 操作                                    |
 |----------------------|-------------------------------------------|
+| 快捷键             | 操作                                    |
 | `LEFT_ARROW`         | Go to previous year |
 | `LEFT_ARROW`         | 转到去年 |
 | `RIGHT_ARROW`        | Go to next year |
