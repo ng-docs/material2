@@ -78,7 +78,7 @@ in your `styles.css`  file:
 
 Alternatively, you can just reference the file directly. This would look something like:
 
-此外，你还可以直接饮用这个文件。类似这样：
+此外，你还可以直接引用这个文件。类似这样：
 
 ```html
 <link href="node_modules/@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet">
