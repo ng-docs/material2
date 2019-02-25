@@ -5,7 +5,7 @@ Angular Material 带了一份供 Angular CLI 使用的生成器（schematic，�
 
 ### Install Schematics
 
-## 安装生成器
+### 安装生成器
 
 Schematics are included with both `@angular/cdk` and `@angular/material`. Once you install the npm
 packages, they will be available through the Angular CLI.
