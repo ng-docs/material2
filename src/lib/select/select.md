@@ -147,12 +147,12 @@ If you want to display a custom trigger label inside a `<mat-select>`, you can u
 
 ### Disabling the ripple effect
 
-### 禁用涟漪效果
+### 禁用水波效果
 
 By default, when a user clicks on a `<mat-option>`, a ripple animation is shown. This can be disabled
 by setting the `disableRipple` property on `<mat-select>`.
 
-默认情况下，当用户点击某个 `<mat-option>` 时，就会显示一个涟漪动画。可以通过设置 `<mat-select>` 上的 `disableRipple` 属性来禁用它。
+默认情况下，当用户点击某个 `<mat-option>` 时，就会显示一个水波动画。可以通过设置 `<mat-select>` 上的 `disableRipple` 属性来禁用它。
 
 <!-- example(select-no-ripple) -->
 

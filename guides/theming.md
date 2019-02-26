@@ -305,7 +305,7 @@ the `mat-core-theme` mixin as well, which contains theme-specific styles for com
 
 `angular-material-theme` 混入器将为[本库中的所有组件](https://github.com/angular/material2/blob/master/src/lib/core/theming/_all-theme.scss)输出主题。
 如果你只想使用这些组件的一个子集（或要修改特定组件的主题），你可以包含专属于该组件的主题混入器。
-你还要包含 `mat-core-theme` 混入器，它包含了常见行为（比如涟漪）的特定于该主题的样式。
+你还要包含 `mat-core-theme` 混入器，它包含了常见行为（比如水波）的特定于该主题的样式。
 
  ```scss
 @import '~@angular/material/theming';
