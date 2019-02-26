@@ -149,15 +149,25 @@ with the `matTabContent` attribute.
 ```
 
 ### Label alignment
+
+### 标签对齐
+
 If you want to align the tab labels in the center or towards the end of the container, you can
 do so using the `[mat-align-tabs]` attribute.
+
+如果要把选项卡标签对齐到中间或容器的两端，你还可以使用 `[mat-align-tabs]` 属性。
 
 <!-- example(tab-group-align) -->
 
 ### Controlling the tab animation
+
+### 控制选项卡的动画
+
 You can control the duration of the tabs' animation using the `animationDuration` input. If you
 want to disable the animation completely, you can do so by setting the properties to `0ms`. The
 duration can be configured globally using the `MAT_TABS_CONFIG` injection token.
+
+你可以通过输入参数 `animationDuration` 来控制选项卡动画的持续时间。如果想完全禁用动画，你可以把该属性设置为 `0ms`。这个持续时间可以通过注入 `MAT_TABS_CONFIG` 令牌来进行全局配置。
 
 <!-- example(tab-group-animations) -->
 
