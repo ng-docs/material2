@@ -195,5 +195,5 @@ Tabs without text or labels should be given a meaningful label via `aria-label` 
 | `HOME`               | 把焦点移到第一个选项卡 |
 | `END`                | Move focus to last tab |
 | `END`                | 把焦点移到最后一个选项卡 |
-| `SPACE` 或 `ENTER`   | Switch to focused tab |
+| `SPACE` or `ENTER`   | Switch to focused tab |
 | `SPACE` 或 `ENTER`   | 切换到当前有焦点的选项卡 |
