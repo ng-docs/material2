@@ -60,9 +60,6 @@ Using the Angular CLI `ng add` command will update your Angular project with the
 ```bash
 ng add @angular/material
 ```
-#### Alternative 2: Angular Devkit 6+
-
-#### 替代方案 2：Angular Devkit 6+
 
 ### Step 2: Configure animations
 
